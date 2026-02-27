@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Section I — The Dawn of Statistical Learning · How AI Works</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<div class="progress-bar" style="background:linear-gradient(90deg,var(--a1),var(--a2))"></div>
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<nav class="topnav"><a href="index.html" class="logo">How AI Works</a><div class="nav-links"><a href="section1.html" class="active">I</a><a href="section2.html">II</a><a href="section3.html">III</a><a href="section4.html">IV</a><a href="section5.html">V</a><a href="section6.html">VI</a><a href="section7.html">VII</a><a href="section8.html">VIII</a></div></nav>
+<div class="section-hero"><div class="era-label" style="color:var(--a1)">Section I · 1800s–1960s</div>
+<h1>The Dawn of Statistical Learning</h1><p>From Gauss's least squares to Rosenblatt's perceptron — mathematics lays the foundation for machine intelligence.</p>
+<div class="nav-arrows"><a href="index.html">&larr; Home</a><a href="section2.html">Section II &rarr;</a></div></div>
+<div class="models-container">
+
+<div class="model-card"><div class="mc-head"><span class="mc-year" style="color:var(--a1)">1805</span><div class="mc-info"><h3>Linear Regression <a href="https://en.wikipedia.org/wiki/Least_squares" target="_blank" class="paper-link">Paper</a></h3><p>Legendre & Gauss's method of least squares — fit a straight line to scattered data by minimizing the sum of squared errors.</p></div></div>
+<div class="mc-formula" style="color:var(--a1)">y = wx + b &nbsp; minimize Σ(yᵢ - (wxᵢ + b))²</div>
+<div class="mc-demo" id="demo-lr"></div></div>
+
+<div class="model-card"><div class="mc-head"><span class="mc-year" style="color:var(--a1)">1812</span><div class="mc-info"><h3>Bayes' Theorem <a href="https://en.wikipedia.org/wiki/Bayes%27_theorem" target="_blank" class="paper-link">Paper</a></h3><p>Update your belief based on new evidence. Prior × likelihood → posterior. The core framework of probabilistic inference.</p></div></div>
+<div class="mc-formula" style="color:var(--a1)">P(A|B) = P(B|A)·P(A) / P(B) &nbsp; posterior = likelihood × prior / evidence</div>
+<div class="mc-demo" id="demo-bayes"></div></div>
+
+<div class="model-card"><div class="mc-head"><span class="mc-year" style="color:var(--a1)">1906</span><div class="mc-info"><h3>Markov Chain <a href="https://en.wikipedia.org/wiki/Markov_chain" target="_blank" class="paper-link">Paper</a></h3><p>Memoryless state transitions — the next state depends only on the current state. Cornerstone of HMM, MCMC, and PageRank.</p></div></div>
+<div class="mc-formula" style="color:var(--a1)">P(Xₙ₊₁|Xₙ,Xₙ₋₁,...) = P(Xₙ₊₁|Xₙ) &nbsp; memoryless property</div>
+<div class="mc-demo" id="demo-markov"></div></div>
+
+<div class="model-card"><div class="mc-head"><span class="mc-year" style="color:var(--a1)">1958</span><div class="mc-info"><h3>Perceptron <a href="https://doi.org/10.1037/h0042519" target="_blank" class="paper-link">Paper</a></h3><p>Rosenblatt's first artificial neuron that could learn from data. Computes weighted sum of inputs; output 1 if above threshold, 0 otherwise. If wrong, nudge the weights.</p></div></div>
+<div class="mc-formula" style="color:var(--a1)">y = step(w·x + b) &nbsp; update: w += η(target - y)·x</div>
+<div class="mc-demo" id="demo-perceptron"></div></div>
+
+<div class="model-card"><div class="mc-head"><span class="mc-year" style="color:var(--a1)">1960</span><div class="mc-info"><h3>Adaline <a href="https://en.wikipedia.org/wiki/ADALINE" target="_blank" class="paper-link">Paper</a></h3><p>Widrow & Hoff's adaptive linear neuron — unlike the perceptron, Adaline computes error before the activation function, using gradient descent (LMS rule).</p></div></div>
+<div class="mc-formula" style="color:var(--a1)">Δw = η(target - w·x - b)·x &nbsp; (LMS / Widrow-Hoff rule)</div>
+<div class="mc-demo" id="demo-adaline"></div></div>
+
+</div>
+<footer><a href="index.html">&larr; Home</a> &middot; <a href="section2.html">Section II: Early Exploration &rarr;</a></footer>
+<script src="shared.js"></script>
+<script>
+// ===== LINEAR REGRESSION =====
+(function(){const el=$('demo-lr'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Click to add points, right-click to remove nearest. Best-fit line updates in real-time.');
+let pts=[{x:100,y:230},{x:180,y:195},{x:260,y:175},{x:350,y:140},{x:430,y:110},{x:550,y:80},{x:620,y:60}];
+function fit(){if(pts.length<2)return{w:0,b:150};let sx=0,sy=0,sxy=0,sxx=0,n=pts.length;
+pts.forEach(p=>{sx+=p.x;sy+=p.y;sxy+=p.x*p.y;sxx+=p.x*p.x});let w=(n*sxy-sx*sy)/(n*sxx-sx*sx||1);return{w,b:(sy-w*sx)/n}}
+function draw(){ctx.clearRect(0,0,750,300);for(let i=0;i<750;i+=75){ctx.strokeStyle='#1a1a2a';ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,300);ctx.stroke()}
+for(let i=0;i<300;i+=75){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(750,i);ctx.stroke()}
+let{w,b}=fit();if(pts.length>=2){ctx.save();ctx.shadowColor='#ff6b6b';ctx.shadowBlur=8;ctx.strokeStyle='#ff6b6b';ctx.lineWidth=2.5;
+ctx.beginPath();ctx.moveTo(0,b);ctx.lineTo(750,w*750+b);ctx.stroke();ctx.restore();
+let mse=pts.reduce((a,p)=>a+(p.y-(w*p.x+b))**2,0)/pts.length;
+pts.forEach(p=>{ctx.strokeStyle='rgba(255,107,107,.3)';ctx.lineWidth=1;ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x,w*p.x+b);ctx.stroke();ctx.setLineDash([])});
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(8,8,215,48,8);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='500 10px Fira Code';ctx.fillText('y = '+w.toFixed(3)+'x + '+b.toFixed(1),18,26);
+ctx.fillStyle='#ffd166';ctx.fillText('MSE = '+mse.toFixed(1)+' | '+pts.length+' points',18,44)}
+pts.forEach(p=>{ctx.save();ctx.shadowColor='#4ecdc4';ctx.shadowBlur=6;ctx.beginPath();ctx.arc(p.x,p.y,5,0,TAU);ctx.fillStyle='#4ecdc4';ctx.fill();ctx.restore()})}
+c.onclick=e=>{let r=c.getBoundingClientRect();pts.push({x:(e.clientX-r.left)*750/r.width,y:(e.clientY-r.top)*300/r.height});draw()};
+c.oncontextmenu=e=>{e.preventDefault();let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*300/r.height;
+pts=pts.filter(p=>dist(p.x,p.y,mx,my)>15);draw()};
+const ctrl=addControls(el);
+const rb=document.createElement('button');rb.className='btn';rb.textContent='\ud83c\udfb2 Random';rb.onclick=()=>{pts=[];for(let i=0;i<10;i++)pts.push({x:rand(40,700),y:rand(20,280)});draw()};
+const clr=document.createElement('button');clr.className='btn';clr.textContent='\u21ba Reset';clr.onclick=()=>{pts=[{x:100,y:230},{x:180,y:195},{x:260,y:175},{x:350,y:140},{x:430,y:110},{x:550,y:80},{x:620,y:60}];draw()};
+ctrl.appendChild(rb);ctrl.appendChild(clr);draw()})();
+
+// ===== BAYES' THEOREM — Medical Diagnosis =====
+(function(){const el=$('demo-bayes'),[c,ctx]=createCanvas(el,750,360);
+addHint(el,'Adjust prevalence, sensitivity, and false positive rate. Watch 1000 people get tested — see the surprising result!');
+let prev=2,sens=95,fpr=5;
+function draw(){ctx.clearRect(0,0,750,360);
+let pop=1000,sick=Math.round(pop*prev/100),healthy=pop-sick;
+let tp=Math.round(sick*sens/100),fn=sick-tp,fp=Math.round(healthy*fpr/100),tn=healthy-fp;
+let totalPos=tp+fp,post=totalPos>0?tp/totalPos*100:0;
+// Title
+ctx.fillStyle='#ffd166';ctx.font='600 11px Fira Code';ctx.fillText('Scenario: 1,000 people take a medical test',15,18);
+// Population grid
+let gx=15,gy=28,gs=4.5,cols=50;
+for(let i=0;i<pop;i++){let x=gx+(i%cols)*gs,y=gy+Math.floor(i/cols)*gs;
+let isSick=i<sick,testPos=isSick?i<tp:i>=sick&&i<sick+fp;
+ctx.fillStyle=isSick&&testPos?'#ff6b6b':isSick?'#a78bfa':testPos?'#fb923c':'#151520';
+ctx.fillRect(x,y,gs-1,gs-1)}
+// Legend (below grid)
+let ly=125;
+[{c:'#ff6b6b',l:'True Positive (sick + test+): '+tp},{c:'#fb923c',l:'False Positive (healthy + test+): '+fp},
+{c:'#a78bfa',l:'False Negative (sick + test-): '+fn},{c:'#151520',l:'True Negative (healthy + test-): '+tn}].forEach((it,i)=>{
+ctx.fillStyle=it.c;ctx.fillRect(15+i%2*365,ly+Math.floor(i/2)*16,10,10);ctx.strokeStyle='#333';ctx.strokeRect(15+i%2*365,ly+Math.floor(i/2)*16,10,10);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText(it.l,30+i%2*365,ly+Math.floor(i/2)*16+9)});
+// Big result panel
+let ry=165;ctx.fillStyle='rgba(6,6,12,.92)';ctx.beginPath();ctx.roundRect(15,ry,720,90,12);ctx.fill();
+ctx.strokeStyle='#1e1e32';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(15,ry,720,90,12);ctx.stroke();
+ctx.fillStyle='#ffd166';ctx.font='700 13px Fira Code';ctx.fillText('\u2795 You tested POSITIVE. Are you actually sick?',30,ry+22);
+// Gauge bar
+ctx.fillStyle='#111120';ctx.beginPath();ctx.roundRect(30,ry+32,500,22,6);ctx.fill();
+let grad=ctx.createLinearGradient(30,0,530,0);grad.addColorStop(0,'#34d399');grad.addColorStop(.5,'#ffd166');grad.addColorStop(1,'#ff6b6b');
+ctx.fillStyle='rgba(0,0,0,0)';
+// fill bar segments
+ctx.fillStyle='#34d39966';ctx.beginPath();ctx.roundRect(30,ry+32,500*Math.min(post/100,1),22,6);ctx.fill();
+if(post>50)ctx.fillStyle='#ff6b6b66';else ctx.fillStyle='#34d39966';
+ctx.beginPath();ctx.roundRect(30,ry+32,500*Math.min(post/100,1),22,6);ctx.fill();
+// Percentage label on bar
+ctx.fillStyle='#fff';ctx.font='bold 12px Fira Code';
+let barW=500*post/100;
+if(barW>60)ctx.fillText((post.toFixed(1))+'% chance sick',35,ry+47);
+else{ctx.fillStyle=post>50?'#ff6b6b':'#34d399';ctx.fillText(post.toFixed(1)+'%',barW+40,ry+47)}
+// Big number
+ctx.fillStyle=post>50?'#ff6b6b':'#34d399';ctx.font='900 36px Fraunces';ctx.textAlign='right';
+ctx.fillText(post.toFixed(1)+'%',720,ry+58);ctx.textAlign='left';
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText(tp+' truly sick out of '+totalPos+' positive tests',30,ry+75);
+// Insight
+ctx.fillStyle=post<20?'#34d399':post<50?'#ffd166':'#ff6b6b';ctx.font='600 9px Fira Code';
+let msg=post<15?'\u26a0 BASE RATE FALLACY! Even though the test is '+sens+'% accurate, only '+post.toFixed(1)+'% of positives are real!':
+post<50?'\u26a0 Still more likely HEALTHY than sick despite positive test!':'Positive test likely means sick (high prevalence).';
+ctx.fillText(msg,300,ry+75);
+// Formula
+let fy=265;ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,fy,720,85,10);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 11px Fira Code';ctx.fillText("Bayes' Theorem:",25,fy+20);
+ctx.fillStyle='#e4e2df';ctx.font='400 10px Fira Code';
+ctx.fillText('P(sick | positive) = P(positive | sick) \u00d7 P(sick) / P(positive)',25,fy+40);
+ctx.fillStyle='#4ecdc4';ctx.font='400 10px Fira Code';
+ctx.fillText('= '+sens+'% \u00d7 '+prev+'%  /  ('+sens+'%\u00d7'+prev+'% + '+fpr+'%\u00d7'+(100-prev)+'%)  =  '+post.toFixed(1)+'%',25,fy+60);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px DM Sans';
+ctx.fillText('\ud83d\udca1 The rarer the disease (low prevalence), the more false positives dominate — this is the base rate fallacy!',25,fy+78)}
+const ctrl=addControls(el);
+ctrl.innerHTML='<label>Prevalence</label><input type="range" min="1" max="50" value="2" id="bp"><span id="bpv" class="btn" style="min-width:30px;text-align:center">2%</span><label>Sensitivity</label><input type="range" min="50" max="99" value="95" id="bs"><span id="bsv" class="btn" style="min-width:30px;text-align:center">95%</span><label>False Pos Rate</label><input type="range" min="1" max="30" value="5" id="bf"><span id="bfv" class="btn" style="min-width:30px;text-align:center">5%</span>';
+$('bp').oninput=e=>{prev=+e.target.value;$('bpv').textContent=prev+'%';draw()};
+$('bs').oninput=e=>{sens=+e.target.value;$('bsv').textContent=sens+'%';draw()};
+$('bf').oninput=e=>{fpr=+e.target.value;$('bfv').textContent=fpr+'%';draw()};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='\u21ba Reset';
+rst.onclick=()=>{prev=2;sens=95;fpr=5;$('bp').value=2;$('bs').value=95;$('bf').value=5;$('bpv').textContent='2%';$('bsv').textContent='95%';$('bfv').textContent='5%';draw()};
+ctrl.appendChild(rst);draw()})();
+
+// ===== MARKOV CHAIN =====
+(function(){const el=$('demo-markov'),[c,ctx]=createCanvas(el,750,260);
+addHint(el,'Click a state to jump there. Press Step to advance. The particle follows transition probabilities.');
+const S=[{n:'Sunny',e:'\u2600\ufe0f',x:180,y:70,c:'#ffd166'},{n:'Rainy',e:'\ud83c\udf27\ufe0f',x:570,y:70,c:'#38bdf8'},{n:'Cloudy',e:'\u2601\ufe0f',x:375,y:190,c:'#a78bfa'}];
+const T=[[.6,.15,.25],[.2,.5,.3],[.3,.2,.5]];let cur=0,hist=[0],px=S[0].x,py=S[0].y;
+function step(){let r=Math.random(),a=0;for(let j=0;j<3;j++){a+=T[cur][j];if(r<a){cur=j;break}}hist.push(cur);if(hist.length>25)hist.shift()}
+function draw(){ctx.clearRect(0,0,750,260);
+for(let i=0;i<3;i++)for(let j=0;j<3;j++){if(T[i][j]<.05)continue;let s=S[i],d=S[j];
+if(i===j){ctx.beginPath();ctx.arc(s.x,s.y-30,16,0,TAU);ctx.strokeStyle=s.c+'44';ctx.lineWidth=1;ctx.stroke();
+ctx.fillStyle='#7d7a8c';ctx.font='400 7px Fira Code';ctx.textAlign='center';ctx.fillText((T[i][j]*100|0)+'%',s.x,s.y-50)}
+else{let mx=(s.x+d.x)/2,my=(s.y+d.y)/2,nx=-(d.y-s.y),ny=d.x-s.x,ln=Math.hypot(nx,ny);
+let cx=mx+nx/ln*22,cy=my+ny/ln*22;
+ctx.strokeStyle=s.c+'33';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.quadraticCurveTo(cx,cy,d.x,d.y);ctx.stroke();
+ctx.fillStyle='#7d7a8c';ctx.font='400 7px Fira Code';ctx.textAlign='center';ctx.fillText((T[i][j]*100|0)+'%',cx,cy)}}
+S.forEach((s,i)=>{let a=i===cur;ctx.save();if(a){ctx.shadowColor=s.c;ctx.shadowBlur=18}
+ctx.beginPath();ctx.arc(s.x,s.y,26,0,TAU);ctx.fillStyle=a?s.c+'33':s.c+'11';ctx.fill();
+ctx.strokeStyle=a?s.c:s.c+'55';ctx.lineWidth=a?2.5:1.5;ctx.stroke();ctx.restore();
+ctx.font='18px sans-serif';ctx.textAlign='center';ctx.fillText(s.e,s.x,s.y+6);
+ctx.fillStyle=s.c;ctx.font='500 8px Fira Code';ctx.fillText(s.n,s.x,s.y+42)});
+px=lerp(px,S[cur].x,.1);py=lerp(py,S[cur].y,.1);
+ctx.save();ctx.shadowColor='#fff';ctx.shadowBlur=8;ctx.beginPath();ctx.arc(px,py,4,0,TAU);ctx.fillStyle='#fff';ctx.fill();ctx.restore();
+ctx.textAlign='left';ctx.fillStyle='#4a475a';ctx.font='400 8px Fira Code';ctx.fillText('History:',12,248);
+ctx.font='12px sans-serif';hist.slice(-22).forEach((h,i)=>ctx.fillText(S[h].e,60+i*17,251));
+requestAnimationFrame(draw)}
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*260/r.height;
+S.forEach((s,i)=>{if(dist(mx,my,s.x,s.y)<30){cur=i;hist.push(cur);if(hist.length>25)hist.shift()}})};
+const ctrl=addControls(el);
+const sb=document.createElement('button');sb.className='btn';sb.textContent='\u25b6 Step';sb.onclick=step;
+let tmr=null;const ab=document.createElement('button');ab.className='btn';ab.textContent='\u23e9 Auto';
+ab.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}else{tmr=setInterval(step,350);ab.classList.add('active')}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='\u21ba Reset';
+rst.onclick=()=>{cur=0;hist=[0];if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}};
+ctrl.appendChild(sb);ctrl.appendChild(ab);ctrl.appendChild(rst);draw()})();
+
+// ===== PERCEPTRON — Fixed boundary rendering =====
+(function(){const el=$('demo-perceptron'),[c,ctx]=createCanvas(el,750,320);
+addHint(el,'Left-click = Red class, Right-click = Blue class. Hit Train to watch the boundary learn. Yellow = misclassified.');
+let pts=[],w1=0,w2=0,b=0,lr=1,epoch=0,errs=0;
+// Use raw pixel coordinates for weights to avoid normalization bugs
+function seed(){pts=[];for(let i=0;i<8;i++){pts.push({x:rand(50,300),y:rand(40,280),c:0});pts.push({x:rand(450,710),y:rand(40,280),c:1})}}
+seed();
+function predict(px,py){return(w1*px+w2*py+b)>=0?1:0}
+function trainEpoch(){errs=0;epoch++;let sh=[...pts].sort(()=>Math.random()-.5);
+sh.forEach(p=>{let pred=predict(p.x,p.y),err=p.c-pred;if(err!==0){errs++;
+w1+=lr*err*p.x;w2+=lr*err*p.y;b+=lr*err*375}})}
+function draw(){ctx.clearRect(0,0,750,320);
+// Decision regions (low res pixel shading)
+for(let py=0;py<320;py+=10)for(let px=0;px<750;px+=10){
+let v=w1*px+w2*py+b;
+ctx.fillStyle=v>=0?'rgba(56,189,248,0.07)':'rgba(255,107,107,0.07)';
+ctx.fillRect(px,py,10,10)}
+// Decision boundary line: w1*x + w2*y + b = 0
+if(Math.abs(w1)>1e-10||Math.abs(w2)>1e-10){
+ctx.save();ctx.shadowColor='#ffd166';ctx.shadowBlur=8;ctx.strokeStyle='#ffd166';ctx.lineWidth=2.5;ctx.beginPath();
+if(Math.abs(w2)>1e-10){
+let y0=(-b-w1*0)/w2,y1=(-b-w1*750)/w2;ctx.moveTo(0,y0);ctx.lineTo(750,y1)}
+else{let xv=-b/w1;ctx.moveTo(xv,0);ctx.lineTo(xv,320)}
+ctx.stroke();ctx.restore();
+// Margin region
+ctx.strokeStyle='rgba(255,209,102,.12)';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+if(Math.abs(w2)>1e-10){let margin=20;
+let y0a=(-b-w1*0+margin*Math.hypot(w1,w2))/w2,y1a=(-b-w1*750+margin*Math.hypot(w1,w2))/w2;
+let y0b=(-b-w1*0-margin*Math.hypot(w1,w2))/w2,y1b=(-b-w1*750-margin*Math.hypot(w1,w2))/w2;
+ctx.beginPath();ctx.moveTo(0,y0a);ctx.lineTo(750,y1a);ctx.stroke();
+ctx.beginPath();ctx.moveTo(0,y0b);ctx.lineTo(750,y1b);ctx.stroke()}
+ctx.setLineDash([])}
+// Points
+pts.forEach(p=>{let pred=predict(p.x,p.y),wrong=pred!==p.c;
+ctx.beginPath();ctx.arc(p.x,p.y,wrong?8:5,0,TAU);ctx.fillStyle=p.c?'#38bdf8':'#ff6b6b';ctx.fill();
+if(wrong){ctx.strokeStyle='#ffd166';ctx.lineWidth=2.5;ctx.stroke()}});
+// Info panel
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(8,8,260,65,8);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 11px Fira Code';ctx.fillText('Epoch '+epoch,18,26);
+ctx.fillStyle=errs>0?'#ff6b6b':'#34d399';ctx.fillText('  Errors: '+errs+'/'+pts.length,90,26);
+if(errs===0&&epoch>0){ctx.fillStyle='#34d399';ctx.fillText('  \u2705 Converged!',200,26)}
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('w\u2081='+w1.toFixed(4)+' w\u2082='+w2.toFixed(4),18,43);
+ctx.fillText('b='+b.toFixed(1)+' | lr='+lr,18,58);
+// Algorithm explanation
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(8,280,400,32,6);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='400 8px Fira Code';
+ctx.fillText('Rule: if y\u0302 \u2260 y, then w += lr \u00d7 (y - y\u0302) \u00d7 x',18,300)}
+c.onclick=e=>{let r=c.getBoundingClientRect();pts.push({x:(e.clientX-r.left)*750/r.width,y:(e.clientY-r.top)*320/r.height,c:0});draw()};
+c.oncontextmenu=e=>{e.preventDefault();let r=c.getBoundingClientRect();pts.push({x:(e.clientX-r.left)*750/r.width,y:(e.clientY-r.top)*320/r.height,c:1});draw()};
+const ctrl=addControls(el);
+const tb=document.createElement('button');tb.className='btn';tb.textContent='\u25b6 Train x10';tb.onclick=()=>{for(let i=0;i<10;i++)trainEpoch();draw()};
+let tmr=null;const ab=document.createElement('button');ab.className='btn';ab.textContent='\u23e9 Auto Train';
+ab.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}else{tmr=setInterval(()=>{trainEpoch();draw();if(errs===0){clearInterval(tmr);tmr=null;ab.classList.remove('active')}},100);ab.classList.add('active')}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='\u21ba Reset';
+rst.onclick=()=>{seed();w1=0;w2=0;b=0;epoch=0;errs=0;if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}draw()};
+ctrl.appendChild(tb);ctrl.appendChild(ab);ctrl.appendChild(rst);draw()})();
+
+// ===== ADALINE =====
+(function(){const el=$('demo-adaline'),[c,ctx]=createCanvas(el,750,280);
+addHint(el,'Watch gradient descent slowly fit the line. Loss curve (right) shows convergence. Compare with Perceptron above!');
+let pts=[];for(let i=0;i<12;i++)pts.push({x:rand(30,460),y:rand(20,260)});
+let w=0,b2=130,lr2=.0001,losses=[],ep=0;
+function train(){if(!pts.length)return;let dw=0,db=0,n=pts.length;
+pts.forEach(p=>{let e=(w*p.x+b2)-p.y;dw+=e*p.x;db+=e});w-=lr2*dw/n;b2-=lr2*db/n*100;ep++;
+losses.push(pts.reduce((a,p)=>a+(p.y-(w*p.x+b2))**2,0)/n);if(losses.length>200)losses.shift()}
+function draw(){ctx.clearRect(0,0,750,280);
+for(let x=0;x<470;x+=60){ctx.strokeStyle='#1a1a2a';ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,280);ctx.stroke()}
+pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,4,0,TAU);ctx.fillStyle='#4ecdc4';ctx.fill()});
+ctx.save();ctx.shadowColor='#ffd166';ctx.shadowBlur=6;ctx.strokeStyle='#ffd166';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,b2);ctx.lineTo(470,w*470+b2);ctx.stroke();ctx.restore();
+pts.forEach(p=>{ctx.strokeStyle='rgba(255,107,107,.25)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x,w*p.x+b2);ctx.stroke()});
+let rx=490,rw=250,rh=180;ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(rx,10,rw,rh,10);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='600 10px Fira Code';ctx.fillText('Loss Curve (MSE)',rx+10,28);
+if(losses.length>1){let mx=Math.max(...losses),mn=Math.min(...losses);if(mx===mn)mx=mn+1;
+ctx.strokeStyle='#ff6b6b';ctx.lineWidth=1.5;ctx.beginPath();
+losses.forEach((l,i)=>{let x=rx+10+i*(rw-20)/200,y=35+(1-(l-mn)/(mx-mn))*(rh-45);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke()}
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('Epoch: '+ep,rx+10,rh-3);
+if(losses.length)ctx.fillText('MSE: '+losses[losses.length-1].toFixed(1),rx+120,rh-3);
+// Key difference note
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(490,200,250,70,8);ctx.fill();
+ctx.fillStyle='#a78bfa';ctx.font='600 9px Fira Code';ctx.fillText('Adaline vs Perceptron:',500,218);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText('Perceptron: error after step fn',500,234);ctx.fillText('Adaline: error on continuous output',500,248);ctx.fillText('\u2192 Smoother gradient descent!',500,262)}
+const ctrl=addControls(el);
+let tmr=null;const ab=document.createElement('button');ab.className='btn';ab.textContent='\u23e9 Train';
+ab.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}else{tmr=setInterval(()=>{for(let i=0;i<5;i++)train();draw()},30);ab.classList.add('active')}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='\u21ba Reset';
+rst.onclick=()=>{w=0;b2=130;losses=[];ep=0;if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}draw()};
+ctrl.appendChild(ab);ctrl.appendChild(rst);draw()})();
+</script></body></html>
