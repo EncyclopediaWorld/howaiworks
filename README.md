@@ -2,9 +2,9 @@
 
 [![HTML5](https://img.shields.io/badge/HTML5-Canvas-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![CSS3](https://img.shields.io/badge/CSS3-Responsive-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![License: Apache 2.0](https://img.shields.io/badge/Code-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![License: CC BY 4.0](https://img.shields.io/badge/Content-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+![GitHub Forks](https://img.shields.io/github/forks/EncyclopediaWorld/howaiworks?style=flat)
 [![GitHub stars](https://img.shields.io/github/stars/EncyclopediaWorld/howaiworks?style=social)](https://github.com/EncyclopediaWorld/howaiworks)
 [![GitHub downloads](https://img.shields.io/github/downloads/EncyclopediaWorld/howaiworks/total?color=brightgreen&label=Downloads)](https://github.com/EncyclopediaWorld/howaiworks/releases)
 [![Demos](https://img.shields.io/badge/Interactive_Demos-50-fb923c)](section1.html)
