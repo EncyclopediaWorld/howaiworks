@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Section I — The Dawn of Statistical Learning · How AI Works</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<div class="progress-bar" style="background:linear-gradient(90deg,var(--a1),var(--a3))"></div>
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<nav class="topnav"><a href="index.html" class="logo">How AI Works</a><div class="nav-links"><a href="section1.html" class="active">I</a><a href="section2.html">II</a><a href="section3.html">III</a><a href="section4.html">IV</a><a href="section5.html">V</a><a href="section6.html">VI</a><a href="section7.html">VII</a><a href="section8.html">VIII</a></div></nav>
+
+<div class="section-hero" style="background:radial-gradient(ellipse 60% 50% at 50% 70%,rgba(255,107,107,.06),transparent)">
+  <div class="era-label" style="color:var(--a1)">Section I · 1800s–1960s</div>
+  <h1>The Dawn of Statistical Learning</h1>
+  <p>From Gauss's least squares to Rosenblatt's perceptron — mathematics lays the foundation for machine intelligence.</p>
+  <div class="nav-arrows"><span style="color:var(--text3);font-size:.72rem;padding:.4rem">Start</span><a href="section2.html">Section II →</a></div>
+</div>
+
+<div class="models-container">
+
+<!-- ========== LINEAR REGRESSION ========== -->
+<div class="model-card">
+<div class="mc-head"><span class="mc-year" style="color:var(--a1)">1805</span><div class="mc-info"><h3>Linear Regression</h3><p>Legendre & Gauss's method of least squares — fit a straight line to scattered data by minimizing the sum of squared errors. The starting point of all regression, still widely used today.</p></div></div>
+<div class="mc-formula" style="color:var(--a1)">ŷ = w·x + b  minimize L = 1/n · Σ(yᵢ - ŷᵢ)²</div>
+<div class="mc-demo" id="demo-linreg"></div>
+</div>
+
+<!-- ========== BAYES ========== -->
+<div class="model-card">
+<div class="mc-head"><span class="mc-year" style="color:var(--a1)">1812</span><div class="mc-info"><h3>Bayes' Theorem</h3><p>Bayes' theorem — update your belief in a hypothesis based on new evidence. Prior + likelihood → posterior. The core framework of probabilistic inference.</p></div></div>
+<div class="mc-formula" style="color:var(--a1)">P(H|E) = P(E|H) · P(H) / P(E)</div>
+<div class="mc-demo" id="demo-bayes"></div>
+</div>
+
+<!-- ========== MARKOV ========== -->
+<div class="model-card">
+<div class="mc-head"><span class="mc-year" style="color:var(--a1)">1906</span><div class="mc-info"><h3>Markov Chain</h3><p>Markov chains — memoryless state transitions. The next state depends only on the current state, not on earlier history. The cornerstone of HMM, MCMC, and many other methods.</p></div></div>
+<div class="mc-formula" style="color:var(--a1)">P(Xₜ₊₁ | Xₜ, Xₜ₋₁, ...) = P(Xₜ₊₁ | Xₜ) memoryless</div>
+<div class="mc-demo" id="demo-markov"></div>
+</div>
+
+<!-- ========== PERCEPTRON ========== -->
+<div class="model-card">
+<div class="mc-head"><span class="mc-year" style="color:var(--a1)">1958</span><div class="mc-info"><h3>Perceptron</h3><p>Rosenblatt's perceptron — the first artificial neuron that could "learn" from data. It does something simple: compute a weighted sum of inputs, output 1 if above threshold, 0 otherwise.</p></div></div>
+<div class="mc-formula" style="color:var(--a1)">y = step(Σ wᵢxᵢ + b)  update: w ← w + η·(target - y)·x</div>
+<div class="mc-demo" id="demo-perceptron"></div>
+</div>
+
+<!-- ========== ADALINE ========== -->
+<div class="model-card">
+<div class="mc-head"><span class="mc-year" style="color:var(--a1)">1960</span><div class="mc-info"><h3>Adaline</h3><p>Widrow & Hoff's adaptive linear neuron — unlike the perceptron, Adaline computes error before the activation function, using the continuous LMS rule to update weights.</p></div></div>
+<div class="mc-formula" style="color:var(--a1)">w ← w + η · (y - w·x) · x  LMS / Widrow-Hoff rule</div>
+<div class="mc-demo" id="demo-adaline"></div>
+</div>
+
+</div>
+<footer><a href="index.html">← Home</a> · <a href="section2.html">Section II: Early Exploration →</a></footer>
+<script src="shared.js"></script>
+<script>
+// ============================================================
+//  LINEAR REGRESSION — fancy animated scatter with glow effects
+// ============================================================
+(function(){
+const el=$('demo-linreg'), [c,ctx]=createCanvas(el,750,340);
+addHint(el,'🖱️ Click to add data · Double-click to remove · Watch the fit animate smoothly');
+let pts=[{x:85,y:275},{x:155,y:235},{x:250,y:195},{x:340,y:155},{x:450,y:115},{x:560,y:75},{x:650,y:50}];
+let animW=0,animB=170,t=0;
+
+function fit(){
+  if(pts.length<2) return{m:0,b:170};
+  let sx=0,sy=0,sxx=0,sxy=0,n=pts.length;
+  pts.forEach(p=>{sx+=p.x;sy+=p.y;sxx+=p.x*p.x;sxy+=p.x*p.y});
+  let m=(n*sxy-sx*sy)/(n*sxx-sx*sx||1);
+  return{m, b:(sy-m*sx)/n};
+}
+
+function draw(){
+  t+=.015;
+  const{m,b}=fit();
+  animW=lerp(animW,m,.08); animB=lerp(animB,b,.08);
+  let mse=pts.reduce((a,p)=>a+(p.y-(animW*p.x+animB))**2,0)/(pts.length||1);
+
+  ctx.clearRect(0,0,750,340);
+
+  // Subtle grid
+  ctx.strokeStyle='#0f0f1c'; ctx.lineWidth=1;
+  for(let i=0;i<=750;i+=50){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,340);ctx.stroke();}
+  for(let i=0;i<=340;i+=50){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(750,i);ctx.stroke();}
+
+  // Residual rectangles (error squares visualization)
+  pts.forEach(p=>{
+    let py=animW*p.x+animB, err=Math.abs(p.y-py);
+    let side=Math.min(err,60);
+    ctx.fillStyle=`rgba(255,107,107,${clamp(err/300,.02,.1)})`;
+    ctx.strokeStyle=`rgba(255,107,107,${clamp(err/200,.05,.2)})`;
+    ctx.lineWidth=.5;
+    let ly=Math.min(p.y,py);
+    ctx.fillRect(p.x-side/2,ly,side,Math.abs(p.y-py));
+    ctx.strokeRect(p.x-side/2,ly,side,Math.abs(p.y-py));
+  });
+
+  // Fit line with glow
+  ctx.save();
+  ctx.shadowColor='rgba(78,205,196,.4)'; ctx.shadowBlur=16;
+  ctx.strokeStyle='#4ecdc4'; ctx.lineWidth=2.5;
+  ctx.beginPath(); ctx.moveTo(0,animB); ctx.lineTo(750,animW*750+animB); ctx.stroke();
+  ctx.restore();
+
+  // Confidence band
+  if(pts.length>=3){
+    let se=Math.sqrt(mse)*1.5;
+    ctx.fillStyle='rgba(78,205,196,.04)';
+    ctx.beginPath(); ctx.moveTo(0,animB-se); ctx.lineTo(750,animW*750+animB-se);
+    ctx.lineTo(750,animW*750+animB+se); ctx.lineTo(0,animB+se); ctx.closePath(); ctx.fill();
+  }
+
+  // Points with animated glow
+  pts.forEach((p,i)=>{
+    let glow=Math.sin(t*3+i)*.3+.7;
+    ctx.save();
+    ctx.shadowColor='rgba(255,209,102,.35)'; ctx.shadowBlur=10*glow;
+    ctx.beginPath(); ctx.arc(p.x,p.y,6,0,TAU);
+    ctx.fillStyle='#ffd166'; ctx.fill();
+    ctx.restore();
+    ctx.strokeStyle='rgba(6,6,12,.8)'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.arc(p.x,p.y,6,0,TAU); ctx.stroke();
+  });
+
+  // Info overlay
+  ctx.fillStyle='rgba(6,6,12,.82)';
+  let bx=12,by=10,bw=210,bh=62;
+  ctx.beginPath(); ctx.roundRect(bx,by,bw,bh,8); ctx.fill();
+  ctx.strokeStyle='#1e1e32'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.roundRect(bx,by,bw,bh,8); ctx.stroke();
+
+  ctx.fillStyle='#4ecdc4'; ctx.font='600 13px Fira Code';
+  ctx.fillText(`ŷ = ${animW.toFixed(4)}·x + ${animB.toFixed(1)}`,22,32);
+  ctx.fillStyle='#ff6b6b'; ctx.font='500 11px Fira Code';
+  ctx.fillText(`MSE = ${mse.toFixed(1)}`,22,50);
+  ctx.fillStyle='#7d7a8c'; ctx.fillText(`${pts.length} points`,130,50);
+  ctx.fillStyle='#4a475a'; ctx.font='400 9px Fira Code';
+  ctx.fillText('squares = (yᵢ − ŷᵢ)² error',22,65);
+
+  requestAnimationFrame(draw);
+}
+
+c.onclick=e=>{const r=c.getBoundingClientRect(); pts.push({x:(e.clientX-r.left)*750/r.width, y:(e.clientY-r.top)*340/r.height});};
+c.ondblclick=e=>{const r=c.getBoundingClientRect(); let mx=(e.clientX-r.left)*750/r.width, my=(e.clientY-r.top)*340/r.height;
+  let minD=Infinity,minI=-1; pts.forEach((p,i)=>{let d=dist(mx,my,p.x,p.y);if(d<minD){minD=d;minI=i}});
+  if(minI>=0&&minD<35) pts.splice(minI,1);};
+
+const ctrl=addControls(el);
+const clr=document.createElement('button');clr.className='btn';clr.textContent='🗑 Clear';clr.onclick=()=>{pts.length=0};
+const rnd=document.createElement('button');rnd.className='btn';rnd.textContent='🎲 Random';
+rnd.onclick=()=>{pts.length=0;let slope=rand(-.35,.05),off=rand(80,260);for(let i=0;i<randInt(6,12);i++)pts.push({x:rand(30,720),y:off+slope*rand(30,720)+rand(-45,45)})};
+ctrl.appendChild(clr); ctrl.appendChild(rnd);
+draw();
+})();
+
+// ============================================================
+//  BAYES — interactive population grid with animated transitions
+// ============================================================
+(function(){
+const el=$('demo-bayes'), [c,ctx]=createCanvas(el,750,380);
+addHint(el,'🎛️ Drag sliders · Watch each person\'s test result update in real-time');
+let prior=.02, sens=.95, fpr=.05, people=[], t=0;
+const N=600, cols=30;
+
+function genPeople(){
+  people=[];
+  for(let i=0;i<N;i++){
+    let sick=Math.random()<prior;
+    let pos=sick?(Math.random()<sens):(Math.random()<fpr);
+    people.push({sick,pos,x:16+(i%cols)*23.5, y:18+Math.floor(i/cols)*17.5,
+      targetColor:sick&&pos?[255,90,90]:!sick&&pos?[251,146,60]:sick&&!pos?[167,139,250]:[20,20,35],
+      r:0, g:0, b:0});
+  }
+  // Init colors
+  people.forEach(p=>{p.r=p.targetColor[0];p.g=p.targetColor[1];p.b=p.targetColor[2]});
+}
+genPeople();
+
+function draw(){
+  t+=.02;
+  ctx.clearRect(0,0,750,380);
+
+  let pe=prior*sens+(1-prior)*fpr, post=prior*sens/pe;
+  let tp=people.filter(p=>p.sick&&p.pos).length, fp=people.filter(p=>!p.sick&&p.pos).length;
+  let fn=people.filter(p=>p.sick&&!p.pos).length, tn=people.filter(p=>!p.sick&&!p.pos).length;
+
+  // Animate colors
+  people.forEach(p=>{
+    p.r=lerp(p.r,p.targetColor[0],.08);
+    p.g=lerp(p.g,p.targetColor[1],.08);
+    p.b=lerp(p.b,p.targetColor[2],.08);
+  });
+
+  // Draw grid
+  people.forEach((p,i)=>{
+    let pulse=p.pos?Math.sin(t*4+i*.1)*.15+.85:1;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.pos?5.5:4.5,0,TAU);
+    ctx.fillStyle=`rgba(${p.r|0},${p.g|0},${p.b|0},${pulse})`;
+    ctx.fill();
+    if(p.sick&&p.pos){ctx.strokeStyle='rgba(255,90,90,.4)';ctx.lineWidth=1;ctx.stroke();}
+  });
+
+  // Right panel
+  let px=540, py=12;
+  ctx.fillStyle='rgba(6,6,12,.88)';
+  ctx.beginPath(); ctx.roundRect(px-8,py,210,360,10); ctx.fill();
+  ctx.strokeStyle='#1e1e32'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.roundRect(px-8,py,210,360,10); ctx.stroke();
+
+  ctx.fillStyle='#7d7a8c'; ctx.font='500 10px Fira Code';
+  ctx.fillText('Tested positive — are you really sick?',px+4,py+22);
+
+  ctx.fillStyle='#ff6b6b'; ctx.font='900 36px Fraunces';
+  ctx.fillText(`${(post*100).toFixed(1)}%`,px+4,py+68);
+  ctx.fillStyle='#7d7a8c'; ctx.font='400 10px Fira Code';
+  ctx.fillText('P(sick | positive)',px+4,py+84);
+
+  // Breakdown bars
+  let by=py+105;
+  [{label:'True Pos',val:tp,color:'#ff6b6b'},{label:'False Pos',val:fp,color:'#fb923c'},
+   {label:'False Neg',val:fn,color:'#a78bfa'},{label:'True Neg',val:tn,color:'#252538'}].forEach((b,i)=>{
+    let y=by+i*32;
+    ctx.fillStyle=b.color; ctx.beginPath(); ctx.arc(px+10,y+6,4,0,TAU); ctx.fill();
+    ctx.fillStyle='#7d7a8c'; ctx.font='400 9px Fira Code';
+    ctx.fillText(b.label,px+20,y+10);
+    ctx.fillStyle='#111120'; ctx.fillRect(px+100,y,88,12);
+    ctx.fillStyle=b.color+'88'; ctx.fillRect(px+100,y,88*(b.val/N),12);
+    ctx.fillStyle='#e4e2df'; ctx.font='500 8px Fira Code';
+    ctx.fillText(b.val+'',px+192,y+10);
+  });
+
+  // Insight
+  let iy=by+145;
+  ctx.fillStyle='#ffd166'; ctx.font='500 10px Fira Code';
+  ctx.fillText('💡 Key Insight:',px+4,iy);
+  ctx.fillStyle='#7d7a8c'; ctx.font='400 9px DM Sans';
+  let lines=['Even with a 95% accurate test,','if the disease is rare (1-2%),','most positives are FALSE.','This is the base rate fallacy!'];
+  lines.forEach((l,i)=>ctx.fillText(l,px+4,iy+16+i*14));
+
+  requestAnimationFrame(draw);
+}
+
+const ctrl=addControls(el);
+ctrl.innerHTML=`<label>Prevalence</label><input type="range" min="5" max="300" value="20" id="bp"><span id="bpv" style="font-family:var(--mono);font-size:.7rem;color:var(--a1)">2.0%</span>
+<label>Sensitivity</label><input type="range" min="50" max="99" value="95" id="bs"><span id="bsv" style="font-family:var(--mono);font-size:.7rem;color:var(--a2)">95%</span>
+<label>False Pos</label><input type="range" min="1" max="30" value="5" id="bf"><span id="bfv" style="font-family:var(--mono);font-size:.7rem;color:var(--a7)">5%</span>`;
+$('bp').oninput=e=>{prior=e.target.value/1000;$('bpv').textContent=(prior*100).toFixed(1)+'%';genPeople()};
+$('bs').oninput=e=>{sens=e.target.value/100;$('bsv').textContent=(sens*100).toFixed(0)+'%';genPeople()};
+$('bf').oninput=e=>{fpr=e.target.value/100;$('bfv').textContent=(fpr*100).toFixed(0)+'%';genPeople()};
+draw();
+})();
+
+// ============================================================
+//  MARKOV — gorgeous state machine with animated traveling particle
+// ============================================================
+(function(){
+const el=$('demo-markov'), [c,ctx]=createCanvas(el,750,360);
+addHint(el,'🖱️ Click a state to jump there · "Auto" to watch the random walk');
+const S=[
+  {name:'Sunny',emoji:'☀️',x:190,y:100,c:'#ffd166',c2:'rgba(255,209,102,'},
+  {name:'Rainy',emoji:'🌧️',x:560,y:100,c:'#38bdf8',c2:'rgba(56,189,248,'},
+  {name:'Cloudy',emoji:'☁️',x:375,y:280,c:'#a78bfa',c2:'rgba(167,139,250,'}
+];
+const T=[[.55,.15,.3],[.2,.45,.35],[.3,.2,.5]];
+let cur=0, hist=[0], particle={x:S[0].x,y:S[0].y,tx:S[0].x,ty:S[0].y}, timer=null, t=0;
+
+function step(){
+  let r=Math.random(),cum=0;
+  for(let i=0;i<3;i++){cum+=T[cur][i]; if(r<cum){cur=i;break}}
+  hist.push(cur); if(hist.length>35) hist.shift();
+  particle.tx=S[cur].x; particle.ty=S[cur].y;
+}
+
+function drawArrow(from,to,prob,self){
+  if(prob<.05) return;
+  let a=from,b=to;
+  if(self){
+    // Self-loop arc
+    let angle=a===S[0]?-Math.PI/2:a===S[1]?-Math.PI/4:Math.PI/2;
+    let cx=a.x+Math.cos(angle)*50, cy=a.y+Math.sin(angle)*50;
+    ctx.strokeStyle=a.c2+(.2+prob*.5)+')'; ctx.lineWidth=prob*5;
+    ctx.beginPath(); ctx.arc(cx,cy,22,.5,TAU-.5); ctx.stroke();
+    ctx.fillStyle=a.c2+'.5)'; ctx.font='500 9px Fira Code'; ctx.textAlign='center';
+    ctx.fillText((prob*100|0)+'%',cx+Math.cos(angle)*18,cy+Math.sin(angle)*18);
+    return;
+  }
+  let mx=(a.x+b.x)/2, my=(a.y+b.y)/2;
+  let nx=-(b.y-a.y)*.12, ny=(b.x-a.x)*.12;
+  ctx.strokeStyle=a.c2+(.15+prob*.4)+')'; ctx.lineWidth=.8+prob*4;
+  ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.quadraticCurveTo(mx+nx,my+ny,b.x,b.y); ctx.stroke();
+  // Arrow head
+  let dx=b.x-(mx+nx), dy=b.y-(my+ny), len=Math.hypot(dx,dy);
+  dx/=len; dy/=len;
+  let ax=b.x-dx*38, ay=b.y-dy*38;
+  ctx.fillStyle=a.c2+(.3+prob*.4)+')';
+  ctx.beginPath(); ctx.moveTo(ax+dy*5,ay-dx*5); ctx.lineTo(ax-dy*5,ay+dx*5); ctx.lineTo(ax+dx*10,ay+dy*10); ctx.closePath(); ctx.fill();
+  // Label
+  ctx.fillStyle=a.c2+'.6)'; ctx.font='500 9px Fira Code'; ctx.textAlign='center';
+  ctx.fillText((prob*100|0)+'%',mx+nx*.7,my+ny*.7-2);
+}
+
+function draw(){
+  t+=.02;
+  particle.x=lerp(particle.x,particle.tx,.06);
+  particle.y=lerp(particle.y,particle.ty,.06);
+  ctx.clearRect(0,0,750,360);
+
+  // Background gradient per state
+  S.forEach((s,i)=>{
+    let isActive=i===cur;
+    if(isActive){
+      let grad=ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,120);
+      grad.addColorStop(0,s.c2+'.06)'); grad.addColorStop(1,'transparent');
+      ctx.fillStyle=grad; ctx.fillRect(s.x-120,s.y-120,240,240);
+    }
+  });
+
+  // Edges
+  for(let i=0;i<3;i++) for(let j=0;j<3;j++){
+    if(i===j) drawArrow(S[i],S[j],T[i][j],true);
+    else drawArrow(S[i],S[j],T[i][j],false);
+  }
+
+  // Nodes
+  S.forEach((s,i)=>{
+    let isActive=i===cur;
+    ctx.save();
+    if(isActive){ctx.shadowColor=s.c;ctx.shadowBlur=25;}
+    ctx.beginPath(); ctx.arc(s.x,s.y,isActive?38:32,0,TAU);
+    ctx.fillStyle=isActive?s.c2+'.12)':'#0c0c16';ctx.fill();
+    ctx.strokeStyle=isActive?s.c:'#252538';ctx.lineWidth=isActive?2.5:1.5;ctx.stroke();
+    ctx.restore();
+    ctx.font=`${isActive?'32':'26'}px sans-serif`; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(s.emoji,s.x,s.y-2);
+    ctx.fillStyle=isActive?s.c:'#7d7a8c'; ctx.font=`${isActive?'600 ':'400 '}10px Fira Code`;
+    ctx.fillText(s.name,s.x,s.y+25);
+  });
+
+  // Traveling particle
+  let pGlow=Math.sin(t*6)*.4+.6;
+  ctx.save();ctx.shadowColor='#fff';ctx.shadowBlur=15*pGlow;
+  ctx.beginPath();ctx.arc(particle.x,particle.y,5,0,TAU);
+  ctx.fillStyle=`rgba(255,255,255,${.6+pGlow*.4})`;ctx.fill();
+  ctx.restore();
+
+  // History trail at bottom
+  ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+  ctx.fillStyle='#7d7a8c'; ctx.font='400 9px Fira Code'; ctx.fillText('History:',15,350);
+  hist.forEach((h,i)=>{
+    let alpha=.2+.8*(i/hist.length);
+    ctx.globalAlpha=alpha;
+    ctx.font=`${10+4*(i===hist.length-1?1:0)}px sans-serif`;
+    ctx.fillText(S[h].emoji,60+i*20,352);
+  });
+  ctx.globalAlpha=1;
+  requestAnimationFrame(draw);
+}
+
+c.onclick=e=>{const r=c.getBoundingClientRect();let mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*360/r.height;
+  S.forEach((s,i)=>{if(dist(mx,my,s.x,s.y)<40){cur=i;hist.push(cur);particle.tx=s.x;particle.ty=s.y;}});};
+
+const ctrl=addControls(el);
+const btn=document.createElement('button');btn.className='btn';btn.textContent='▶ Step';btn.onclick=step;
+const abtn=document.createElement('button');abtn.className='btn';abtn.textContent='⏩ Auto';
+abtn.onclick=()=>{if(timer){clearInterval(timer);timer=null;abtn.classList.remove('active');abtn.textContent='⏩ Auto'}
+  else{timer=setInterval(step,500);abtn.classList.add('active');abtn.textContent='⏹ Stop'}};
+ctrl.appendChild(btn);ctrl.appendChild(abtn);
+draw();
+})();
+
+// ============================================================
+//  PERCEPTRON — pixel-level decision boundary + animated learning
+// ============================================================
+(function(){
+const el=$('demo-perceptron'), [c,ctx]=createCanvas(el,750,380);
+addHint(el,'🖱️ Left-click = 🔴 Class A · Right-click = 🔵 Class B · Boundary learns live!');
+let pts=[], w=[rand(-.3,.3),rand(-.3,.3)], b=rand(-.1,.1), epoch=0, errCount=0;
+const W=750, H=380;
+
+// Generate initial data
+for(let i=0;i<10;i++){
+  pts.push({x:rand(40,300),y:rand(30,170),l:1});
+  pts.push({x:rand(450,710),y:rand(210,350),l:0});
+}
+
+function trainEpoch(){
+  errCount=0;
+  pts.forEach(p=>{
+    let pred=(w[0]*p.x/W+w[1]*p.y/H+b)>=0?1:0;
+    let err=p.l-pred;
+    if(err!==0){w[0]+=.03*err*p.x/W; w[1]+=.03*err*p.y/H; b+=.03*err; errCount++;}
+  });
+  epoch++;
+}
+
+// Precomputed decision region image (updated periodically)
+let regionCanvas=document.createElement('canvas');
+regionCanvas.width=W/4; regionCanvas.height=H/4;
+let rctx=regionCanvas.getContext('2d');
+
+function updateRegions(){
+  let img=rctx.createImageData(W/4,H/4);
+  for(let y=0;y<H/4;y++) for(let x=0;x<W/4;x++){
+    let rx=x*4, ry=y*4;
+    let v=w[0]*rx/W+w[1]*ry/H+b;
+    let conf=Math.abs(v)*3;
+    let i=(y*(W/4)+x)*4;
+    if(v>=0){img.data[i]=255;img.data[i+1]=100;img.data[i+2]=100;img.data[i+3]=clamp(conf*22,5,30);}
+    else{img.data[i]=56;img.data[i+1]=189;img.data[i+2]=248;img.data[i+3]=clamp(conf*22,5,30);}
+  }
+  rctx.putImageData(img,0,0);
+}
+
+let frameCount=0;
+function draw(){
+  frameCount++;
+  if(frameCount%2===0){for(let i=0;i<2;i++) trainEpoch();}
+  if(frameCount%6===0) updateRegions();
+
+  ctx.clearRect(0,0,W,H);
+
+  // Decision regions (scaled up)
+  ctx.imageSmoothingEnabled=true;
+  ctx.drawImage(regionCanvas,0,0,W,H);
+
+  // Decision boundary line
+  if(Math.abs(w[1])>.0001){
+    ctx.save();ctx.shadowColor='rgba(255,255,255,.3)';ctx.shadowBlur=8;
+    ctx.strokeStyle='rgba(255,255,255,.5)'; ctx.lineWidth=2; ctx.setLineDash([8,6]);
+    let y0=(-b-w[0]*0)/w[1]*H, y1=(-b-w[0]*1)/w[1]*H;
+    ctx.beginPath(); ctx.moveTo(0,y0); ctx.lineTo(W,y1); ctx.stroke();
+    ctx.setLineDash([]); ctx.restore();
+  }
+
+  // Points
+  pts.forEach(p=>{
+    let pred=(w[0]*p.x/W+w[1]*p.y/H+b)>=0?1:0;
+    let correct=pred===p.l;
+    ctx.save();
+    if(!correct){ctx.shadowColor='#ffd166';ctx.shadowBlur=12;}
+    ctx.beginPath(); ctx.arc(p.x,p.y,correct?7:9,0,TAU);
+    ctx.fillStyle=p.l?'#ff6b6b':'#38bdf8'; ctx.fill();
+    ctx.strokeStyle=correct?'rgba(6,6,12,.7)':'#ffd166';
+    ctx.lineWidth=correct?1.5:2.5; ctx.stroke();
+    ctx.restore();
+  });
+
+  // Stats overlay
+  ctx.fillStyle='rgba(6,6,12,.82)';
+  ctx.beginPath();ctx.roundRect(10,10,280,55,8);ctx.fill();
+  ctx.strokeStyle='#1e1e32';ctx.lineWidth=1;
+  ctx.beginPath();ctx.roundRect(10,10,280,55,8);ctx.stroke();
+
+  let acc=pts.length?((pts.length-errCount)/pts.length*100).toFixed(0):'-';
+  ctx.fillStyle='#ffd166'; ctx.font='600 12px Fira Code';
+  ctx.fillText(`Epoch ${epoch}  Accuracy: ${acc}%  Errors: ${errCount}`,20,32);
+  ctx.fillStyle='#7d7a8c'; ctx.font='400 10px Fira Code';
+  ctx.fillText(`w=[${w[0].toFixed(3)}, ${w[1].toFixed(3)}]  b=${b.toFixed(3)}`,20,52);
+
+  requestAnimationFrame(draw);
+}
+
+c.onclick=e=>{const r=c.getBoundingClientRect(); pts.push({x:(e.clientX-r.left)*W/r.width, y:(e.clientY-r.top)*H/r.height, l:1});};
+c.oncontextmenu=e=>{e.preventDefault();const r=c.getBoundingClientRect(); pts.push({x:(e.clientX-r.left)*W/r.width, y:(e.clientY-r.top)*H/r.height, l:0});};
+
+const ctrl=addControls(el);
+const clr=document.createElement('button');clr.className='btn';clr.textContent='🗑 Reset';
+clr.onclick=()=>{pts.length=0;w=[rand(-.3,.3),rand(-.3,.3)];b=rand(-.1,.1);epoch=0;};
+ctrl.appendChild(clr);
+updateRegions(); draw();
+})();
+
+// ============================================================
+//  ADALINE — split view: scatter + live loss curve
+// ============================================================
+(function(){
+const el=$('demo-adaline'), [c,ctx]=createCanvas(el,750,320);
+addHint(el,'🖱️ Click left half to add points · Watch gradient descent minimize MSE in real-time');
+let pts=[{x:70,y:270},{x:160,y:225},{x:270,y:175},{x:380,y:130},{x:500,y:80},{x:600,y:45}];
+let w=-.001, b0=280, lr=2e-6, losses=[], t=0;
+const SPLIT=470;
+
+function draw(){
+  t+=.015;
+  // Train
+  pts.forEach(p=>{let err=p.y-(w*p.x+b0); w+=lr*err*p.x; b0+=lr*err;});
+  let mse=pts.reduce((a,p)=>a+(p.y-(w*p.x+b0))**2,0)/(pts.length||1);
+  losses.push(mse); if(losses.length>250) losses.shift();
+
+  ctx.clearRect(0,0,750,320);
+
+  // Left: scatter
+  ctx.save(); ctx.beginPath(); ctx.rect(0,0,SPLIT,320); ctx.clip();
+  // Grid
+  ctx.strokeStyle='#0f0f1c';ctx.lineWidth=1;
+  for(let i=0;i<SPLIT;i+=50){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,320);ctx.stroke();}
+  for(let i=0;i<320;i+=50){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(SPLIT,i);ctx.stroke();}
+  // Line
+  ctx.save();ctx.shadowColor='rgba(167,139,250,.3)';ctx.shadowBlur=10;
+  ctx.strokeStyle='#a78bfa'; ctx.lineWidth=2.5;
+  ctx.beginPath(); ctx.moveTo(0,b0); ctx.lineTo(SPLIT,w*SPLIT+b0); ctx.stroke();
+  ctx.restore();
+  // Residuals + points
+  pts.forEach(p=>{
+    let py=w*p.x+b0;
+    ctx.strokeStyle='rgba(255,107,107,.2)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x,py);ctx.stroke();
+    ctx.beginPath();ctx.arc(p.x,p.y,5,0,TAU);ctx.fillStyle='#fb923c';ctx.fill();
+  });
+  ctx.fillStyle='#a78bfa';ctx.font='500 10px Fira Code';
+  ctx.fillText(`w=${w.toFixed(5)}  b=${b0.toFixed(1)}`,12,18);
+  ctx.restore();
+
+  // Right: loss curve
+  ctx.fillStyle='rgba(6,6,12,.92)'; ctx.fillRect(SPLIT,0,280,320);
+  ctx.strokeStyle='#1e1e32'; ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(SPLIT,0);ctx.lineTo(SPLIT,320);ctx.stroke();
+
+  ctx.fillStyle='#ffd166';ctx.font='600 11px Fira Code';ctx.fillText('Loss (MSE)',SPLIT+15,28);
+
+  if(losses.length>2){
+    let maxL=Math.max(...losses,1), ox=SPLIT+15,oy=45,gw=245,gh=230;
+    // Grid
+    ctx.strokeStyle='#151520';
+    for(let i=0;i<=4;i++){let y=oy+gh*i/4;ctx.beginPath();ctx.moveTo(ox,y);ctx.lineTo(ox+gw,y);ctx.stroke();
+      ctx.fillStyle='#4a475a';ctx.font='400 8px Fira Code';ctx.textAlign='right';ctx.fillText((maxL*(1-i/4)).toFixed(0),ox-4,y+3);ctx.textAlign='left';}
+
+    // Loss line with gradient
+    ctx.strokeStyle='#ff6b6b';ctx.lineWidth=2;ctx.beginPath();
+    losses.forEach((l,i)=>{let x=ox+i*(gw/250),y=oy+gh-(l/maxL)*gh;i?ctx.lineTo(x,y):ctx.moveTo(x,y);});
+    ctx.stroke();
+
+    // Current value
+    ctx.fillStyle='rgba(6,6,12,.8)';
+    ctx.beginPath();ctx.roundRect(SPLIT+15,285,245,28,6);ctx.fill();
+    ctx.fillStyle='#ff6b6b';ctx.font='600 11px Fira Code';
+    ctx.fillText(`MSE: ${mse.toFixed(2)}`,SPLIT+25,304);
+    let arrow=losses.length>2&&losses[losses.length-1]<losses[losses.length-2]?'↓ decreasing':'→ converged';
+    ctx.fillStyle='#34d399';ctx.fillText(arrow,SPLIT+160,304);
+  }
+  requestAnimationFrame(draw);
+}
+
+c.onclick=e=>{const r=c.getBoundingClientRect();let mx=(e.clientX-r.left)*750/r.width;
+  if(mx<SPLIT) pts.push({x:mx,y:(e.clientY-r.top)*320/r.height});};
+
+const ctrl=addControls(el);
+const rnd=document.createElement('button');rnd.className='btn';rnd.textContent='🎲 Random';
+rnd.onclick=()=>{pts.length=0;losses.length=0;w=-.001;b0=280;for(let i=0;i<7;i++)pts.push({x:rand(20,SPLIT-20),y:rand(20,300)})};
+const lr_btn=document.createElement('button');lr_btn.className='btn';lr_btn.textContent='🐇 Faster LR';
+lr_btn.onclick=()=>{lr=lr===2e-6?8e-6:2e-6; lr_btn.textContent=lr>3e-6?'🐢 Slower LR':'🐇 Faster LR'};
+ctrl.appendChild(rnd);ctrl.appendChild(lr_btn);
+draw();
+})();
+</script>
+</body></html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Section VI — Deep Learning Explosion · How AI Works</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<div class="progress-bar" style="background:linear-gradient(90deg,var(--a5),var(--a6))"></div>
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<nav class="topnav"><a href="index.html" class="logo">How AI Works</a><div class="nav-links"><a href="section3.html">III</a><a href="section4.html">IV</a><a href="section5.html">V</a><a href="section6.html">VI</a><a href="section7.html">VII</a><a href="section8.html">VIII</a></div></nav>
+<div class="section-hero" style="background:radial-gradient(ellipse 60% 50% at 50% 70%,rgba(244,114,182,.06),transparent)">
+  <div class="era-label" style="color:var(--a5)">Section VI · 2012–2015</div>
+  <h1>The Deep Learning Explosion</h1>
+  <p>AlexNet ignites a revolution. GANs, attention mechanisms, and residual connections reshape the entire field in just four years.</p>
+  <div class="nav-arrows"><a href="section5.html">&larr; Section V</a><a href="section7.html">Section VII &rarr;</a></div>
+</div>
+<div class="models-container">
+
+<!-- ALEXNET -->
+<div class="model-card"><div class="mc-head"><span class="mc-year" style="color:var(--a5)">2012</span><div class="mc-info"><h3>AlexNet</h3><p>Krizhevsky, Sutskever & Hinton's deep CNN crushed ImageNet by a massive margin. Five conv layers, ReLU activations, GPU training, and data augmentation — this single paper triggered the modern deep learning era.</p></div></div>
+<div class="mc-formula" style="color:var(--a5)">Input 224x224 -> Conv(96) -> Pool -> Conv(256) -> Pool -> Conv(384x3) -> FC(4096x2) -> Softmax(1000)</div>
+<div class="mc-demo" id="demo-alex"></div></div>
+
+<!-- DROPOUT -->
+<div class="model-card"><div class="mc-head"><span class="mc-year" style="color:var(--a5)">2014</span><div class="mc-info"><h3>Dropout</h3><p>Srivastava & Hinton's elegant regularization — randomly zero out neurons during training to prevent co-adaptation. At test time, use all neurons with scaled weights. Simple yet dramatically reduces overfitting.</p></div></div>
+<div class="mc-formula" style="color:var(--a5)">Train: h_i = h_i * Bernoulli(p)    Test: h_i = h_i * p    (inverted dropout)</div>
+<div class="mc-demo" id="demo-dropout"></div></div>
+
+<!-- WORD2VEC -->
+<div class="model-card"><div class="mc-head"><span class="mc-year" style="color:var(--a5)">2013</span><div class="mc-info"><h3>Word2Vec</h3><p>Mikolov et al.'s word embeddings — train a shallow network to predict context words, producing dense vectors where semantic relationships become geometric: king - man + woman = queen.</p></div></div>
+<div class="mc-formula" style="color:var(--a5)">Skip-gram: maximize P(context | word)    CBOW: maximize P(word | context)</div>
+<div class="mc-demo" id="demo-w2v"></div></div>
+
+<!-- VAE -->
+<div class="model-card"><div class="mc-head"><span class="mc-year" style="color:var(--a5)">2013</span><div class="mc-info"><h3>VAE (Variational Autoencoder)</h3><p>Kingma & Welling's generative model — encode inputs to a distribution in latent space, sample from it, then decode. The reparameterization trick enables backprop through sampling. Walk through latent space to generate smooth interpolations.</p></div></div>
+<div class="mc-formula" style="color:var(--a5)">ELBO = E[log p(x|z)] - KL(q(z|x) || p(z))    z = mu + sigma * epsilon</div>
+<div class="mc-demo" id="demo-vae"></div></div>
+
+<!-- GAN -->
+<div class="model-card"><div class="mc-head"><span class="mc-year" style="color:var(--a5)">2014</span><div class="mc-info"><h3>GAN (Generative Adversarial Network)</h3><p>Goodfellow et al.'s adversarial game — a Generator creates fake samples to fool a Discriminator, while the Discriminator tries to tell real from fake. Through competition, the Generator learns to produce realistic outputs.</p></div></div>
+<div class="mc-formula" style="color:var(--a5)">min_G max_D  E[log D(x)] + E[log(1 - D(G(z)))]</div>
+<div class="mc-demo" id="demo-gan"></div></div>
+
+<!-- SEQ2SEQ + ATTENTION -->
+<div class="model-card"><div class="mc-head"><span class="mc-year" style="color:var(--a5)">2014/15</span><div class="mc-info"><h3>Seq2Seq + Attention</h3><p>Sutskever et al.'s encoder-decoder plus Bahdanau's attention — instead of compressing the entire input into a single vector, attention lets the decoder look back at all encoder states, weighted by relevance to the current output step.</p></div></div>
+<div class="mc-formula" style="color:var(--a5)">alpha_ij = softmax(score(s_i, h_j))    c_i = sum alpha_ij h_j    "look where it matters"</div>
+<div class="mc-demo" id="demo-attn"></div></div>
+
+<!-- RESNET -->
+<div class="model-card"><div class="mc-head"><span class="mc-year" style="color:var(--a5)">2015</span><div class="mc-info"><h3>ResNet (Residual Networks)</h3><p>He et al.'s skip connections — instead of learning a transformation F(x), learn the residual F(x) + x. This simple identity shortcut lets gradients flow directly through the network, enabling training of 100+ layer networks.</p></div></div>
+<div class="mc-formula" style="color:var(--a5)">y = F(x, {W_i}) + x    "learn the residual, not the full mapping"</div>
+<div class="mc-demo" id="demo-resnet"></div></div>
+
+<!-- BATCHNORM -->
+<div class="model-card"><div class="mc-head"><span class="mc-year" style="color:var(--a5)">2015</span><div class="mc-info"><h3>Batch Normalization</h3><p>Ioffe & Szegedy's trick — normalize each layer's inputs across the mini-batch, then apply learnable scale and shift. Stabilizes training, allows higher learning rates, and acts as a regularizer.</p></div></div>
+<div class="mc-formula" style="color:var(--a5)">x_hat = (x - mu_B) / sqrt(sigma_B^2 + eps)    y = gamma * x_hat + beta</div>
+<div class="mc-demo" id="demo-bn"></div></div>
+
+</div>
+<footer><a href="section5.html">&larr; Section V</a> &middot; <a href="section7.html">Section VII: Transformer Revolution &rarr;</a></footer>
+<script src="shared.js"></script>
+<script>
+// ============ ALEXNET: Interactive architecture explorer ============
+(function(){
+const el=$('demo-alex'),[c,ctx]=createCanvas(el,750,310);
+addHint(el,'Hover over each layer to see details -- click to highlight the data flow');
+const layers=[
+  {name:'Input',w:52,h:52,d:3,x:25,color:'#ffd166',desc:'224x224x3 RGB image'},
+  {name:'Conv1',w:48,h:48,d:96,x:105,color:'#ff6b6b',desc:'11x11 stride 4, ReLU'},
+  {name:'Pool1',w:24,h:24,d:96,x:185,color:'#ff6b6b88',desc:'3x3 max pool, stride 2'},
+  {name:'Conv2',w:24,h:24,d:256,x:245,color:'#fb923c',desc:'5x5 pad 2, ReLU'},
+  {name:'Pool2',w:12,h:12,d:256,x:325,color:'#fb923c88',desc:'3x3 max pool'},
+  {name:'Conv3',w:12,h:12,d:384,x:395,color:'#a78bfa',desc:'3x3, ReLU'},
+  {name:'Conv4',w:12,h:12,d:384,x:445,color:'#a78bfa',desc:'3x3, ReLU'},
+  {name:'Conv5',w:12,h:12,d:256,x:495,color:'#a78bfa',desc:'3x3, ReLU'},
+  {name:'FC1',w:6,h:1,d:4096,x:575,color:'#4ecdc4',desc:'4096 neurons + Dropout'},
+  {name:'FC2',w:6,h:1,d:4096,x:625,color:'#4ecdc4',desc:'4096 neurons + Dropout'},
+  {name:'Output',w:6,h:1,d:1000,x:685,color:'#34d399',desc:'1000-class softmax'},
+];
+let hovered=-1,selected=-1,t=0;
+function draw(){t+=.02;ctx.clearRect(0,0,750,310);
+// Connections
+for(let i=0;i<layers.length-1;i++){let a=layers[i],b=layers[i+1];
+let on=selected===-1||i===selected||i===selected-1;
+ctx.strokeStyle=on?'rgba(255,255,255,.06)':'rgba(255,255,255,.015)';ctx.lineWidth=on?1:.5;
+for(let k=0;k<3;k++){ctx.beginPath();ctx.moveTo(a.x+Math.min(a.w,30)+10,80+k*40);ctx.lineTo(b.x,80+k*40);ctx.stroke()}}
+// Layers as 3D blocks
+layers.forEach((l,i)=>{let active=i===hovered||i===selected;let bx=l.x,by=130-Math.min(l.h,50)/2;
+let bw=Math.min(l.w,50),bh=Math.min(l.h,50),bd=Math.min(Math.log2(l.d+1)*3,20);
+// 3D effect - top face
+ctx.fillStyle=active?l.color+'55':l.color+'22';
+ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(bx+bd,by-bd);ctx.lineTo(bx+bw+bd,by-bd);ctx.lineTo(bx+bw,by);ctx.closePath();ctx.fill();
+// Right face
+ctx.fillStyle=active?l.color+'44':l.color+'15';
+ctx.beginPath();ctx.moveTo(bx+bw,by);ctx.lineTo(bx+bw+bd,by-bd);ctx.lineTo(bx+bw+bd,by+bh-bd);ctx.lineTo(bx+bw,by+bh);ctx.closePath();ctx.fill();
+// Front face
+ctx.save();if(active){ctx.shadowColor=l.color;ctx.shadowBlur=15}
+ctx.fillStyle=active?l.color+'44':l.color+'18';ctx.fillRect(bx,by,bw,bh);
+ctx.strokeStyle=active?l.color:l.color+'44';ctx.lineWidth=active?2:1;ctx.strokeRect(bx,by,bw,bh);ctx.restore();
+// Data flow pulse
+if(selected===-1||i<=selected){let pulse=Math.sin(t*3-i*.6)*.4+.6;
+ctx.beginPath();ctx.arc(bx+bw/2,130,2,0,TAU);ctx.fillStyle=`rgba(255,255,255,${pulse*.3})`;ctx.fill()}
+// Label
+ctx.fillStyle=active?l.color:'#7d7a8c';ctx.font=`${active?'600':'400'} 9px Fira Code`;ctx.textAlign='center';
+ctx.fillText(l.name,bx+bw/2+bd/2,by+bh+16);
+if(l.d>3){ctx.fillStyle='#4a475a';ctx.font='400 7px Fira Code';ctx.fillText(l.d+'',bx+bw/2+bd/2,by+bh+27)}});
+// Info panel for hovered layer
+let infoIdx=hovered>=0?hovered:selected;
+if(infoIdx>=0){let l=layers[infoIdx];
+ctx.fillStyle='rgba(6,6,12,.92)';ctx.beginPath();ctx.roundRect(15,220,720,75,10);ctx.fill();
+ctx.strokeStyle=l.color+'44';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(15,220,720,75,10);ctx.stroke();
+ctx.textAlign='left';ctx.fillStyle=l.color;ctx.font='700 14px Fira Code';ctx.fillText(l.name,30,244);
+ctx.fillStyle='#e4e2df';ctx.font='400 11px DM Sans';ctx.fillText(l.desc,130,244);
+ctx.fillStyle='#7d7a8c';ctx.font='400 10px Fira Code';
+let params=l.d*(l.w||1)*(l.h||1);ctx.fillText(`Output: ${l.w}x${l.h}x${l.d}    ~${(params/1000).toFixed(0)}K activations`,30,268);
+if(l.name.startsWith('FC'))ctx.fillText('Dropout p=0.5 applied here during training',400,268);
+if(l.name==='Conv1')ctx.fillText('96 kernels of 11x11 -- largest receptive field',400,268)}
+else{ctx.textAlign='left';ctx.fillStyle='#4a475a';ctx.font='400 10px Fira Code';ctx.fillText('Hover a layer to explore  |  60M parameters  |  Won ImageNet 2012 with 16.4% top-5 error (prev: 26.2%)',25,250)}
+ctx.textAlign='left';
+requestAnimationFrame(draw)}
+c.onmousemove=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width;
+hovered=-1;layers.forEach((l,i)=>{if(mx>=l.x-5&&mx<=l.x+60)hovered=i})};
+c.onmouseleave=()=>hovered=-1;
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width;
+let clicked=-1;layers.forEach((l,i)=>{if(mx>=l.x-5&&mx<=l.x+60)clicked=i});selected=selected===clicked?-1:clicked};
+draw()})();
+
+// ============ DROPOUT: Live network with toggling neurons ============
+(function(){
+const el=$('demo-dropout'),[c,ctx]=createCanvas(el,750,280);
+addHint(el,'Toggle dropout on/off -- click "Resample" to see different neurons dropped each time');
+const arch=[5,8,8,3];let dropRate=.5,dropoutOn=true,mask=[];
+function sampleMask(){mask=arch.map((n,li)=>li===0||li===arch.length-1?Array(n).fill(true):Array(n).fill(0).map(()=>Math.random()>dropRate))}
+sampleMask();let t=0;
+function draw(){t+=.02;ctx.clearRect(0,0,750,280);
+const lx=[100,260,440,620];
+const np=arch.map((n,li)=>Array(n).fill(0).map((_,ni)=>({x:lx[li],y:140-((n-1)*26)/2+ni*26})));
+// Edges
+for(let l=0;l<arch.length-1;l++)for(let j=0;j<arch[l+1];j++){if(dropoutOn&&!mask[l+1][j])continue;
+for(let i=0;i<arch[l];i++){if(dropoutOn&&!mask[l][i])continue;
+let a=np[l][i],b=np[l+1][j];
+ctx.strokeStyle=`rgba(167,139,250,${dropoutOn?.25:.1})`;ctx.lineWidth=dropoutOn?1.2:.6;
+ctx.beginPath();ctx.moveTo(a.x+10,a.y);ctx.lineTo(b.x-10,b.y);ctx.stroke()}}
+// Nodes
+arch.forEach((n,li)=>{for(let ni=0;ni<n;ni++){let p=np[li][ni],active=!dropoutOn||mask[li][ni];
+ctx.save();
+if(active&&dropoutOn){ctx.shadowColor='#a78bfa';ctx.shadowBlur=8}
+ctx.beginPath();ctx.arc(p.x,p.y,10,0,TAU);
+if(!active){ctx.setLineDash([2,2]);ctx.fillStyle='rgba(255,107,107,.04)';ctx.strokeStyle='#ff6b6b33';ctx.lineWidth=1;
+ctx.fill();ctx.stroke();ctx.setLineDash([]);
+ctx.fillStyle='#ff6b6b44';ctx.font='bold 8px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('X',p.x,p.y)}
+else{ctx.fillStyle=li===0?'rgba(255,209,102,.2)':li===arch.length-1?'rgba(52,211,153,.2)':'rgba(167,139,250,.2)';ctx.fill();
+ctx.strokeStyle=li===0?'#ffd166':li===arch.length-1?'#34d399':'#a78bfa';ctx.lineWidth=1.5;ctx.stroke();
+let pulse=Math.sin(t*3+ni+li)*.15+.85;ctx.beginPath();ctx.arc(p.x,p.y,4,0,TAU);
+ctx.fillStyle=`rgba(255,255,255,${pulse*.3})`;ctx.fill()}
+ctx.restore()}});
+// Labels
+['Input','Hidden 1','Hidden 2','Output'].forEach((l,i)=>{ctx.fillStyle='#4a475a';ctx.font='400 8px Fira Code';ctx.textAlign='center';ctx.fillText(l,lx[i],270)});
+// Stats
+let active=mask.flat().filter(Boolean).length,total=mask.flat().length;
+ctx.textAlign='left';ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(10,8,330,40,8);ctx.fill();
+ctx.fillStyle=dropoutOn?'#ff6b6b':'#34d399';ctx.font='600 11px Fira Code';
+ctx.fillText(dropoutOn?`Dropout ON: ${active}/${total} neurons active`:'Dropout OFF: all neurons active (test mode)',20,26);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText(dropoutOn?`Drop rate: ${(dropRate*100).toFixed(0)}% -- prevents co-adaptation`:'Full network used, weights scaled by p',20,42);
+requestAnimationFrame(draw)}
+const ctrl=addControls(el);
+const tog=document.createElement('button');tog.className='btn active';tog.textContent='Dropout: ON';
+tog.onclick=()=>{dropoutOn=!dropoutOn;tog.textContent=dropoutOn?'Dropout: ON':'Dropout: OFF';tog.classList.toggle('active',dropoutOn)};
+const resample=document.createElement('button');resample.className='btn';resample.textContent='\ud83c\udfb2 Resample';resample.onclick=()=>{sampleMask()};
+ctrl.innerHTML='<label>Drop Rate</label><input type="range" min="10" max="80" value="50" id="dr"><span id="drv" style="font-family:var(--mono);font-size:.7rem;color:var(--a1)">50%</span>';
+$('dr').oninput=e=>{dropRate=e.target.value/100;$('drv').textContent=(dropRate*100|0)+'%';sampleMask()};
+ctrl.appendChild(tog);ctrl.appendChild(resample);draw()})();
+
+// ============ WORD2VEC: 2D Embedding Space Explorer ============
+(function(){
+const el=$('demo-w2v'),[c,ctx]=createCanvas(el,750,360);
+addHint(el,'Drag words around -- observe semantic clusters form. Click "king - man + woman = ?" for analogy');
+const words=[
+  {w:'king',x:520,y:80,c:'#ffd166'},{w:'queen',x:580,y:140,c:'#ffd166'},{w:'man',x:400,y:100,c:'#38bdf8'},{w:'woman',x:460,y:160,c:'#38bdf8'},
+  {w:'prince',x:540,y:120,c:'#ffd166'},{w:'princess',x:590,y:175,c:'#ffd166'},
+  {w:'cat',x:120,y:220,c:'#ff6b6b'},{w:'dog',x:180,y:240,c:'#ff6b6b'},{w:'kitten',x:100,y:260,c:'#ff6b6b'},{w:'puppy',x:200,y:275,c:'#ff6b6b'},
+  {w:'paris',x:350,y:300,c:'#a78bfa'},{w:'france',x:410,y:310,c:'#a78bfa'},{w:'london',x:300,y:270,c:'#a78bfa'},{w:'england',x:360,y:280,c:'#a78bfa'},
+  {w:'good',x:650,y:260,c:'#4ecdc4'},{w:'great',x:680,y:290,c:'#4ecdc4'},{w:'bad',x:650,y:320,c:'#fb923c'},{w:'terrible',x:690,y:340,c:'#fb923c'},
+];
+let drag=-1,showAnalogy=false,analogyResult={x:0,y:0},t=0;
+function draw(){t+=.015;ctx.clearRect(0,0,750,360);
+// Faint cluster outlines
+let clusters=[{xs:[0,1,4,5],c:'#ffd166'},{xs:[6,7,8,9],c:'#ff6b6b'},{xs:[10,11,12,13],c:'#a78bfa'}];
+clusters.forEach(cl=>{let pts=cl.xs.map(i=>words[i]);let cx=pts.reduce((a,p)=>a+p.x,0)/pts.length,cy=pts.reduce((a,p)=>a+p.y,0)/pts.length;
+let r=pts.reduce((a,p)=>Math.max(a,dist(cx,cy,p.x,p.y)),0)+30;
+ctx.beginPath();ctx.arc(cx,cy,r,0,TAU);ctx.strokeStyle=cl.c+'15';ctx.lineWidth=1;ctx.stroke();
+ctx.fillStyle=cl.c+'06';ctx.fill()});
+// Semantic arrows (same relationship)
+[[0,1,2,3,'royalty'],[0,2,1,3,'gender'],[10,11,12,13,'capital-country']].forEach(([a,b,c2,d,label])=>{
+let wa=words[a],wb=words[b],wc=words[c2],wd=words[d];
+ctx.strokeStyle='rgba(255,255,255,.06)';ctx.lineWidth=1;ctx.setLineDash([3,3]);
+ctx.beginPath();ctx.moveTo(wa.x,wa.y);ctx.lineTo(wb.x,wb.y);ctx.stroke();
+ctx.beginPath();ctx.moveTo(wc.x,wc.y);ctx.lineTo(wd.x,wd.y);ctx.stroke();ctx.setLineDash([])});
+// Words
+words.forEach((w,i)=>{let pulse=Math.sin(t*2+i)*.08+.92;
+ctx.save();ctx.shadowColor=w.c;ctx.shadowBlur=4;
+ctx.beginPath();ctx.arc(w.x,w.y,5,0,TAU);ctx.fillStyle=w.c;ctx.globalAlpha=pulse;ctx.fill();ctx.restore();ctx.globalAlpha=1;
+ctx.fillStyle=w.c;ctx.font='500 11px Fira Code';ctx.textAlign='center';ctx.fillText(w.w,w.x,w.y-10)});
+// Analogy visualization
+if(showAnalogy){let k=words[0],m=words[2],w=words[3];
+analogyResult.x=k.x-m.x+w.x;analogyResult.y=k.y-m.y+w.y;
+// Draw the parallelogram
+ctx.strokeStyle='#ffd16644';ctx.lineWidth=1.5;ctx.setLineDash([5,5]);
+ctx.beginPath();ctx.moveTo(m.x,m.y);ctx.lineTo(k.x,k.y);ctx.stroke();
+ctx.beginPath();ctx.moveTo(w.x,w.y);ctx.lineTo(analogyResult.x,analogyResult.y);ctx.stroke();
+ctx.strokeStyle='#ff6b6b44';
+ctx.beginPath();ctx.moveTo(m.x,m.y);ctx.lineTo(w.x,w.y);ctx.stroke();
+ctx.beginPath();ctx.moveTo(k.x,k.y);ctx.lineTo(analogyResult.x,analogyResult.y);ctx.stroke();
+ctx.setLineDash([]);
+// Result point
+ctx.save();ctx.shadowColor='#34d399';ctx.shadowBlur=18;
+ctx.beginPath();ctx.arc(analogyResult.x,analogyResult.y,8,0,TAU);ctx.fillStyle='#34d399';ctx.fill();ctx.restore();
+ctx.fillStyle='#34d399';ctx.font='700 12px Fira Code';ctx.fillText('= queen?',analogyResult.x,analogyResult.y-14);
+// Equation at top
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(180,5,400,30,8);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 12px Fira Code';ctx.textAlign='center';
+ctx.fillText('king - man + woman = queen \u2714',380,24)}
+ctx.textAlign='left'}
+c.onmousedown=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*360/r.height;
+words.forEach((w,i)=>{if(dist(mx,my,w.x,w.y)<20)drag=i})};
+c.onmousemove=e=>{if(drag>=0){let r=c.getBoundingClientRect();words[drag].x=(e.clientX-r.left)*750/r.width;words[drag].y=(e.clientY-r.top)*360/r.height;draw()}};
+c.onmouseup=()=>drag=-1;
+const ctrl=addControls(el);
+const ab=document.createElement('button');ab.className='btn';ab.textContent='\ud83d\udc51 king - man + woman = ?';
+ab.onclick=()=>{showAnalogy=!showAnalogy;ab.classList.toggle('active',showAnalogy);draw()};
+ctrl.appendChild(ab);draw()})();
+
+// ============ VAE: Latent Space Explorer ============
+(function(){
+const el=$('demo-vae'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Click anywhere in the 2D latent space to sample -- drag to smoothly interpolate between outputs');
+let latentX=0,latentY=0,t=0;
+function decode(zx,zy){let out=[];for(let i=0;i<8;i++)for(let j=0;j<8;j++){
+let v=sigmoid(Math.sin(zx*2+i*.5)*Math.cos(zy*2+j*.5)+Math.sin((zx+zy)*1.5+i*j*.1)*.5);
+out.push(v)}return out}
+function draw(){t+=.02;ctx.clearRect(0,0,750,300);
+// Latent space grid (left)
+let lw=280,lh=260,lox=20,loy=20;
+ctx.fillStyle='#0a0a14';ctx.fillRect(lox,loy,lw,lh);
+// Grid samples
+for(let xi=-3;xi<=3;xi+=.5)for(let yi=-3;yi<=3;yi+=.5){
+let px=lox+lw/2+xi*lw/6,py=loy+lh/2+yi*lh/6;
+let d=Math.sqrt(xi*xi+yi*yi);let alpha=Math.exp(-d*d/8);
+ctx.fillStyle=`rgba(167,139,250,${alpha*.12})`;
+ctx.fillRect(px-2,py-2,4,4)}
+// Gaussian prior circle
+for(let r=1;r<=3;r++){ctx.strokeStyle=`rgba(167,139,250,${.1/r})`;ctx.lineWidth=1;
+ctx.beginPath();ctx.arc(lox+lw/2,loy+lh/2,r*lw/6,0,TAU);ctx.stroke()}
+// Current position
+let px=lox+lw/2+latentX*lw/6,py=loy+lh/2+latentY*lw/6;
+ctx.save();ctx.shadowColor='#a78bfa';ctx.shadowBlur=18;
+ctx.beginPath();ctx.arc(px,py,7,0,TAU);ctx.fillStyle='#a78bfa';ctx.fill();ctx.restore();
+ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(px,py,7,0,TAU);ctx.stroke();
+// Labels
+ctx.fillStyle='#a78bfa';ctx.font='600 10px Fira Code';ctx.fillText('Latent Space (z1, z2)',lox,15);
+ctx.fillStyle='#4a475a';ctx.font='400 8px Fira Code';ctx.textAlign='center';
+ctx.fillText('z1',lox+lw/2,loy+lh+14);ctx.textAlign='right';ctx.fillText('z2',lox-4,loy+lh/2+3);ctx.textAlign='left';
+// Decoded output (right)
+let out=decode(latentX,latentY);
+let dox=340,doy=30,cs=25;
+ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.fillText('Decoded Output',dox,20);
+for(let i=0;i<8;i++)for(let j=0;j<8;j++){let v=out[i*8+j];
+ctx.fillStyle=`rgba(78,205,196,${v})`;ctx.fillRect(dox+j*cs,doy+i*cs,cs-2,cs-2)}
+// mu / sigma panel
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(560,30,180,250,10);ctx.fill();ctx.strokeStyle='#1e1e32';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(560,30,180,250,10);ctx.stroke();
+ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.fillText('Reparameterization',572,52);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText(`z = [\u03bc + \u03c3\u00b7\u03b5]`,572,72);
+ctx.fillText(`z1 = ${latentX.toFixed(2)}`,572,95);ctx.fillText(`z2 = ${latentY.toFixed(2)}`,572,112);
+let d2=latentX*latentX+latentY*latentY;
+ctx.fillText(`||z||  = ${Math.sqrt(d2).toFixed(2)}`,572,135);
+ctx.fillStyle='#a78bfa';ctx.fillText('KL divergence:',572,160);ctx.fillStyle='#e4e2df';ctx.fillText(`${(d2*.5).toFixed(3)}`,572,178);
+// Explanation
+ctx.fillStyle='#4a475a';ctx.font='400 8px DM Sans';
+['Nearby points in latent','space decode to similar','outputs -- smooth interpolation!','','Click anywhere to sample.','Drag for continuous walk.'].forEach((l,i)=>ctx.fillText(l,572,200+i*14))}
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*300/r.height;
+if(mx<310){latentX=(mx-20-140)/280*6;latentY=(my-20-130)/260*6;draw()}};
+c.onmousemove=e=>{if(e.buttons){let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*300/r.height;
+if(mx<310){latentX=clamp((mx-20-140)/280*6,-3,3);latentY=clamp((my-20-130)/260*6,-3,3);draw()}}};
+draw()})();
+
+// ============ GAN: Generator vs Discriminator live training ============
+(function(){
+const el=$('demo-gan'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Click "Train" to watch the Generator and Discriminator improve together in an adversarial game');
+let gQuality=.1,dAccuracy=.5,round=0,hist=[],phase='idle';
+let realDist=[],fakeDist=[];
+function genDists(){realDist=Array(60).fill(0).map(()=>({x:rand(400,700),y:rand(30,270)}));
+fakeDist=Array(60).fill(0).map(()=>({x:rand(50,350),y:rand(30,270),targetX:0,targetY:0}));
+fakeDist.forEach(f=>{let t=realDist[randInt(0,realDist.length)];f.targetX=t.x;f.targetY=t.y})}
+genDists();
+function train(){round++;
+gQuality=Math.min(.95,gQuality+rand(.01,.04));dAccuracy=.5+Math.sin(round*.15)*.15+gQuality*.3;dAccuracy=clamp(dAccuracy,.4,.95);
+hist.push({g:gQuality,d:dAccuracy});if(hist.length>100)hist.shift();
+fakeDist.forEach(f=>{f.x=lerp(f.x,f.targetX+rand(-20,20)*(1-gQuality),.04+gQuality*.06);
+f.y=lerp(f.y,f.targetY+rand(-20,20)*(1-gQuality),.04+gQuality*.06)});draw()}
+function draw(){ctx.clearRect(0,0,750,300);
+// Real samples
+realDist.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,3.5,0,TAU);ctx.fillStyle='rgba(78,205,196,.4)';ctx.fill()});
+// Fake samples
+fakeDist.forEach(f=>{ctx.beginPath();ctx.arc(f.x,f.y,3,0,TAU);ctx.fillStyle=`rgba(255,107,107,${.15+gQuality*.5})`;ctx.fill()});
+// Labels
+ctx.fillStyle='rgba(6,6,12,.8)';ctx.beginPath();ctx.roundRect(10,8,220,55,8);ctx.fill();
+ctx.fillStyle='#4ecdc4';ctx.font='600 10px Fira Code';ctx.fillText('\u25cf Real data distribution',22,26);
+ctx.fillStyle='#ff6b6b';ctx.fillText('\u25cf Generated (fake) data',22,44);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText(`Round ${round}`,22,56);
+// Quality meters
+let mx=10,my=75;ctx.fillStyle='rgba(6,6,12,.8)';ctx.beginPath();ctx.roundRect(mx,my,180,62,8);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='500 9px Fira Code';ctx.fillText('G quality',mx+8,my+16);
+ctx.fillStyle='#111120';ctx.fillRect(mx+80,my+6,90,12);ctx.fillStyle='#ff6b6b88';ctx.fillRect(mx+80,my+6,90*gQuality,12);
+ctx.fillStyle='#e4e2df';ctx.font='400 8px Fira Code';ctx.fillText((gQuality*100|0)+'%',mx+175,my+16);
+ctx.fillStyle='#4ecdc4';ctx.font='500 9px Fira Code';ctx.fillText('D accuracy',mx+8,my+38);
+ctx.fillStyle='#111120';ctx.fillRect(mx+80,my+28,90,12);ctx.fillStyle='#4ecdc488';ctx.fillRect(mx+80,my+28,90*dAccuracy,12);
+ctx.fillStyle='#e4e2df';ctx.font='400 8px Fira Code';ctx.fillText((dAccuracy*100|0)+'%',mx+175,my+38);
+ctx.fillStyle='#ffd16688';ctx.font='400 8px Fira Code';ctx.fillText(gQuality>.7?'G is winning -- fakes look real!':gQuality>.4?'D and G are competing...':'D easily detects fakes',mx+8,my+56);
+// Loss history
+if(hist.length>2){let hx=10,hy=220,hw=180,hh=60;
+ctx.fillStyle='rgba(6,6,12,.8)';ctx.beginPath();ctx.roundRect(hx,hy,hw+10,hh+15,8);ctx.fill();
+ctx.strokeStyle='#ff6b6b';ctx.lineWidth=1.5;ctx.beginPath();
+hist.forEach((h,i)=>{let x=hx+5+i*(hw/100),y=hy+hh-(h.g*hh);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();
+ctx.strokeStyle='#4ecdc4';ctx.lineWidth=1;ctx.beginPath();
+hist.forEach((h,i)=>{let x=hx+5+i*(hw/100),y=hy+hh-(h.d*hh);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke()}}
+const ctrl=addControls(el);const btn=document.createElement('button');btn.className='btn';btn.textContent='\u25b6 Train x10';
+btn.onclick=()=>{for(let i=0;i<10;i++)train()};
+let timer=null;const abtn=document.createElement('button');abtn.className='btn';abtn.textContent='\u23e9 Auto';
+abtn.onclick=()=>{if(timer){clearInterval(timer);timer=null;abtn.classList.remove('active')}else{timer=setInterval(train,50);abtn.classList.add('active')}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='\u21ba';rst.onclick=()=>{gQuality=.1;dAccuracy=.5;round=0;hist=[];genDists();if(timer){clearInterval(timer);timer=null;abtn.classList.remove('active')}draw()};
+ctrl.appendChild(btn);ctrl.appendChild(abtn);ctrl.appendChild(rst);draw()})();
+
+// ============ SEQ2SEQ + ATTENTION: Heatmap visualization ============
+(function(){
+const el=$('demo-attn'),[c,ctx]=createCanvas(el,750,320);
+addHint(el,'Click "Decode Next" to step through -- watch the attention heatmap show where the decoder focuses');
+const src=['I','love','machine','learning','very','much'];
+const tgt=['Je','aime','l\'apprentissage','automatique','beaucoup'];
+let step=-1,attnWeights=[];
+function advance(){step++;if(step>=tgt.length){step=-1;attnWeights=[];draw();return}
+let w=[];src.forEach((_,j)=>{let v=Math.random();
+if(step===0&&j<=1)v+=1.5;if(step===1&&j===1)v+=2;if(step===2&&(j===2||j===3))v+=1.8;if(step===3&&j===3)v+=2;if(step===4&&(j===4||j===5))v+=1.5;
+w.push(v)});
+let s=w.reduce((a,b)=>a+b,0);w=w.map(v=>v/s);attnWeights.push(w);draw()}
+function draw(){ctx.clearRect(0,0,750,320);
+let ox=25,cw=90,ch=32;
+// Source
+ctx.fillStyle='#38bdf8';ctx.font='600 10px Fira Code';ctx.fillText('Encoder (Source):',ox,22);
+src.forEach((w,i)=>{let x=ox+i*cw,y=32;
+ctx.beginPath();ctx.roundRect(x,y,cw-6,ch,6);ctx.fillStyle='rgba(56,189,248,.08)';ctx.fill();ctx.strokeStyle='#38bdf844';ctx.lineWidth=1;ctx.stroke();
+ctx.fillStyle='#38bdf8';ctx.font='500 11px Fira Code';ctx.textAlign='center';ctx.fillText(w,x+cw/2-3,y+ch/2+4)});
+// Attention heatmap
+if(attnWeights.length>0){let hy=75;
+ctx.textAlign='left';ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.fillText('Attention Weights:',ox,hy);
+attnWeights.forEach((aw,ti)=>{let y=hy+8+ti*(ch+4);
+ctx.fillStyle='#a78bfa';ctx.font='400 9px Fira Code';ctx.textAlign='right';ctx.fillText(tgt[ti],ox-5+95,y+ch/2+3);ctx.textAlign='left';
+aw.forEach((a,si)=>{let x=ox+95+si*cw;
+ctx.fillStyle=`rgba(255,209,102,${a})`;ctx.fillRect(x,y,cw-6,ch);
+ctx.strokeStyle='#1e1e32';ctx.lineWidth=.5;ctx.strokeRect(x,y,cw-6,ch);
+if(a>.2){ctx.fillStyle=a>.4?'#000':'#ffd166';ctx.font='500 9px Fira Code';ctx.textAlign='center';ctx.fillText((a*100|0)+'%',x+cw/2-3,y+ch/2+3);ctx.textAlign='left'}})})}
+// Target
+let ty=attnWeights.length*36+100;
+ctx.fillStyle='#4ecdc4';ctx.font='600 10px Fira Code';ctx.fillText('Decoder (Target):',ox,ty);
+tgt.forEach((w,i)=>{let x=ox+i*cw+95,y=ty+8,done=i<=step;
+ctx.beginPath();ctx.roundRect(x,y,cw-6,ch,6);
+ctx.fillStyle=done?'rgba(78,205,196,.12)':'#0a0a14';ctx.fill();
+ctx.strokeStyle=done?'#4ecdc4':'#1e1e32';ctx.lineWidth=done?1.5:1;ctx.stroke();
+if(done){ctx.fillStyle='#4ecdc4';ctx.font='500 11px Fira Code';ctx.textAlign='center';ctx.fillText(w,x+cw/2-3,y+ch/2+4);ctx.textAlign='left'}
+else{ctx.fillStyle='#4a475a';ctx.font='400 11px Fira Code';ctx.textAlign='center';ctx.fillText('?',x+cw/2-3,y+ch/2+4);ctx.textAlign='left'}});
+ctx.textAlign='left'}
+const ctrl=addControls(el);const btn=document.createElement('button');btn.className='btn';btn.textContent='\u25b6 Decode Next';btn.onclick=advance;
+let timer=null;const abtn=document.createElement('button');abtn.className='btn';abtn.textContent='\u23e9 Auto';
+abtn.onclick=()=>{if(timer){clearInterval(timer);timer=null;abtn.classList.remove('active')}else{timer=setInterval(advance,800);abtn.classList.add('active')}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='\u21ba';rst.onclick=()=>{step=-1;attnWeights=[];draw()};
+ctrl.appendChild(btn);ctrl.appendChild(abtn);ctrl.appendChild(rst);draw()})();
+
+// ============ RESNET: Skip connection visualization ============
+(function(){
+const el=$('demo-resnet'),[c,ctx]=createCanvas(el,750,290);
+addHint(el,'Toggle skip connections on/off -- see how gradients flow (or vanish) through 8 layers');
+let skipOn=true,t=0;
+const NL=8,layerX=Array(NL).fill(0).map((_,i)=>60+i*82);
+function draw(){t+=.025;ctx.clearRect(0,0,750,290);
+let grad=skipOn?Array(NL).fill(0).map((_,i)=>.9-.02*i):Array(NL).fill(0).map((_,i)=>Math.max(.02,.8*Math.pow(.6,i)));
+// Layers
+layerX.forEach((x,i)=>{let g=grad[i],h=120;
+// Main block
+ctx.save();if(g>.3){ctx.shadowColor='#4ecdc4';ctx.shadowBlur=g*12}
+ctx.fillStyle=`rgba(78,205,196,${.05+g*.2})`;ctx.beginPath();ctx.roundRect(x,85,50,h,8);ctx.fill();
+ctx.strokeStyle=`rgba(78,205,196,${.2+g*.6})`;ctx.lineWidth=1.5;ctx.stroke();ctx.restore();
+// Layer label
+ctx.fillStyle='#e4e2df';ctx.font='500 10px Fira Code';ctx.textAlign='center';
+ctx.fillText(`L${i+1}`,x+25,150);ctx.fillText('F(x)',x+25,135);
+// Gradient magnitude
+ctx.fillStyle=g>.3?'#4ecdc4':'#ff6b6b';ctx.font='400 8px Fira Code';
+ctx.fillText(`\u2207${g.toFixed(2)}`,x+25,220);
+// Gradient bar
+ctx.fillStyle='#111120';ctx.fillRect(x+5,225,40,8);
+ctx.fillStyle=g>.3?'#4ecdc4aa':'#ff6b6b88';ctx.fillRect(x+5,225,40*g,8);
+// Forward connection
+if(i<NL-1){ctx.strokeStyle=`rgba(78,205,196,${.1+g*.3})`;ctx.lineWidth=1+g*2;
+ctx.beginPath();ctx.moveTo(x+50,145);ctx.lineTo(layerX[i+1],145);ctx.stroke();
+// Pulse
+let pulse=(Math.sin(t*3-i)*.5+.5);let px=lerp(x+50,layerX[i+1],pulse);
+ctx.beginPath();ctx.arc(px,145,2,0,TAU);ctx.fillStyle=`rgba(78,205,196,${.3+g*.5})`;ctx.fill()}});
+// Skip connections
+if(skipOn){for(let i=0;i<NL-2;i+=2){let x1=layerX[i],x2=layerX[i+2];
+ctx.strokeStyle='#ffd16655';ctx.lineWidth=2;
+ctx.beginPath();ctx.moveTo(x1+25,85);ctx.quadraticCurveTo((x1+x2)/2+25,45,x2+25,85);ctx.stroke();
+// Plus symbol at landing
+ctx.fillStyle='#ffd166';ctx.font='bold 14px sans-serif';ctx.textAlign='center';ctx.fillText('+',x2+25,80);
+// Skip pulse
+let pulse=(Math.sin(t*2.5-i*.7)*.5+.5);
+let cpx=(x1+x2)/2+25,cpy=45;
+let spx=(1-pulse)**2*(x1+25)+2*(1-pulse)*pulse*cpx+pulse**2*(x2+25);
+let spy=(1-pulse)**2*85+2*(1-pulse)*pulse*cpy+pulse**2*85;
+ctx.beginPath();ctx.arc(spx,spy,3,0,TAU);ctx.fillStyle='rgba(255,209,102,.6)';ctx.fill()}}
+// Info
+ctx.textAlign='left';ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(10,250,730,35,8);ctx.fill();
+ctx.fillStyle=skipOn?'#34d399':'#ff6b6b';ctx.font='600 11px Fira Code';
+ctx.fillText(skipOn?'\u2705 Skip connections ON: gradients preserved across all layers!':'\u274c No skip connections: gradient vanishes exponentially!',20,272);
+let avgGrad=grad.reduce((a,b)=>a+b,0)/NL;
+ctx.fillStyle='#7d7a8c';ctx.font='400 10px Fira Code';ctx.fillText(`Avg gradient: ${avgGrad.toFixed(3)}    y = F(x) ${skipOn?'+ x':''}`,500,272);
+requestAnimationFrame(draw)}
+const ctrl=addControls(el);
+const tog=document.createElement('button');tog.className='btn active';tog.textContent='\u26a1 Skip: ON';
+tog.onclick=()=>{skipOn=!skipOn;tog.textContent=skipOn?'\u26a1 Skip: ON':'\u26a1 Skip: OFF';tog.classList.toggle('active',skipOn)};
+ctrl.appendChild(tog);draw()})();
+
+// ============ BATCHNORM: Distribution normalization viz ============
+(function(){
+const el=$('demo-bn'),[c,ctx]=createCanvas(el,750,260);
+addHint(el,'Click "Forward Pass" to see how BatchNorm normalizes wild distributions -- toggle ON/OFF to compare');
+let bnOn=true,samples=[],normalized=[],scaled=[],gamma=1.2,beta=.3;
+function gen(){samples=Array(80).fill(0).map(()=>rand(-3,5)+rand(-1,1));
+if(bnOn){let mu=samples.reduce((a,b)=>a+b,0)/samples.length;
+let std=Math.sqrt(samples.reduce((a,b)=>a+(b-mu)**2,0)/samples.length+.001);
+normalized=samples.map(s=>(s-mu)/std);scaled=normalized.map(s=>s*gamma+beta)}
+else{normalized=samples;scaled=samples}}
+gen();
+function drawHist(data,ox,oy,w,h,color,label){
+let bins=Array(20).fill(0),mn=Math.min(...data)-1,mx=Math.max(...data)+1;
+data.forEach(v=>{let bi=clamp(Math.floor((v-mn)/(mx-mn)*20),0,19);bins[bi]++});
+let maxB=Math.max(...bins,1),bw=w/20;
+ctx.fillStyle=color+'15';ctx.fillRect(ox,oy,w,h);
+bins.forEach((b,i)=>{let bh=b/maxB*h*.85;ctx.fillStyle=color+'66';ctx.fillRect(ox+i*bw,oy+h-bh,bw-1,bh)});
+// Mean line
+let mu=data.reduce((a,b)=>a+b,0)/data.length;let mux=ox+(mu-mn)/(mx-mn)*w;
+ctx.strokeStyle=color;ctx.lineWidth=2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(mux,oy);ctx.lineTo(mux,oy+h);ctx.stroke();ctx.setLineDash([]);
+ctx.fillStyle=color;ctx.font='600 9px Fira Code';ctx.textAlign='center';ctx.fillText(label,ox+w/2,oy-5);
+let std=Math.sqrt(data.reduce((a,b)=>a+(b-mu)**2,0)/data.length);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText(`\u03bc=${mu.toFixed(2)} \u03c3=${std.toFixed(2)}`,ox+w/2,oy+h+12);ctx.textAlign='left'}
+function draw(){ctx.clearRect(0,0,750,260);let h=130;
+drawHist(samples,20,35,200,h,'#ff6b6b','Raw Activations');
+if(bnOn){ctx.fillStyle='#4a475a';ctx.font='20px sans-serif';ctx.fillText('\u2192',228,105);
+drawHist(normalized,255,35,200,h,'#a78bfa','Normalized (\u03bc=0, \u03c3=1)');
+ctx.fillStyle='#4a475a';ctx.font='20px sans-serif';ctx.fillText('\u2192',463,105);
+drawHist(scaled,490,35,200,h,'#4ecdc4',`Scaled (\u03b3=${gamma.toFixed(1)}, \u03b2=${beta.toFixed(1)})`)}
+else{ctx.fillStyle='#7d7a8c';ctx.font='400 11px Fira Code';ctx.fillText('BatchNorm OFF -- raw activations pass through unchanged',255,105)}
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,195,720,55,8);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';
+ctx.fillText(bnOn?'BatchNorm: Normalize \u2192 Scale & Shift \u2192 Stable training!':'Without BatchNorm: internal covariate shift slows training',25,215);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText(bnOn?'Allows higher learning rates, reduces sensitivity to initialization, acts as regularizer':'Activations drift wildly between layers, causing slow convergence',25,235)}
+const ctrl=addControls(el);
+const tog=document.createElement('button');tog.className='btn active';tog.textContent='BN: ON';
+tog.onclick=()=>{bnOn=!bnOn;tog.textContent=bnOn?'BN: ON':'BN: OFF';tog.classList.toggle('active',bnOn);gen();draw()};
+const btn=document.createElement('button');btn.className='btn';btn.textContent='\u25b6 New Forward Pass';btn.onclick=()=>{gen();draw()};
+ctrl.innerHTML='<label>\u03b3</label><input type="range" min="1" max="30" value="12" id="gm"><span id="gmv" style="font-family:var(--mono);font-size:.7rem;color:var(--a4)">1.2</span><label>\u03b2</label><input type="range" min="-20" max="20" value="3" id="bt"><span id="btv" style="font-family:var(--mono);font-size:.7rem;color:var(--a2)">0.3</span>';
+$('gm').oninput=e=>{gamma=e.target.value/10;$('gmv').textContent=gamma.toFixed(1);gen();draw()};
+$('bt').oninput=e=>{beta=e.target.value/10;$('btv').textContent=beta.toFixed(1);gen();draw()};
+ctrl.appendChild(tog);ctrl.appendChild(btn);draw()})();
+</script></body></html>
