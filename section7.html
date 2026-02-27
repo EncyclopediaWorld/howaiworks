@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Section VII — The Transformer Revolution · How AI Works</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<div class="progress-bar" style="background:linear-gradient(90deg,var(--a7),var(--a6))"></div>
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<nav class="topnav"><a href="index.html" class="logo">How AI Works</a><div class="nav-links"><a href="section1.html">I</a><a href="section2.html">II</a><a href="section3.html">III</a><a href="section4.html">IV</a><a href="section5.html">V</a><a href="section6.html">VI</a><a href="section7.html" class="active">VII</a><a href="section8.html">VIII</a></div></nav>
+<div class="section-hero"><div class="era-label" style="color:var(--a7)">Section VII · 2016–2019</div>
+<h1>The Transformer Revolution</h1><p>Self-attention, BERT, GPT — the architecture that changed everything. Language models become the new foundation of AI.</p>
+<div class="nav-arrows"><a href="section6.html">&larr; Section VI</a><a href="section8.html">Section VIII &rarr;</a></div></div>
+<div class="models-container">
+
+<!-- ======= XGBOOST ======= -->
+<div class="model-card" id="model-xgboost"><div class="mc-head"><span class="mc-year" style="color:var(--a7)">2016</span><div class="mc-info">
+<h3>XGBoost <a href="https://arxiv.org/abs/1603.02754" target="_blank" class="paper-link">Paper</a></h3>
+<p>Chen & Guestrin's extreme gradient boosting — GBDT on steroids with regularization, column subsampling, and parallel construction. Dominated Kaggle for years.</p>
+<div class="model-lineage">Optimizes <a href="section5.html#model-gbdt">GBDT</a> with L1/L2 regularization on <a href="section3.html#model-dtree">Decision Tree</a> leaves; still the top choice for structured/tabular data even in the deep learning era.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a7)">obj = Σ loss(yᵢ, ŷᵢ) + Σ Ω(tree) — loss + regularization (prevents overfitting!)</div>
+<div class="mc-demo" id="demo-xgb"></div></div>
+
+<!-- ======= WAVENET ======= -->
+<div class="model-card" id="model-wavenet"><div class="mc-head"><span class="mc-year" style="color:var(--a7)">2016</span><div class="mc-info">
+<h3>WaveNet <a href="https://arxiv.org/abs/1609.03499" target="_blank" class="paper-link">Paper</a></h3>
+<p>DeepMind's autoregressive audio model — generates speech sample by sample using dilated causal convolutions to capture long-range patterns.</p>
+<div class="model-lineage">Applies <a href="section4.html#model-cnn">CNN</a>'s convolutions to sequential audio generation; its autoregressive approach parallels <a href="section7.html#model-gpt1">GPT</a>'s left-to-right text generation.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a7)">P(x) = ∏ P(xₜ | x₁,...,xₜ₋₁) — predict each sample from all previous (causal)</div>
+<div class="mc-demo" id="demo-wave"></div></div>
+
+<!-- ======= TRANSFORMER ======= -->
+<div class="model-card" id="model-transformer"><div class="mc-head"><span class="mc-year" style="color:var(--a7)">2017</span><div class="mc-info">
+<h3>Transformer <a href="https://arxiv.org/abs/1706.03762" target="_blank" class="paper-link">Paper</a></h3>
+<p>"Attention Is All You Need" — replace RNNs entirely with self-attention. Each token attends to ALL others in parallel. Multi-head attention captures different relationships.</p>
+<div class="model-lineage">Generalizes <a href="section6.html#model-seq2seq">Seq2Seq</a>'s attention into a pure-attention architecture with <a href="section6.html#model-resnet">ResNet</a>'s skip connections; becomes the backbone of <a href="section7.html#model-gpt1">GPT</a>, <a href="section7.html#model-bert">BERT</a>, <a href="section8.html#model-vit">ViT</a>, and virtually all modern AI.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a7)">Attention(Q,K,V) = softmax(QKᵀ/√d) · V — every token looks at every other token</div>
+<div class="mc-demo" id="demo-transformer"></div></div>
+
+<!-- ======= ELMO ======= -->
+<div class="model-card" id="model-elmo"><div class="mc-head"><span class="mc-year" style="color:var(--a7)">2018</span><div class="mc-info">
+<h3>ELMo <a href="https://arxiv.org/abs/1802.05365" target="_blank" class="paper-link">Paper</a></h3>
+<p>Embeddings from Language Models — word vectors that change based on context! "bank" gets different embeddings in "river bank" vs "bank account".</p>
+<div class="model-lineage">Makes <a href="section6.html#model-word2vec">Word2Vec</a> context-aware using bidirectional <a href="section4.html#model-lstm">LSTM</a>; superseded by <a href="section7.html#model-bert">BERT</a>'s Transformer-based contextual embeddings.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a7)">ELMo(word) = γ(s₀·e + s₁·h_forward + s₂·h_backward) — context-dependent embedding</div>
+<div class="mc-demo" id="demo-elmo"></div></div>
+
+<!-- ======= GPT-1 ======= -->
+<div class="model-card" id="model-gpt1"><div class="mc-head"><span class="mc-year" style="color:var(--a7)">2018</span><div class="mc-info">
+<h3>GPT-1 <a href="https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf" target="_blank" class="paper-link">Paper</a></h3>
+<p>OpenAI's first Generative Pre-trained Transformer — pretrain on massive text with next-word prediction, then fine-tune for tasks. Proved unsupervised pretraining works.</p>
+<div class="model-lineage">Applies <a href="section7.html#model-transformer">Transformer</a> decoder to <a href="section5.html#model-nnlm">NNLM</a>'s next-word prediction paradigm; scales up to <a href="section7.html#model-gpt2">GPT-2</a> and ultimately <a href="section8.html#model-gpt3">GPT-3</a>/<a href="section8.html#model-chatgpt">ChatGPT</a>.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a7)">P(wₜ | w₁...wₜ₋₁) via 12-layer Transformer decoder — left-to-right generation</div>
+<div class="mc-demo" id="demo-gpt1"></div></div>
+
+<!-- ======= BERT ======= -->
+<div class="model-card" id="model-bert"><div class="mc-head"><span class="mc-year" style="color:var(--a7)">2018</span><div class="mc-info">
+<h3>BERT <a href="https://arxiv.org/abs/1810.04805" target="_blank" class="paper-link">Paper</a></h3>
+<p>Google's Bidirectional Encoder — unlike GPT (left-to-right), BERT reads BOTH directions. Pretrained by masking random words and predicting them from full context.</p>
+<div class="model-lineage">Uses <a href="section7.html#model-transformer">Transformer</a> encoder with <a href="section7.html#model-elmo">ELMo</a>'s bidirectional insight; dominates NLP understanding tasks, while <a href="section7.html#model-gpt1">GPT</a> wins at generation.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a7)">[CLS] The [MASK] sat on the mat [SEP] → predict: cat (bidirectional context!)</div>
+<div class="mc-demo" id="demo-bert"></div></div>
+
+<!-- ======= STYLEGAN ======= -->
+<div class="model-card" id="model-stylegan"><div class="mc-head"><span class="mc-year" style="color:var(--a7)">2018</span><div class="mc-info">
+<h3>StyleGAN <a href="https://arxiv.org/abs/1812.04948" target="_blank" class="paper-link">Paper</a></h3>
+<p>NVIDIA's style-based generator — controls image generation at different scales: coarse features (pose, shape) and fine features (color, texture) via style vectors.</p>
+<div class="model-lineage">Advances <a href="section6.html#model-gan">GAN</a> with style-based control at each resolution level; produces photorealistic faces, later surpassed by <a href="section8.html#model-diffusion">Diffusion Models</a>.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a7)">z → Mapping Network → w → AdaIN at each layer — style control at every resolution</div>
+<div class="mc-demo" id="demo-style"></div></div>
+
+<!-- ======= GPT-2 ======= -->
+<div class="model-card" id="model-gpt2"><div class="mc-head"><span class="mc-year" style="color:var(--a7)">2019</span><div class="mc-info">
+<h3>GPT-2 <a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf" target="_blank" class="paper-link">Paper</a></h3>
+<p>10× larger than GPT-1 (1.5B params). Showed scaling produces emergent abilities — zero-shot performance without fine-tuning. "Too dangerous to release."</p>
+<div class="model-lineage">Scales <a href="section7.html#model-gpt1">GPT-1</a> 10× to unlock zero-shot abilities; proves the scaling hypothesis that leads to <a href="section8.html#model-gpt3">GPT-3</a> (100× more) and <a href="section8.html#model-gpt4">GPT-4</a>.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a7)">Same as GPT-1 but 10× bigger → emergent zero-shot abilities without fine-tuning!</div>
+<div class="mc-demo" id="demo-gpt2"></div></div>
+
+<!-- ======= T5 ======= -->
+<div class="model-card" id="model-t5"><div class="mc-head"><span class="mc-year" style="color:var(--a7)">2019</span><div class="mc-info">
+<h3>T5 (Text-to-Text Transfer Transformer) <a href="https://arxiv.org/abs/1910.10683" target="_blank" class="paper-link">Paper</a></h3>
+<p>Google's unified framework — EVERY NLP task is "text in, text out". Translation? Summarization? Classification? One model, one format.</p>
+<div class="model-lineage">Unifies <a href="section7.html#model-transformer">Transformer</a> encoder-decoder for ALL tasks via text prefixes; its "everything is text" paradigm merges with <a href="section7.html#model-gpt2">GPT-2</a>'s prompting to create the modern instruction-following AI.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a7)">"translate English to German: That is good" → "Das ist gut" — everything is text-to-text</div>
+<div class="mc-demo" id="demo-t5"></div></div>
+
+</div>
+<footer><a href="section6.html">&larr; Section VI</a> &middot; <a href="section8.html">Section VIII: Foundation Models &rarr;</a></footer>
+<script src="shared.js"></script>
+<script>
+// ===== XGBOOST =====
+(function(){const el=$('demo-xgb'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Compare GBDT vs XGBoost. XGBoost adds regularization to prevent overfitting!');
+let data=[];for(let i=0;i<25;i++){let x=i/24*680+35;data.push({x,y:150+Math.sin(i/24*5)*70+rand(-20,20)})}
+let treesP=[],treesX=[],predsP=data.map(()=>150),predsX=data.map(()=>150);
+function fitStump(resid,shrink){let best={split:350,lm:0,rm:0},bestS=Infinity;
+for(let s=50;s<680;s+=25){let L=[],R=[];resid.forEach((r,i)=>{if(data[i].x<=s)L.push(r);else R.push(r)});
+if(!L.length||!R.length)continue;let lm=L.reduce((a,b)=>a+b,0)/L.length*shrink,rm=R.reduce((a,b)=>a+b,0)/R.length*shrink;
+let sc=L.reduce((a,v)=>a+(v-lm)**2,0)+R.reduce((a,v)=>a+(v-rm)**2,0);
+if(sc<bestS){bestS=sc;best={split:s,lm,rm}}}return best}
+function addBoth(){let rP=data.map((d,i)=>d.y-predsP[i]),rX=data.map((d,i)=>d.y-predsX[i]);
+let bP=fitStump(rP,1.0),bX=fitStump(rX,0.7);treesP.push(bP);treesX.push(bX);
+predsP=predsP.map((p,i)=>p+0.3*(data[i].x<=bP.split?bP.lm:bP.rm));
+predsX=predsX.map((p,i)=>p+0.3*(data[i].x<=bX.split?bX.lm*0.7:bX.rm*0.7));draw()}
+function mse(preds){return data.reduce((a,d,i)=>a+(d.y-preds[i])**2,0)/data.length}
+function draw(){ctx.clearRect(0,0,750,300);
+let mid=375;ctx.strokeStyle='#1e1e32';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(mid,0);ctx.lineTo(mid,250);ctx.stroke();
+ctx.fillStyle='#ff6b6b';ctx.font='600 10px Fira Code';ctx.fillText('Plain GBDT',15,15);
+ctx.fillStyle='#34d399';ctx.fillText('XGBoost (+regularization)',mid+15,15);
+data.forEach(d=>{ctx.beginPath();ctx.arc(d.x,d.y,3,0,TAU);ctx.fillStyle='#38bdf8';ctx.fill()});
+if(treesP.length){ctx.save();ctx.beginPath();ctx.rect(0,0,mid,300);ctx.clip();
+ctx.strokeStyle='#ff6b6b';ctx.lineWidth=2;ctx.beginPath();data.forEach((d,i)=>{i?ctx.lineTo(d.x,predsP[i]):ctx.moveTo(d.x,predsP[i])});ctx.stroke();ctx.restore()}
+if(treesX.length){ctx.save();ctx.beginPath();ctx.rect(mid,0,mid,300);ctx.clip();
+ctx.strokeStyle='#34d399';ctx.lineWidth=2;ctx.beginPath();data.forEach((d,i)=>{i?ctx.lineTo(d.x,predsX[i]):ctx.moveTo(d.x,predsX[i])});ctx.stroke();ctx.restore()}
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(15,255,720,38,8);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='500 9px Fira Code';ctx.fillText('GBDT: '+treesP.length+' trees, MSE='+mse(predsP).toFixed(1),25,272);
+ctx.fillStyle='#34d399';ctx.fillText('XGBoost: '+treesX.length+' trees, MSE='+mse(predsX).toFixed(1)+' (regularized → less overfitting)',25,288)}
+const ctrl=addControls(el);
+const ab=document.createElement('button');ab.className='btn';ab.textContent='🌳 +1 Tree';ab.onclick=addBoth;
+const a5=document.createElement('button');a5.className='btn';a5.textContent='🌲 +10';a5.onclick=()=>{for(let i=0;i<10;i++)addBoth()};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{treesP=[];treesX=[];predsP=data.map(()=>150);predsX=data.map(()=>150);draw()};
+ctrl.appendChild(ab);ctrl.appendChild(a5);ctrl.appendChild(rst);draw()})();
+
+// ===== WAVENET =====
+(function(){const el=$('demo-wave'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Watch dilated convolutions capture increasingly long-range patterns. Each layer doubles the receptive field!');
+let samples=[];for(let i=0;i<64;i++)samples.push(Math.sin(i/64*TAU*3)*.5+Math.sin(i/64*TAU*7)*.3+rand(-.1,.1));
+let generating=false,genPos=0;
+function draw(){ctx.clearRect(0,0,750,300);
+let wx=30,wy=28,ww=690,wh=55;
+ctx.fillStyle='rgba(6,6,12,.8)';ctx.beginPath();ctx.roundRect(wx,wy,ww,wh,6);ctx.fill();
+ctx.strokeStyle='#fb923c';ctx.lineWidth=1.5;ctx.beginPath();
+samples.forEach((s,i)=>{let x=wx+i/63*ww,y=wy+wh/2-s*wh/2;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();
+if(generating&&genPos<64){ctx.save();ctx.shadowColor='#ffd166';ctx.shadowBlur=8;ctx.fillStyle='#ffd166';ctx.beginPath();ctx.arc(wx+genPos/63*ww,wy+wh/2-samples[genPos]*wh/2,5,0,TAU);ctx.fill();ctx.restore()}
+ctx.fillStyle='#fb923c';ctx.font='600 9px Fira Code';ctx.fillText('Audio Waveform (64 samples)',wx,wy-5);
+let layers=[{d:1,name:'Layer 1 (d=1)'},{d:2,name:'Layer 2 (d=2)'},{d:4,name:'Layer 3 (d=4)'},{d:8,name:'Layer 4 (d=8)'}];
+let ly=100,lh=35,nW=9;
+layers.forEach((L,li)=>{let y=ly+li*(lh+8);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText(L.name,5,y+20);
+for(let i=0;i<32;i++){let x=100+i*19;
+ctx.fillStyle='#fb923c'+(li===0?'33':li===1?'44':li===2?'66':'88');ctx.fillRect(x,y,nW,lh-2);
+if(li>0&&i-L.d>=0){ctx.strokeStyle='#fb923c33';ctx.lineWidth=1;ctx.beginPath();
+ctx.moveTo(x+nW/2,y+lh-2);ctx.lineTo(100+i*19+nW/2,y-8);ctx.stroke();
+ctx.beginPath();ctx.moveTo(x+nW/2,y+lh-2);ctx.lineTo(100+(i-L.d)*19+nW/2,y-8);ctx.stroke()}}
+let rf=Math.pow(2,li+1)-1;ctx.fillStyle='#ffd166';ctx.font='500 7px Fira Code';ctx.fillText('RF='+rf,690,y+20)});
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(15,258,720,35,8);ctx.fill();
+ctx.fillStyle='#fb923c';ctx.font='600 9px Fira Code';ctx.fillText('Dilated Causal Convolution: dilation doubles → exponentially growing receptive field!',25,276);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText('"Causal" = only sees PAST samples. Generates one sample at a time, like GPT generates one token at a time.',25,290)}
+const ctrl=addControls(el);let tmr=null;
+const gb=document.createElement('button');gb.className='btn';gb.textContent='🎙 Generate';
+gb.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;gb.classList.remove('active');generating=false}
+else{generating=true;genPos=0;gb.classList.add('active');
+tmr=setInterval(()=>{if(genPos<63){genPos++;samples[genPos]=Math.sin(genPos/64*TAU*3)*.5+Math.sin(genPos/64*TAU*7)*.3+rand(-.15,.15);draw()}
+else{clearInterval(tmr);tmr=null;gb.classList.remove('active');generating=false}},50)}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{samples=[];for(let i=0;i<64;i++)samples.push(Math.sin(i/64*TAU*3)*.5+Math.sin(i/64*TAU*7)*.3+rand(-.1,.1));generating=false;genPos=0;if(tmr){clearInterval(tmr);tmr=null;gb.classList.remove('active')}draw()};
+ctrl.appendChild(gb);ctrl.appendChild(rst);draw()})();
+
+// ===== TRANSFORMER =====
+(function(){const el=$('demo-transformer'),[c,ctx]=createCanvas(el,750,340);
+addHint(el,'Click any word to see its self-attention pattern — which words does it attend to?');
+const tokens=['The','cat','sat','on','the','warm','mat'];
+const attnW=[[.05,.15,.1,.05,.4,.05,.2],[.1,.1,.3,.1,.05,.15,.2],[.05,.2,.1,.25,.05,.1,.25],
+[.1,.05,.3,.1,.1,.15,.2],[.3,.1,.05,.1,.1,.1,.25],[.05,.1,.1,.2,.05,.2,.3],[.05,.15,.2,.1,.25,.1,.15]];
+let selT=1;
+function draw(){ctx.clearRect(0,0,750,340);
+let tx=30,ty=22,tw=95;
+tokens.forEach((t,i)=>{let x=tx+i*tw;let isSel=i===selT;let attn=attnW[selT][i];
+ctx.fillStyle=isSel?'rgba(251,146,60,.2)':`rgba(251,146,60,${attn*.3})`;ctx.beginPath();ctx.roundRect(x,ty,tw-6,36,6);ctx.fill();
+ctx.strokeStyle=isSel?'#fb923c':`rgba(251,146,60,${.2+attn*.8})`;ctx.lineWidth=isSel?2.5:1+attn*3;
+ctx.beginPath();ctx.roundRect(x,ty,tw-6,36,6);ctx.stroke();
+ctx.fillStyle=isSel?'#fb923c':'#e4e2df';ctx.font=(isSel?'700':'500')+' 12px Fira Code';ctx.textAlign='center';
+ctx.fillText(t,x+tw/2-3,ty+22);
+if(!isSel){ctx.fillStyle='#ffd166';ctx.font='500 8px Fira Code';ctx.fillText((attn*100|0)+'%',x+tw/2-3,ty+50)}
+ctx.textAlign='left'});
+// Heatmap
+let mx2=30,my2=78,ms=40;
+ctx.fillStyle='#fb923c';ctx.font='600 10px Fira Code';ctx.fillText('Self-Attention Matrix (click row):',mx2,my2-5);
+tokens.forEach((t,i)=>{
+ctx.fillStyle=i===selT?'#fb923c':'#7d7a8c';ctx.font='400 8px Fira Code';ctx.textAlign='right';ctx.fillText(t,mx2-5,my2+i*ms+ms/2+3);ctx.textAlign='left';
+tokens.forEach((t2,j)=>{let v=attnW[i][j];
+ctx.fillStyle=`rgba(251,146,60,${v})`;ctx.fillRect(mx2+j*ms,my2+i*ms,ms-2,ms-2);
+ctx.fillStyle=v>.2?'#fff':'#555';ctx.font='400 7px Fira Code';ctx.textAlign='center';
+ctx.fillText((v*100|0)+'%',mx2+j*ms+ms/2-1,my2+i*ms+ms/2+2);ctx.textAlign='left'})});
+tokens.forEach((t,j)=>{ctx.save();ctx.translate(mx2+j*ms+ms/2,my2-2);ctx.rotate(-0.5);
+ctx.fillStyle='#7d7a8c';ctx.font='400 7px Fira Code';ctx.fillText(t,0,0);ctx.restore()});
+// QKV panel
+let rx=340,ry=78;
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(rx,ry,400,200,10);ctx.fill();
+ctx.fillStyle='#fb923c';ctx.font='700 12px Fira Code';ctx.fillText('How Self-Attention Works:',rx+10,ry+22);
+ctx.fillStyle='#ff6b6b';ctx.font='600 10px Fira Code';ctx.fillText('Q (Query)',rx+10,ry+48);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('"What am I looking for?"',rx+85,ry+48);
+ctx.fillStyle='#38bdf8';ctx.font='600 10px Fira Code';ctx.fillText('K (Key)',rx+10,ry+70);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('"What do I contain?"',rx+85,ry+70);
+ctx.fillStyle='#4ecdc4';ctx.font='600 10px Fira Code';ctx.fillText('V (Value)',rx+10,ry+92);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('"Here\'s my information"',rx+85,ry+92);
+ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.fillText('Score = Q·K/√d → softmax → weighted V',rx+10,ry+120);
+ctx.fillStyle='#e4e2df';ctx.font='400 9px Fira Code';ctx.fillText('"'+tokens[selT]+'" attends most to:',rx+10,ry+150);
+let sorted=[...attnW[selT].entries()].sort((a,b)=>b[1]-a[1]);
+sorted.slice(0,3).forEach((s,i)=>{ctx.fillStyle=['#ff6b6b','#ffd166','#4ecdc4'][i];ctx.font='500 10px Fira Code';
+ctx.fillText((i+1)+'. "'+tokens[s[0]]+'" ('+(s[1]*100|0)+'%)',rx+10,ry+170+i*16)});
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(340,290,400,42,8);ctx.fill();
+ctx.fillStyle='#a78bfa';ctx.font='600 9px Fira Code';ctx.fillText('Multi-Head: 8-16 attention heads in parallel!',350,308);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText('Each head learns different patterns: syntax, coreference, semantics...',350,324)}
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx3=(e.clientX-r.left)*750/r.width,my3=(e.clientY-r.top)*340/r.height;
+if(my3>=22&&my3<=58){let idx=Math.floor((mx3-30)/95);if(idx>=0&&idx<tokens.length){selT=idx;draw()}}
+if(my3>=78&&my3<=78+7*40){let row=Math.floor((my3-78)/40);if(row>=0&&row<7){selT=row;draw()}}};
+const ctrl=addControls(el);draw()})();
+
+// ===== ELMO =====
+(function(){const el=$('demo-elmo'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Click a context to see how the SAME word gets DIFFERENT embeddings based on context!');
+const examples=[
+{word:'bank',ctx1:'river bank with trees',ctx2:'bank account balance',dim1:[.8,.2,.7,.1],dim2:[.1,.9,.2,.8],desc:'Place vs Finance'},
+{word:'bat',ctx1:'baseball bat swing',ctx2:'bat flew at night',dim1:[.7,.3,.8,.2],dim2:[.2,.7,.3,.9],desc:'Equipment vs Animal'},
+{word:'light',ctx1:'light weight feather',ctx2:'bright light shining',dim1:[.3,.8,.2,.6],dim2:[.8,.2,.7,.3],desc:'Not heavy vs Illumination'},
+{word:'spring',ctx1:'spring water fresh',ctx2:'spring season flowers',dim1:[.6,.3,.8,.4],dim2:[.3,.7,.4,.8],desc:'Water vs Season'}];
+let sel=0;
+function draw(){ctx.clearRect(0,0,750,300);let ex=examples[sel];
+examples.forEach((e,i)=>{let x=15+i*183,y=8;
+ctx.fillStyle=i===sel?'rgba(251,146,60,.12)':'#0c0c16';ctx.beginPath();ctx.roundRect(x,y,176,26,5);ctx.fill();
+ctx.strokeStyle=i===sel?'#fb923c':'#1e1e32';ctx.lineWidth=i===sel?2:1;ctx.beginPath();ctx.roundRect(x,y,176,26,5);ctx.stroke();
+ctx.fillStyle=i===sel?'#e4e2df':'#4a475a';ctx.font='500 10px Fira Code';ctx.fillText('"'+e.word+'"',x+8,y+17)});
+let py=48,ph=100;
+[{ctx2:ex.ctx1,dims:ex.dim1,label:'Context A',c:'#ff6b6b',x:15},
+{ctx2:ex.ctx2,dims:ex.dim2,label:'Context B',c:'#38bdf8',x:385}].forEach(p=>{
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(p.x,py,355,ph,10);ctx.fill();
+ctx.fillStyle=p.c;ctx.font='600 11px Fira Code';ctx.fillText(p.label+': "'+p.ctx2+'"',p.x+10,py+20);
+ctx.fillStyle='#ffd166';ctx.font='700 13px Fira Code';ctx.fillText('"'+ex.word+'"',p.x+10,py+42);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText('ELMo embedding:',p.x+10,py+60);
+['Syntax','Semantic','Topic','Context'].forEach((l,i)=>{let y=py+65+i*8;
+ctx.fillStyle=p.c+'33';ctx.fillRect(p.x+80,y,200*p.dims[i],6);
+ctx.fillStyle='#4a475a';ctx.font='400 6px Fira Code';ctx.fillText(l,p.x+10,y+5)})});
+let sy=158;ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(15,sy,720,55,10);ctx.fill();
+let sim=ex.dim1.reduce((a,v,i)=>a+v*ex.dim2[i],0)/(Math.hypot(...ex.dim1)*Math.hypot(...ex.dim2));
+ctx.fillStyle='#ffd166';ctx.font='700 12px Fira Code';ctx.fillText('Same word "'+ex.word+'" → cosine sim: '+sim.toFixed(3),25,sy+20);
+ctx.fillStyle=sim<.5?'#34d399':'#ff6b6b';ctx.font='600 10px Fira Code';
+ctx.fillText(sim<.5?'✓ Very different meanings!':'✗ Similar',25,sy+40);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('| '+ex.desc,250,sy+40);
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,223,720,68,10);ctx.fill();
+ctx.fillStyle='#fb923c';ctx.font='700 11px Fira Code';ctx.fillText('ELMo vs Word2Vec:',25,242);
+ctx.fillStyle='#ff6b6b';ctx.font='500 9px Fira Code';ctx.fillText('Word2Vec: "'+ex.word+'" always = same vector regardless of context ✗',25,260);
+ctx.fillStyle='#34d399';ctx.fillText('ELMo: "'+ex.word+'" = different vector per context via bidirectional LSTM ✓',25,278)}
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*300/r.height;
+examples.forEach((ex,i)=>{let x=15+i*183;if(mx>=x&&mx<=x+176&&my>=8&&my<=34){sel=i;draw()}})};
+const ctrl=addControls(el);draw()})();
+
+// ===== GPT-1 =====
+(function(){const el=$('demo-gpt1'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Watch GPT generate left-to-right. Each word predicted from ALL previous words via self-attention.');
+const seqs=[
+{prompt:['The','cat'],gen:['sat','on','the','warm','mat','.'],probs:[.45,.6,.7,.3,.5,.8]},
+{prompt:['Once','upon'],gen:['a','time','there','was','a','king'],probs:[.7,.8,.4,.5,.6,.3]},
+{prompt:['The','weather'],gen:['is','beautiful','today','in','the','city'],probs:[.6,.35,.45,.5,.7,.25]}];
+let selS=0,genPos=-1;
+function draw(){ctx.clearRect(0,0,750,300);let seq=seqs[selS],all=[...seq.prompt,...seq.gen];
+seqs.forEach((s,i)=>{let x=15+i*245,y=8;
+ctx.fillStyle=i===selS?'rgba(251,146,60,.12)':'#0c0c16';ctx.beginPath();ctx.roundRect(x,y,235,26,5);ctx.fill();
+ctx.strokeStyle=i===selS?'#fb923c':'#1e1e32';ctx.lineWidth=i===selS?2:1;ctx.beginPath();ctx.roundRect(x,y,235,26,5);ctx.stroke();
+ctx.fillStyle=i===selS?'#e4e2df':'#4a475a';ctx.font='500 9px Fira Code';ctx.fillText('"'+s.prompt.join(' ')+' ..."',x+8,y+17)});
+let tx=25,ty=48,tw=85;
+all.forEach((w,i)=>{let x=tx+(i%8)*tw,y=ty+Math.floor(i/8)*55;let isP=i<seq.prompt.length;
+let isGen=!isP&&i-seq.prompt.length<=genPos;let isCur=!isP&&i-seq.prompt.length===genPos;
+ctx.fillStyle=isCur?'rgba(255,209,102,.2)':isGen?'rgba(251,146,60,.1)':isP?'rgba(56,189,248,.08)':'#0a0a14';
+ctx.beginPath();ctx.roundRect(x,y,tw-5,40,6);ctx.fill();
+ctx.strokeStyle=isCur?'#ffd166':isGen?'#fb923c44':isP?'#38bdf8':'#1e1e32';ctx.lineWidth=isCur?2:1;
+ctx.beginPath();ctx.roundRect(x,y,tw-5,40,6);ctx.stroke();
+ctx.fillStyle=isGen||isP?'#e4e2df':'#333';ctx.font=(isCur?'700':'500')+' 11px Fira Code';ctx.textAlign='center';
+ctx.fillText(isGen||isP?w:'?',x+tw/2-3,y+18);
+if(isGen){let prob=seq.probs[i-seq.prompt.length];ctx.fillStyle='#fb923c44';ctx.fillRect(x+5,y+28,prob*(tw-15),6);
+ctx.fillStyle='#fb923c';ctx.font='400 7px Fira Code';ctx.fillText((prob*100|0)+'%',x+tw/2-3,y+36)}
+if(isP){ctx.fillStyle='#38bdf8';ctx.font='400 7px Fira Code';ctx.fillText('prompt',x+tw/2-3,y+36)}
+ctx.textAlign='left';
+if(isCur){for(let j=0;j<i;j++){let jx=tx+(j%8)*tw+tw/2-3,jy=ty+Math.floor(j/8)*55+40;
+ctx.strokeStyle='rgba(255,209,102,.15)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x+tw/2-3,y);ctx.lineTo(jx,jy);ctx.stroke()}}});
+let ay=168;ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(15,ay,720,55,10);ctx.fill();
+ctx.fillStyle='#fb923c';ctx.font='700 11px Fira Code';ctx.fillText('GPT-1: Transformer Decoder (left-to-right)',25,ay+18);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('Each token attends ONLY to previous tokens (causal mask). Pretrained on BookCorpus (117M params).',25,ay+38);
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,235,720,58,10);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.fillText('GPT approach: Predict the NEXT word (autoregressive)',25,253);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('Step 1: Pretrain on "predict next word" (unsupervised) → Step 2: Fine-tune on task (classification, QA, etc.)',25,273);
+ctx.fillText('This pretrain+finetune paradigm becomes the foundation of all modern language AI.',25,288)}
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*300/r.height;
+seqs.forEach((s,i)=>{let x=15+i*245;if(mx>=x&&mx<=x+235&&my>=8&&my<=34){selS=i;genPos=-1;draw()}})};
+const ctrl=addControls(el);
+const gb=document.createElement('button');gb.className='btn';gb.textContent='▶ Next';gb.onclick=()=>{if(genPos<seqs[selS].gen.length-1){genPos++;draw()}};
+let tmr=null;const ab=document.createElement('button');ab.className='btn';ab.textContent='⏩ Auto';
+ab.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}else{tmr=setInterval(()=>{if(genPos<seqs[selS].gen.length-1){genPos++;draw()}else{clearInterval(tmr);tmr=null;ab.classList.remove('active')}},400);ab.classList.add('active')}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{genPos=-1;if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}draw()};
+ctrl.appendChild(gb);ctrl.appendChild(ab);ctrl.appendChild(rst);draw()})();
+
+// ===== BERT =====
+(function(){const el=$('demo-bert'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Click a word to [MASK] it. BERT predicts from BOTH left AND right context — unlike GPT!');
+const sent=['The','quick','brown','fox','jumps','over','the','lazy','dog'];
+const preds={0:['The','A','This'],1:['quick','fast','slow'],2:['brown','red','big'],3:['fox','cat','dog'],
+4:['jumps','runs','leaps'],5:['over','under','past'],6:['the','a','his'],7:['lazy','old','sleepy'],8:['dog','cat','fox']};
+const probs={0:[.6,.25,.1],1:[.5,.3,.1],2:[.55,.2,.15],3:[.45,.25,.2],4:[.5,.25,.15],5:[.6,.2,.1],6:[.7,.15,.1],7:[.4,.35,.15],8:[.5,.25,.15]};
+let masked=new Set([3]);
+function draw(){ctx.clearRect(0,0,750,300);
+let tx=20,ty=28,tw=78;
+sent.forEach((w,i)=>{let x=tx+i*tw;let isM=masked.has(i);
+ctx.fillStyle=isM?'rgba(255,209,102,.15)':'rgba(56,189,248,.05)';ctx.beginPath();ctx.roundRect(x,ty,tw-4,40,6);ctx.fill();
+ctx.strokeStyle=isM?'#ffd166':'#38bdf844';ctx.lineWidth=isM?2:1;ctx.beginPath();ctx.roundRect(x,ty,tw-4,40,6);ctx.stroke();
+ctx.fillStyle=isM?'#ffd166':'#e4e2df';ctx.font='600 11px Fira Code';ctx.textAlign='center';ctx.fillText(isM?'[MASK]':w,x+tw/2-2,ty+24);ctx.textAlign='left';
+if(isM){for(let j=0;j<sent.length;j++){if(j===i)continue;let jx=tx+j*tw+tw/2-2;
+ctx.strokeStyle=j<i?'rgba(56,189,248,.2)':'rgba(78,205,196,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x+tw/2-2,ty+40);ctx.lineTo(jx,ty+40);ctx.stroke()}}});
+let py=82;masked.forEach(mi=>{let x=tx+mi*tw;
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(x-30,py,140,70,8);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 9px Fira Code';ctx.fillText('Predictions:',x-25,py+14);
+preds[mi].forEach((p,pi)=>{let y=py+20+pi*16;
+ctx.fillStyle='#111120';ctx.fillRect(x-25,y,100,12);ctx.fillStyle='#ffd166'+(Math.round(probs[mi][pi]*200+55).toString(16).padStart(2,'0'));
+ctx.fillRect(x-25,y,100*probs[mi][pi],12);ctx.fillStyle='#e4e2df';ctx.font='400 8px Fira Code';ctx.fillText(p+' '+(probs[mi][pi]*100|0)+'%',x-22,y+9)})});
+let cy2=165;ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(15,cy2,720,128,10);ctx.fill();
+ctx.fillStyle='#38bdf8';ctx.font='700 12px Fira Code';ctx.fillText('BERT: Bidirectional',25,cy2+20);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('[CLS] The quick brown [MASK] jumps over the lazy dog [SEP]',25,cy2+40);
+ctx.fillStyle='#38bdf8';ctx.font='400 9px Fira Code';ctx.fillText('←←← reads left AND right ←→ predicts "fox"',25,cy2+58);
+ctx.fillStyle='#fb923c';ctx.font='700 12px Fira Code';ctx.fillText('GPT: Unidirectional',400,cy2+20);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('The quick brown ___ ...',400,cy2+40);
+ctx.fillStyle='#fb923c';ctx.font='400 9px Fira Code';ctx.fillText('←←← only left context → less info',400,cy2+58);
+ctx.fillStyle='#ffd166';ctx.font='600 9px Fira Code';ctx.fillText('BERT = understanding. GPT = generation. Both use Transformer.',25,cy2+82);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText('BERT: 340M params, pretrained on Wikipedia+BookCorpus. Dominated GLUE, SQuAD in 2018-2019.',25,cy2+100);
+ctx.fillText('Training: 15% tokens masked → predict from context. Also next sentence prediction (NSP).',25,cy2+115)}
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*300/r.height;
+if(my>=28&&my<=68){let idx=Math.floor((mx-20)/78);if(idx>=0&&idx<sent.length){masked.clear();masked.add(idx);draw()}}};
+const ctrl=addControls(el);draw()})();
+
+// ===== STYLEGAN =====
+(function(){const el=$('demo-style'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Adjust style sliders to control generation at different scales — coarse (pose) vs fine (texture).');
+let coarse={shape:.5,pose:.5},fine={color:.5,texture:.5,detail:.5};
+function generate(co,fi){let grid=[];for(let i=0;i<8;i++)for(let j=0;j<8;j++){
+let v=sigmoid(Math.sin(i*co.shape*3+j*co.pose*2)*2+Math.cos(i*fi.color*4-j*fi.texture*3)*.8+fi.detail*Math.sin(i*j*.5));
+grid.push(v)}return grid}
+function draw(){ctx.clearRect(0,0,750,300);
+// Mapping network
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(15,10,155,120,8);ctx.fill();
+ctx.fillStyle='#a78bfa';ctx.font='600 10px Fira Code';ctx.fillText('Mapping Network',25,30);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText('z (random) → w (style)',25,48);
+ctx.fillText('8 FC layers',25,62);ctx.fillText('w controls EACH layer',25,76);
+ctx.fillText('of the generator',25,90);
+ctx.fillStyle='#ffd166';ctx.font='500 8px Fira Code';ctx.fillText('→ Disentangled styles!',25,110);
+// Coarse controls
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(185,10,170,120,8);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='600 10px Fira Code';ctx.fillText('Coarse Styles (4×4→8×8)',195,30);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';
+ctx.fillText('Shape: '+coarse.shape.toFixed(2),195,52);
+ctx.fillStyle='#111120';ctx.fillRect(195,56,140,8);ctx.fillStyle='#ff6b6b';ctx.fillRect(195,56,140*coarse.shape,8);
+ctx.fillStyle='#7d7a8c';ctx.fillText('Pose: '+coarse.pose.toFixed(2),195,80);
+ctx.fillStyle='#111120';ctx.fillRect(195,84,140,8);ctx.fillStyle='#ff6b6b';ctx.fillRect(195,84,140*coarse.pose,8);
+// Fine controls
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(370,10,170,120,8);ctx.fill();
+ctx.fillStyle='#4ecdc4';ctx.font='600 10px Fira Code';ctx.fillText('Fine Styles (64×64→1024)',380,30);
+['color','texture','detail'].forEach((k,i)=>{let v=fine[k];let y=46+i*28;
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText(k+': '+v.toFixed(2),380,y);
+ctx.fillStyle='#111120';ctx.fillRect(380,y+4,140,8);ctx.fillStyle='#4ecdc4';ctx.fillRect(380,y+4,140*v,8)});
+// Generated image
+let gx=560,gy=10;ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.fillText('Generated:',gx,gy+14);
+let grid=generate(coarse,fine);let cs=20;
+for(let i=0;i<8;i++)for(let j=0;j<8;j++){let v=grid[i*8+j];
+let r=Math.floor(v*180+75),g=Math.floor((1-v)*120+80),b=Math.floor(v*100+100);
+ctx.fillStyle=`rgb(${r},${g},${b})`;ctx.fillRect(gx+j*cs,gy+20+i*cs,cs-1,cs-1)}
+// Style mixing explanation
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(15,140,720,70,10);ctx.fill();
+ctx.fillStyle='#f472b6';ctx.font='700 11px Fira Code';ctx.fillText('StyleGAN: Style-Based Generator Architecture',25,160);
+ctx.fillStyle='#e4e2df';ctx.font='400 9px Fira Code';
+ctx.fillText('Coarse layers (low resolution): control pose, face shape, hair style',25,180);
+ctx.fillText('Fine layers (high resolution): control color, texture, micro-features like freckles',25,196);
+// AdaIN
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,220,720,72,10);ctx.fill();
+ctx.fillStyle='#a78bfa';ctx.font='600 10px Fira Code';ctx.fillText('AdaIN (Adaptive Instance Normalization):',25,240);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('At each layer: normalize activations, then scale & shift using style vector w.',25,258);
+ctx.fillText('Style Mixing: use different w vectors at different layers → mix coarse features of one face with fine features of another!',25,276);
+ctx.fillStyle='#ffd166';ctx.font='500 8px Fira Code';ctx.fillText('This separation of concerns was revolutionary for controllable image generation.',25,290)}
+const ctrl=addControls(el);
+ctrl.innerHTML='<label>Shape</label><input type="range" min="0" max="100" value="50" class="slider" id="sg-shape"><label>Pose</label><input type="range" min="0" max="100" value="50" class="slider" id="sg-pose"><label>Color</label><input type="range" min="0" max="100" value="50" class="slider" id="sg-color"><label>Texture</label><input type="range" min="0" max="100" value="50" class="slider" id="sg-tex">';
+$('sg-shape').oninput=e=>{coarse.shape=e.target.value/100;draw()};
+$('sg-pose').oninput=e=>{coarse.pose=e.target.value/100;draw()};
+$('sg-color').oninput=e=>{fine.color=e.target.value/100;draw()};
+$('sg-tex').oninput=e=>{fine.texture=e.target.value/100;draw()};
+draw()})();
+
+// ===== GPT-2 =====
+(function(){const el=$('demo-gpt2'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Select a task — GPT-2 performs it zero-shot (no task-specific training!) through prompting alone.');
+const tasks=[
+{name:'Translation',prompt:'Translate English to French:\n"Hello, how are you?" =',output:'"Bonjour, comment allez-vous?"',conf:.85},
+{name:'Summarize',prompt:'Article: The economy grew 3%...\nTL;DR:',output:'Economy showed strong growth.',conf:.72},
+{name:'QA',prompt:'Q: Capital of France?\nA:',output:'Paris is the capital of France.',conf:.92},
+{name:'Code',prompt:'# Reverse a string\ndef reverse(',output:'s): return s[::-1]',conf:.78}];
+let selT=0;
+function draw(){ctx.clearRect(0,0,750,300);let t=tasks[selT];
+tasks.forEach((tk,i)=>{let x=15+i*183,y=8;
+ctx.fillStyle=i===selT?'rgba(251,146,60,.12)':'#0c0c16';ctx.beginPath();ctx.roundRect(x,y,176,26,5);ctx.fill();
+ctx.strokeStyle=i===selT?'#fb923c':'#1e1e32';ctx.lineWidth=i===selT?2:1;ctx.beginPath();ctx.roundRect(x,y,176,26,5);ctx.stroke();
+ctx.fillStyle=i===selT?'#e4e2df':'#4a475a';ctx.font='500 10px Fira Code';ctx.fillText(tk.name,x+8,y+17)});
+let py=42;ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(15,py,350,85,10);ctx.fill();
+ctx.fillStyle='#38bdf8';ctx.font='600 10px Fira Code';ctx.fillText('Input Prompt:',25,py+18);
+ctx.fillStyle='#e4e2df';ctx.font='400 10px Fira Code';t.prompt.split('\n').forEach((l,i)=>ctx.fillText(l,25,py+38+i*16));
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(385,py,355,85,10);ctx.fill();
+ctx.fillStyle='#34d399';ctx.font='600 10px Fira Code';ctx.fillText('GPT-2 Output (zero-shot!):',395,py+18);
+ctx.fillStyle='#ffd166';ctx.font='500 11px Fira Code';ctx.fillText(t.output,395,py+42);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('Confidence: '+(t.conf*100)+'%',395,py+68);
+ctx.fillStyle='#111120';ctx.fillRect(395,py+72,200,8);ctx.fillStyle='#34d399';ctx.fillRect(395,py+72,200*t.conf,8);
+let sy=142;ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(15,sy,720,70,10);ctx.fill();
+ctx.fillStyle='#fb923c';ctx.font='700 12px Fira Code';ctx.fillText('GPT-2: Scale unlocks emergent abilities',25,sy+18);
+let models=[{n:'GPT-1',p:'117M',b:.08},{n:'GPT-2 S',p:'124M',b:.09},{n:'GPT-2 M',p:'345M',b:.24},{n:'GPT-2 L',p:'774M',b:.52},{n:'GPT-2 XL',p:'1.5B',b:1}];
+models.forEach((m,i)=>{let x=25+i*140;
+ctx.fillStyle='#111120';ctx.fillRect(x,sy+30,120,14);ctx.fillStyle='#fb923c';ctx.fillRect(x,sy+30,120*m.b,14);
+ctx.fillStyle='#7d7a8c';ctx.font='400 7px Fira Code';ctx.fillText(m.n+' ('+m.p+')',x,sy+58)});
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,225,720,68,10);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.fillText('Zero-shot = no task-specific training! Just prompt engineering.',25,243);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('GPT-2 showed: scale alone produces emergent multi-task abilities via prompting.',25,263);
+ctx.fillText('This "prompting" paradigm becomes the foundation of ChatGPT, Claude, and all modern AI assistants.',25,278);
+ctx.fillText('OpenAI initially called it "too dangerous to release" — the first AI safety debate.',25,293)}
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*300/r.height;
+tasks.forEach((t,i)=>{let x=15+i*183;if(mx>=x&&mx<=x+176&&my>=8&&my<=34){selT=i;draw()}})};
+const ctrl=addControls(el);draw()})();
+
+// ===== T5 =====
+(function(){const el=$('demo-t5'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Click tasks. T5 treats EVERYTHING as text-in → text-out. One model, one format!');
+const tasks=[
+{name:'Translate',input:'translate English to German: That is good',output:'Das ist gut',prefix:'translate'},
+{name:'Summarize',input:'summarize: State authorities reported 47 cases of a new virus. The WHO is monitoring.',output:'47 virus cases; WHO monitoring.',prefix:'summarize'},
+{name:'Classify',input:'sst2 sentence: This movie is absolutely wonderful',output:'positive',prefix:'classify'},
+{name:'QA',input:'question: Who painted the Mona Lisa? context: Leonardo da Vinci painted it in the 16th century.',output:'Leonardo da Vinci',prefix:'qa'},
+{name:'Grammar',input:'cola sentence: The boy the girl saw run.',output:'unacceptable',prefix:'grammar'}];
+let selT=0;
+function draw(){ctx.clearRect(0,0,750,300);let t=tasks[selT];
+tasks.forEach((tk,i)=>{let x=15+i*145,y=8;
+ctx.fillStyle=i===selT?'rgba(251,146,60,.12)':'#0c0c16';ctx.beginPath();ctx.roundRect(x,y,138,26,5);ctx.fill();
+ctx.strokeStyle=i===selT?'#fb923c':'#1e1e32';ctx.lineWidth=i===selT?2:1;ctx.beginPath();ctx.roundRect(x,y,138,26,5);ctx.stroke();
+ctx.fillStyle=i===selT?'#e4e2df':'#4a475a';ctx.font='500 9px Fira Code';ctx.fillText(tk.name,x+8,y+17)});
+let iy=45;ctx.fillStyle='rgba(56,189,248,.05)';ctx.beginPath();ctx.roundRect(15,iy,340,78,10);ctx.fill();
+ctx.strokeStyle='#38bdf8';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(15,iy,340,78,10);ctx.stroke();
+ctx.fillStyle='#38bdf8';ctx.font='600 10px Fira Code';ctx.fillText('Input:',25,iy+18);
+ctx.fillStyle='#e4e2df';ctx.font='400 9px Fira Code';
+let words=t.input.split(' '),line='',ly2=iy+36;
+words.forEach(w=>{if((line+w).length>42){ctx.fillText(line,25,ly2);ly2+=14;line=''}line+=w+' '});if(line)ctx.fillText(line,25,ly2);
+ctx.fillStyle='#fb923c';ctx.font='bold 24px sans-serif';ctx.fillText('→',365,iy+42);
+ctx.fillStyle='rgba(251,146,60,.06)';ctx.beginPath();ctx.roundRect(395,iy,75,78,10);ctx.fill();
+ctx.strokeStyle='#fb923c';ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(395,iy,75,78,10);ctx.stroke();
+ctx.fillStyle='#fb923c';ctx.font='700 16px Fira Code';ctx.textAlign='center';ctx.fillText('T5',432,iy+45);ctx.textAlign='left';
+ctx.fillStyle='#34d399';ctx.font='bold 24px sans-serif';ctx.fillText('→',480,iy+42);
+ctx.fillStyle='rgba(52,211,153,.05)';ctx.beginPath();ctx.roundRect(510,iy,225,78,10);ctx.fill();
+ctx.strokeStyle='#34d399';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(510,iy,225,78,10);ctx.stroke();
+ctx.fillStyle='#34d399';ctx.font='600 10px Fira Code';ctx.fillText('Output:',520,iy+18);
+ctx.fillStyle='#ffd166';ctx.font='600 12px Fira Code';ctx.fillText(t.output,520,iy+45);
+let ky=136;ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(15,ky,720,75,10);ctx.fill();
+ctx.fillStyle='#fb923c';ctx.font='700 12px Fira Code';ctx.fillText('T5: "Text-to-Text Transfer Transformer"',25,ky+20);
+ctx.fillStyle='#e4e2df';ctx.font='400 9px Fira Code';
+ctx.fillText('Every NLP task framed as "text in → text out". Task PREFIX tells what to do.',25,ky+40);
+ctx.fillText('ONE model, ONE training procedure, ONE architecture → handles everything!',25,ky+56);
+ctx.fillText('This unification insight merges with GPT\'s prompting to create the modern instruction-following paradigm.',25,ky+70);
+let ty2=222;ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,ty2,720,70,10);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 9px Fira Code';ctx.fillText('Same model handles all:',25,ty2+16);
+['Translation','Summarization','Classification','QA','Grammar','Generation','Similarity','Paraphrase'].forEach((t2,i)=>{
+let x=25+(i%4)*178,y=ty2+28+Math.floor(i/4)*18;
+ctx.fillStyle=tasks[selT]?.name===t2?'#fb923c':'#4a475a';ctx.font='400 8px Fira Code';ctx.fillText('• '+t2,x,y)})}
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*300/r.height;
+tasks.forEach((t,i)=>{let x=15+i*145;if(mx>=x&&mx<=x+138&&my>=8&&my<=34){selT=i;draw()}})};
+const ctrl=addControls(el);draw()})();
+</script></body></html>

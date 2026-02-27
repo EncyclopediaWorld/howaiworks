@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Section VIII — Foundation Models & The AGI Era · How AI Works</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<div class="progress-bar" style="background:linear-gradient(90deg,var(--a8),var(--a6))"></div>
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<nav class="topnav"><a href="index.html" class="logo">How AI Works</a><div class="nav-links"><a href="section1.html">I</a><a href="section2.html">II</a><a href="section3.html">III</a><a href="section4.html">IV</a><a href="section5.html">V</a><a href="section6.html">VI</a><a href="section7.html">VII</a><a href="section8.html" class="active">VIII</a></div></nav>
+<div class="section-hero"><div class="era-label" style="color:var(--a8)">Section VIII · 2020–2024</div>
+<h1>Foundation Models & The AGI Era</h1><p>GPT-3, diffusion models, ChatGPT, and multimodal AI — the models reshaping our world right now.</p>
+<div class="nav-arrows"><a href="section7.html">&larr; Section VII</a><a href="index.html">Home &rarr;</a></div></div>
+<div class="models-container">
+
+<!-- ======= GPT-3 ======= -->
+<div class="model-card" id="model-gpt3"><div class="mc-head"><span class="mc-year" style="color:var(--a8)">2020</span><div class="mc-info">
+<h3>GPT-3 <a href="https://arxiv.org/abs/2005.14165" target="_blank" class="paper-link">Paper</a></h3>
+<p>175B parameters — 100× GPT-2. Scale alone creates emergent abilities: few-shot learning, reasoning, code generation. No fine-tuning needed.</p>
+<div class="model-lineage">Scales <a href="section7.html#model-gpt2">GPT-2</a> 100× to unlock in-context learning; its few-shot paradigm is refined by <a href="section8.html#model-chatgpt">ChatGPT</a>'s RLHF into the modern AI assistant.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a8)">175B params | zero/one/few-shot via in-context learning — examples in the prompt = "programming"</div>
+<div class="mc-demo" id="demo-gpt3"></div></div>
+
+<!-- ======= ViT ======= -->
+<div class="model-card" id="model-vit"><div class="mc-head"><span class="mc-year" style="color:var(--a8)">2020</span><div class="mc-info">
+<h3>ViT (Vision Transformer) <a href="https://arxiv.org/abs/2010.11929" target="_blank" class="paper-link">Paper</a></h3>
+<p>Cut an image into 16×16 patches, treat each as a "token", feed into a standard Transformer. No convolutions needed — attention alone works for vision!</p>
+<div class="model-lineage">Applies <a href="section7.html#model-transformer">Transformer</a> directly to image patches (replacing <a href="section4.html#model-cnn">CNN</a>); enables unified vision-language models like <a href="section8.html#model-clip">CLIP</a> and <a href="section8.html#model-gpt4">GPT-4</a>'s visual understanding.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a8)">Image → 16×16 patches → Linear projection → + Position embedding → Transformer Encoder → Class</div>
+<div class="mc-demo" id="demo-vit"></div></div>
+
+<!-- ======= CLIP ======= -->
+<div class="model-card" id="model-clip"><div class="mc-head"><span class="mc-year" style="color:var(--a8)">2021</span><div class="mc-info">
+<h3>CLIP <a href="https://arxiv.org/abs/2103.00020" target="_blank" class="paper-link">Paper</a></h3>
+<p>Contrastive Language-Image Pretraining — learns to match images with text. Trained on 400M image-text pairs. Enables zero-shot image classification!</p>
+<div class="model-lineage">Pairs <a href="section8.html#model-vit">ViT</a>'s image encoder with a <a href="section7.html#model-transformer">Transformer</a> text encoder via contrastive learning; provides the text-image alignment that powers <a href="section8.html#model-diffusion">Diffusion</a> and <a href="section8.html#model-sora">Sora</a>.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a8)">maximize similarity(image_embed, matching_text_embed) — contrastive learning across modalities</div>
+<div class="mc-demo" id="demo-clip"></div></div>
+
+<!-- ======= DIFFUSION ======= -->
+<div class="model-card" id="model-diffusion"><div class="mc-head"><span class="mc-year" style="color:var(--a8)">2020</span><div class="mc-info">
+<h3>Diffusion Models <a href="https://arxiv.org/abs/2006.11239" target="_blank" class="paper-link">Paper</a></h3>
+<p>Gradually add noise to an image until destroyed, then train a neural net to reverse the process step by step. Generate by starting from pure noise and denoising.</p>
+<div class="model-lineage">Revives <a href="section5.html#model-dae">Denoising Autoencoder</a>'s "learn to denoise" principle; combined with <a href="section8.html#model-clip">CLIP</a> text guidance, surpasses <a href="section6.html#model-gan">GAN</a>/<a href="section7.html#model-stylegan">StyleGAN</a> as the dominant generative paradigm (Stable Diffusion, DALL-E, Midjourney).</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a8)">Forward: x₀ → x₁ → ... → x_T (pure noise) | Reverse: x_T → ... → x₁ → x₀ (image!)</div>
+<div class="mc-demo" id="demo-diff"></div></div>
+
+<!-- ======= CHATGPT ======= -->
+<div class="model-card" id="model-chatgpt"><div class="mc-head"><span class="mc-year" style="color:var(--a8)">2022</span><div class="mc-info">
+<h3>ChatGPT (RLHF) <a href="https://arxiv.org/abs/2203.02155" target="_blank" class="paper-link">Paper</a></h3>
+<p>The model that changed everything. Three-step training: (1) SFT on human demos, (2) Train reward model on preferences, (3) Optimize with PPO.</p>
+<div class="model-lineage">Applies RLHF (Reinforcement Learning from Human Feedback) to <a href="section8.html#model-gpt3">GPT-3</a>; its alignment approach is refined by <a href="section8.html#model-claude">Claude</a>'s Constitutional AI into scalable AI safety.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a8)">Step 1: SFT → Step 2: Reward Model (human prefs) → Step 3: PPO (maximize reward) = RLHF</div>
+<div class="mc-demo" id="demo-rlhf"></div></div>
+
+<!-- ======= LLAMA ======= -->
+<div class="model-card" id="model-llama"><div class="mc-head"><span class="mc-year" style="color:var(--a8)">2023</span><div class="mc-info">
+<h3>LLaMA <a href="https://arxiv.org/abs/2302.13971" target="_blank" class="paper-link">Paper</a></h3>
+<p>Meta's open-source LLM — smaller models on MORE data match much larger ones. LLaMA-13B matches GPT-3 (175B)! Sparked the open-source revolution.</p>
+<div class="model-lineage">Applies Chinchilla scaling laws to the <a href="section7.html#model-transformer">Transformer</a> decoder; proves efficient training beats brute-force scaling, spawning Alpaca, Vicuna, Mistral, and the open-source LLM ecosystem.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a8)">Key insight: 13B params + 1T tokens > 175B params + 300B tokens — data matters more than size!</div>
+<div class="mc-demo" id="demo-llama"></div></div>
+
+<!-- ======= GPT-4 ======= -->
+<div class="model-card" id="model-gpt4"><div class="mc-head"><span class="mc-year" style="color:var(--a8)">2023</span><div class="mc-info">
+<h3>GPT-4 <a href="https://arxiv.org/abs/2303.08774" target="_blank" class="paper-link">Paper</a></h3>
+<p>OpenAI's multimodal model — accepts text AND images. Passes the bar exam, writes code, analyzes charts. Rumored MoE at ~1.8T parameters.</p>
+<div class="model-lineage">Combines <a href="section8.html#model-gpt3">GPT-3</a>'s language power with <a href="section8.html#model-vit">ViT</a>'s visual understanding into a multimodal system; uses Mixture-of-Experts for efficiency at massive scale.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a8)">Multimodal: text + image → unified understanding → text output | MoE: only activate relevant experts</div>
+<div class="mc-demo" id="demo-gpt4"></div></div>
+
+<!-- ======= CLAUDE ======= -->
+<div class="model-card" id="model-claude"><div class="mc-head"><span class="mc-year" style="color:var(--a8)">2024</span><div class="mc-info">
+<h3>Claude <a href="https://arxiv.org/abs/2212.08073" target="_blank" class="paper-link">Paper</a></h3>
+<p>Anthropic's AI trained with Constitutional AI — instead of just human feedback, Claude follows principles to self-critique and improve. Emphasizes helpfulness, honesty, and harmlessness.</p>
+<div class="model-lineage">Improves <a href="section8.html#model-chatgpt">ChatGPT</a>'s RLHF with Constitutional AI (RLAIF): AI self-critiques against written principles → scales alignment without massive human labeling.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a8)">RLHF + Constitutional AI: self-critique against principles → RLAIF (AI feedback from constitution)</div>
+<div class="mc-demo" id="demo-claude"></div></div>
+
+<!-- ======= SORA ======= -->
+<div class="model-card" id="model-sora"><div class="mc-head"><span class="mc-year" style="color:var(--a8)">2024</span><div class="mc-info">
+<h3>Sora <a href="https://openai.com/sora" target="_blank" class="paper-link">Paper</a></h3>
+<p>OpenAI's video generation — up to 60s of high-fidelity video from text. Uses Diffusion Transformer (DiT) on spacetime patches. Understands physics and 3D consistency.</p>
+<div class="model-lineage">Merges <a href="section8.html#model-diffusion">Diffusion Models</a> with <a href="section7.html#model-transformer">Transformer</a> attention on spacetime patches (extending <a href="section8.html#model-vit">ViT</a> to video); represents the frontier of generative AI.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a8)">Text prompt → Spacetime patches → Diffusion Transformer → Video frames (temporal consistency)</div>
+<div class="mc-demo" id="demo-sora"></div></div>
+
+</div>
+<footer><a href="section7.html">&larr; Section VII</a> &middot; <span style="color:var(--a8)">Home &middot; All 50 Models Complete! 🎉</span></footer>
+<script src="shared.js"></script>
+<script>
+// ===== GPT-3 =====
+(function(){const el=$('demo-gpt3'),[c,ctx]=createCanvas(el,750,320);
+addHint(el,'Switch between zero-shot, one-shot, and few-shot. More examples = better performance!');
+const modes=[
+{name:'Zero-shot',examples:[],query:'Sentiment of "This movie was terrible": ',answer:'Negative',conf:.62,
+desc:'No examples. Model must figure out the task from description alone.'},
+{name:'One-shot',examples:[{in:'"I love this!" →',out:'Positive'}],query:'"This movie was terrible": ',answer:'Negative',conf:.84,
+desc:'One example teaches format. Model learns the pattern from a single demo.'},
+{name:'Few-shot',examples:[{in:'"I love this!" →',out:'Positive'},{in:'"Awful experience" →',out:'Negative'},{in:'"Pretty good" →',out:'Positive'}],
+query:'"This movie was terrible": ',answer:'Negative',conf:.95,desc:'Multiple examples = clear pattern. Best with diverse demonstrations.'}];
+let sel=2;
+function draw(){ctx.clearRect(0,0,750,320);let m=modes[sel];
+modes.forEach((mo,i)=>{let x=15+i*245,y=8;
+ctx.fillStyle=i===sel?'rgba(52,211,153,.12)':'#0c0c16';ctx.beginPath();ctx.roundRect(x,y,235,28,5);ctx.fill();
+ctx.strokeStyle=i===sel?'#34d399':'#1e1e32';ctx.lineWidth=i===sel?2:1;ctx.beginPath();ctx.roundRect(x,y,235,28,5);ctx.stroke();
+ctx.fillStyle=i===sel?'#e4e2df':'#4a475a';ctx.font='600 10px Fira Code';ctx.fillText(mo.name+' ('+mo.examples.length+' ex)',x+8,y+18)});
+let py=48;ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(15,py,480,180,10);ctx.fill();
+ctx.fillStyle='#34d399';ctx.font='700 11px Fira Code';ctx.fillText('Prompt sent to GPT-3:',25,py+18);
+let ly=py+38;ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('Classify the sentiment:',25,ly);ly+=18;
+m.examples.forEach(ex=>{ctx.fillStyle='rgba(56,189,248,.08)';ctx.beginPath();ctx.roundRect(25,ly-10,440,20,4);ctx.fill();
+ctx.fillStyle='#38bdf8';ctx.font='400 9px Fira Code';ctx.fillText(ex.in,30,ly);
+ctx.fillStyle='#ffd166';ctx.font='600 9px Fira Code';ctx.fillText(' '+ex.out,30+ctx.measureText(ex.in).width,ly);ly+=24});
+ctx.fillStyle='rgba(255,209,102,.1)';ctx.beginPath();ctx.roundRect(25,ly-10,440,20,4);ctx.fill();
+ctx.fillStyle='#e4e2df';ctx.font='500 9px Fira Code';ctx.fillText(m.query,30,ly);
+ctx.fillStyle='#34d399';ctx.font='700 10px Fira Code';ctx.fillText(m.answer+' ✓',30+ctx.measureText(m.query).width,ly);
+let rx=510,ry=py;ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(rx,ry,225,180,10);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='700 12px Fira Code';ctx.fillText('Confidence',rx+10,ry+22);
+ctx.fillStyle=m.conf>.8?'#34d399':m.conf>.7?'#ffd166':'#ff6b6b';ctx.font='900 36px Fraunces';ctx.fillText((m.conf*100).toFixed(0)+'%',rx+10,ry+65);
+ctx.fillStyle='#111120';ctx.beginPath();ctx.roundRect(rx+10,ry+78,200,16,4);ctx.fill();
+ctx.fillStyle=m.conf>.8?'#34d39988':m.conf>.7?'#ffd16688':'#ff6b6b88';ctx.beginPath();ctx.roundRect(rx+10,ry+78,200*m.conf,16,4);ctx.fill();
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText(m.desc.substring(0,38),rx+10,ry+115);ctx.fillText(m.desc.substring(38),rx+10,ry+130);
+ctx.fillStyle='#fb923c';ctx.font='600 9px Fira Code';ctx.fillText('Scale:',rx+10,ry+152);
+[{n:'GPT-2',p:'1.5B',b:.01},{n:'GPT-3',p:'175B',b:1}].forEach((mm,i)=>{
+ctx.fillStyle='#111120';ctx.fillRect(rx+10,ry+157+i*12,150,10);ctx.fillStyle=i?'#34d399':'#fb923c';ctx.fillRect(rx+10,ry+157+i*12,150*mm.b,10);
+ctx.fillStyle='#7d7a8c';ctx.font='400 7px Fira Code';ctx.fillText(mm.n+' '+mm.p,rx+165,ry+165+i*12)});
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,240,720,72,10);ctx.fill();
+ctx.fillStyle='#34d399';ctx.font='700 11px Fira Code';ctx.fillText('In-Context Learning — GPT-3\'s key discovery:',25,258);
+ctx.fillStyle='#e4e2df';ctx.font='400 9px Fira Code';
+ctx.fillText('No weight updates! The model "learns" purely from examples in the prompt.',25,278);
+ctx.fillText('One model can do ANY task — translation, coding, math — just by changing the prompt.',25,295);
+ctx.fillStyle='#7d7a8c';ctx.fillText('This paradigm shift led directly to ChatGPT and all modern AI assistants.',25,310)}
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*320/r.height;
+modes.forEach((m,i)=>{let x=15+i*245;if(mx>=x&&mx<=x+235&&my>=8&&my<=36){sel=i;draw()}})};
+const ctrl=addControls(el);draw()})();
+
+// ===== ViT =====
+(function(){const el=$('demo-vit'),[c,ctx]=createCanvas(el,750,320);
+addHint(el,'Click patches to see self-attention. The [CLS] token attends to all patches for classification.');
+let grid=[];for(let r=0;r<4;r++)for(let cc=0;cc<4;cc++)grid.push({r,c:cc,v:rand(.2,.9)});
+let selP=0;
+function getAttn(from){let w=grid.map((g,i)=>{let dr=Math.abs(g.r-grid[from].r),dc=Math.abs(g.c-grid[from].c);
+return Math.exp(-(dr+dc)*.5+rand(-.3,.3))});let s=w.reduce((a,b)=>a+b);return w.map(v=>v/s)}
+function draw(){ctx.clearRect(0,0,750,320);let ps=45,ox=20,oy=40;
+ctx.fillStyle='#38bdf8';ctx.font='600 10px Fira Code';ctx.fillText('1. Split into patches:',ox,oy-10);
+grid.forEach((g,i)=>{let x=ox+g.c*ps,y=oy+g.r*ps;let isSel=i===selP;let attn=getAttn(selP)[i];
+ctx.fillStyle=`rgba(56,189,248,${g.v*.7})`;ctx.fillRect(x,y,ps-2,ps-2);
+ctx.strokeStyle=isSel?'#ffd166':`rgba(255,209,102,${attn})`;ctx.lineWidth=isSel?3:1+attn*4;ctx.strokeRect(x,y,ps-2,ps-2);
+ctx.fillStyle='#fff';ctx.font='bold 8px Fira Code';ctx.textAlign='center';ctx.fillText('P'+i,x+ps/2-1,y+ps/2+2);ctx.textAlign='left'});
+ctx.fillStyle='#4a475a';ctx.font='14px sans-serif';ctx.fillText('→',ox+4*ps+5,oy+ps*2);
+let tx=225,ty=35;ctx.fillStyle='#a78bfa';ctx.font='600 10px Fira Code';ctx.fillText('2. Token sequence:',tx,ty);
+ctx.fillStyle='rgba(255,209,102,.15)';ctx.beginPath();ctx.roundRect(tx,ty+8,45,28,5);ctx.fill();
+ctx.strokeStyle='#ffd166';ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(tx,ty+8,45,28,5);ctx.stroke();
+ctx.fillStyle='#ffd166';ctx.font='600 9px Fira Code';ctx.fillText('[CLS]',tx+5,ty+26);
+for(let i=0;i<16;i++){let x=tx+50+i*28,y=ty+8;
+ctx.fillStyle=i===selP?'rgba(56,189,248,.2)':'rgba(56,189,248,.06)';ctx.fillRect(x,y,26,28);
+ctx.strokeStyle=i===selP?'#38bdf8':'#38bdf844';ctx.lineWidth=1;ctx.strokeRect(x,y,26,28);
+ctx.fillStyle='#7d7a8c';ctx.font='400 6px Fira Code';ctx.textAlign='center';ctx.fillText('P'+i,x+13,y+17);ctx.textAlign='left'}
+let mx2=225,my2=80,ms=16;ctx.fillStyle='#fb923c';ctx.font='600 10px Fira Code';ctx.fillText('3. Self-Attention:',mx2,my2-5);
+for(let i=0;i<16;i++)for(let j=0;j<16;j++){ctx.fillStyle=`rgba(251,146,60,${getAttn(i)[j]*1.5})`;ctx.fillRect(mx2+j*ms,my2+i*ms,ms-1,ms-1)}
+ctx.strokeStyle='#ffd166';ctx.lineWidth=2;ctx.strokeRect(mx2,my2+selP*ms,16*ms,ms);
+let cx2=540,cy2=80;ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(cx2,cy2,200,175,10);ctx.fill();
+ctx.fillStyle='#34d399';ctx.font='600 10px Fira Code';ctx.fillText('4. Classification:',cx2+10,cy2+18);
+[{n:'Cat',p:.45},{n:'Dog',p:.3},{n:'Bird',p:.15},{n:'Car',p:.07},{n:'Other',p:.03}].forEach((cl,i)=>{let y=cy2+30+i*28;
+ctx.fillStyle='#111120';ctx.fillRect(cx2+10,y,150,18);ctx.fillStyle='#34d399'+(Math.round(cl.p*200+55).toString(16).padStart(2,'0'));
+ctx.fillRect(cx2+10,y,150*cl.p,18);ctx.fillStyle='#e4e2df';ctx.font='400 9px Fira Code';ctx.fillText(cl.n+' '+(cl.p*100|0)+'%',cx2+15,y+13)});
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText('[CLS] aggregates all',cx2+10,cy2+172);
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,275,720,38,8);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 9px Fira Code';ctx.fillText('ViT: "An Image is Worth 16x16 Words" — same Transformer for text AND images!',25,293);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText('Outperforms CNNs with large pretraining. Unified architecture → CLIP, GPT-4V, etc.',25,308)}
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx3=(e.clientX-r.left)*750/r.width,my3=(e.clientY-r.top)*320/r.height;
+if(mx3>=20&&mx3<=200&&my3>=40&&my3<=220){let col=Math.floor((mx3-20)/45),row=Math.floor((my3-40)/45);
+if(col>=0&&col<4&&row>=0&&row<4){selP=row*4+col;draw()}}};
+const ctrl=addControls(el);draw()})();
+
+// ===== CLIP =====
+(function(){const el=$('demo-clip'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Click images to see similarity scores with text descriptions. CLIP matches images ↔ text zero-shot!');
+const images=[{name:'🐱 Cat photo',embed:[.9,.1,.2,.1]},{name:'🐕 Dog photo',embed:[.1,.9,.1,.2]},
+{name:'🚗 Red car',embed:[.2,.1,.8,.2]},{name:'🌺 Flower',embed:[.1,.2,.2,.9]},{name:'🐱 Cat+flower',embed:[.6,.1,.3,.6]}];
+const texts=[{name:'"a photo of a cat"',embed:[.85,.15,.1,.05]},{name:'"a cute puppy"',embed:[.15,.85,.1,.15]},
+{name:'"a red sports car"',embed:[.1,.05,.9,.1]},{name:'"beautiful flowers"',embed:[.05,.15,.15,.9]},{name:'"a cat in a garden"',embed:[.5,.1,.2,.5]}];
+function cosSim(a,b){let dot=a.reduce((s,v,i)=>s+v*b[i],0);return dot/(Math.hypot(...a)*Math.hypot(...b))}
+let selImg=0;
+function draw(){ctx.clearRect(0,0,750,300);
+ctx.fillStyle='#38bdf8';ctx.font='600 10px Fira Code';ctx.fillText('Image Encoder (ViT):',15,18);
+images.forEach((img,i)=>{let y=28+i*42;let isSel=i===selImg;
+ctx.fillStyle=isSel?'rgba(56,189,248,.12)':'rgba(6,6,12,.7)';ctx.beginPath();ctx.roundRect(15,y,130,36,6);ctx.fill();
+ctx.strokeStyle=isSel?'#38bdf8':'#1e1e32';ctx.lineWidth=isSel?2:1;ctx.beginPath();ctx.roundRect(15,y,130,36,6);ctx.stroke();
+ctx.fillStyle=isSel?'#e4e2df':'#7d7a8c';ctx.font='500 9px Fira Code';ctx.fillText(img.name,25,y+22)});
+ctx.fillStyle='#4ecdc4';ctx.font='600 10px Fira Code';ctx.fillText('Text Encoder (Transformer):',560,18);
+texts.forEach((txt,i)=>{let y=28+i*42;
+ctx.fillStyle='rgba(6,6,12,.7)';ctx.beginPath();ctx.roundRect(560,y,180,36,6);ctx.fill();
+ctx.strokeStyle='#4ecdc466';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(560,y,180,36,6);ctx.stroke();
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText(txt.name,570,y+22)});
+// Similarity matrix
+let mx2=165,my2=20,ms=38;
+ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.fillText('Cosine Similarity Matrix:',mx2+50,my2);
+images.forEach((img,i)=>{texts.forEach((txt,j)=>{let x=mx2+j*ms+50,y=my2+10+i*ms;
+let sim=cosSim(img.embed,txt.embed);ctx.fillStyle=`rgba(52,211,153,${sim*.8})`;ctx.fillRect(x,y,ms-3,ms-3);
+ctx.fillStyle=sim>.5?'#fff':'#555';ctx.font='500 7px Fira Code';ctx.textAlign='center';
+ctx.fillText((sim*100|0)+'%',x+ms/2-2,y+ms/2+3);ctx.textAlign='left';
+if(i===selImg){ctx.strokeStyle='#ffd166';ctx.lineWidth=2;ctx.strokeRect(x,y,ms-3,ms-3)}})});
+texts.forEach((txt,i)=>{let sim=cosSim(images[selImg].embed,txt.embed);
+ctx.strokeStyle=sim>.6?'rgba(52,211,153,.4)':'rgba(255,107,107,.1)';ctx.lineWidth=sim*4;
+ctx.beginPath();ctx.moveTo(145,46+selImg*42);ctx.lineTo(560,46+i*42);ctx.stroke()});
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(15,255,720,38,8);ctx.fill();
+ctx.fillStyle='#34d399';ctx.font='600 9px Fira Code';ctx.fillText('Training: maximize diagonal (matching pairs), minimize off-diagonal.',25,272);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText('Zero-shot: encode image + class descriptions → pick highest similarity. No labeled data needed!',25,288)}
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*300/r.height;
+images.forEach((img,i)=>{if(mx>=15&&mx<=145&&my>=28+i*42&&my<=64+i*42){selImg=i;draw()}})};
+const ctrl=addControls(el);draw()})();
+
+// ===== DIFFUSION =====
+(function(){const el=$('demo-diff'),[c,ctx]=createCanvas(el,750,320);
+addHint(el,'Press "Denoise Step" to watch pure noise become an image. This is EXACTLY how Stable Diffusion works!');
+let totalS=10,curS=totalS;
+let target=[];for(let r=0;r<10;r++)for(let c2=0;c2<10;c2++){target.push((Math.sin(r*.8)*Math.cos(c2*.6)+1)/2*.8+.1)}
+function getGrid(step){return target.map(v=>{let n=step/totalS;return v*(1-n)+rand(0,1)*n})}
+function draw(){ctx.clearRect(0,0,750,320);
+let numShow=6,sw=110;
+for(let s=0;s<numShow;s++){let ds=s===0?totalS:s===numShow-1?Math.max(0,curS):Math.round(totalS*(1-s/(numShow-1)));
+if(ds<curS)ds=curS;let x=15+s*sw+s*10,y=25,grid=getGrid(ds);
+ctx.fillStyle='rgba(6,6,12,.8)';ctx.beginPath();ctx.roundRect(x,y,sw,sw,6);ctx.fill();
+for(let r=0;r<10;r++)for(let c2=0;c2<10;c2++){ctx.fillStyle=`rgba(52,211,153,${grid[r*10+c2]})`;ctx.fillRect(x+c2*11,y+r*11,10,10)}
+ctx.fillStyle=ds>7?'#ff6b6b':ds>3?'#ffd166':'#34d399';ctx.font='600 8px Fira Code';ctx.textAlign='center';
+ctx.fillText('t='+ds,x+sw/2,y+sw+14);ctx.fillText(ds===totalS?'Pure noise':ds===0?'Clean!':'Denoising...',x+sw/2,y+sw+26);ctx.textAlign='left';
+if(s<numShow-1){ctx.fillStyle='#4a475a';ctx.font='16px sans-serif';ctx.fillText('→',x+sw+1,y+sw/2)}}
+let bx=15,by=170;ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(bx,by,160,140,10);ctx.fill();
+let curGrid=getGrid(curS);
+for(let r=0;r<10;r++)for(let c2=0;c2<10;c2++){ctx.fillStyle=`rgba(52,211,153,${curGrid[r*10+c2]})`;ctx.fillRect(bx+10+c2*14,by+10+r*13,13,12)}
+ctx.fillStyle='#ffd166';ctx.font='700 11px Fira Code';ctx.fillText('Step '+curS+'/'+totalS,bx+10,by+140-8);
+let ex=190,ey=170;ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(ex,ey,545,140,10);ctx.fill();
+ctx.fillStyle='#34d399';ctx.font='700 12px Fira Code';ctx.fillText('How Diffusion Works:',ex+10,ey+22);
+[{l:'Forward (training):',d:'Gradually add noise to images → pure noise.',c:'#ff6b6b'},
+{l:'Reverse (generate):',d:'Neural net predicts & removes noise step by step. Noise → image!',c:'#34d399'},
+{l:'Text guidance:',d:'CLIP text embeddings guide denoising via cross-attention → Stable Diffusion.',c:'#ffd166'}].forEach((s,i)=>{
+ctx.fillStyle=s.c;ctx.font='600 9px Fira Code';ctx.fillText(s.l,ex+10,ey+45+i*28);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText(s.d,ex+10,ey+58+i*28)});
+ctx.fillStyle='#111120';ctx.beginPath();ctx.roundRect(ex+10,ey+125,520,10,3);ctx.fill();
+ctx.fillStyle='#34d399';ctx.beginPath();ctx.roundRect(ex+10,ey+125,520*(1-curS/totalS),10,3);ctx.fill();
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText((100-curS/totalS*100|0)+'% complete',ex+10,ey+145-4)}
+const ctrl=addControls(el);
+const db=document.createElement('button');db.className='btn';db.textContent='▶ Denoise';db.onclick=()=>{if(curS>0){curS--;draw()}};
+let tmr=null;const ab=document.createElement('button');ab.className='btn';ab.textContent='⏩ Auto';
+ab.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}else{tmr=setInterval(()=>{if(curS>0){curS--;draw()}else{clearInterval(tmr);tmr=null;ab.classList.remove('active')}},300);ab.classList.add('active')}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Full Noise';
+rst.onclick=()=>{curS=totalS;if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}draw()};
+ctrl.appendChild(db);ctrl.appendChild(ab);ctrl.appendChild(rst);draw()})();
+
+// ===== CHATGPT / RLHF =====
+(function(){const el=$('demo-rlhf'),[c,ctx]=createCanvas(el,750,320);
+addHint(el,'Click through the 3 training steps — exactly how ChatGPT was trained!');
+let step=0;
+const steps=[
+{name:'Step 1: SFT',color:'#38bdf8',desc:'Human trainers write ideal responses. The base LLM is fine-tuned to imitate.',
+boxes:[{l:'Prompt',c:'#38bdf8'},{l:'Human\nAnswer',c:'#ffd166'},{l:'Fine-tune\nLLM',c:'#a78bfa'},{l:'SFT\nModel',c:'#34d399'}],
+detail:['Prompt: "Explain quantum computing"','Human writes ideal answer','Model learns to mimic style','Result: speaks conversationally']},
+{name:'Step 2: Reward Model',color:'#ffd166',desc:'Model generates multiple outputs. Humans rank them. A reward model learns preferences.',
+boxes:[{l:'Model\nOutputs',c:'#38bdf8'},{l:'Human\nRanking',c:'#ffd166'},{l:'Train\nReward',c:'#ff6b6b'},{l:'Reward\nModel',c:'#34d399'}],
+detail:['Generate Response A, B, C, D','Human ranks: B > D > A > C','Reward model learns preferences','Result: can score any response']},
+{name:'Step 3: PPO',color:'#34d399',desc:'LLM generates, reward model scores, PPO optimizes to maximize reward.',
+boxes:[{l:'LLM\nGenerates',c:'#38bdf8'},{l:'Reward\nScores',c:'#ffd166'},{l:'PPO\nOptimize',c:'#ff6b6b'},{l:'Better\nLLM!',c:'#34d399'}],
+detail:['LLM generates response','Reward model scores: 7.3/10','PPO updates for higher scores','Result: improves continuously!']}];
+function draw(){ctx.clearRect(0,0,750,320);
+steps.forEach((s,i)=>{let x=15+i*245,y=8;
+ctx.fillStyle=i===step?s.color+'22':'#0c0c16';ctx.beginPath();ctx.roundRect(x,y,235,28,5);ctx.fill();
+ctx.strokeStyle=i<=step?s.color:'#1e1e32';ctx.lineWidth=i===step?2:1;ctx.beginPath();ctx.roundRect(x,y,235,28,5);ctx.stroke();
+ctx.fillStyle=i<=step?'#e4e2df':'#4a475a';ctx.font=(i===step?'600':'400')+' 9px Fira Code';
+ctx.fillText((i<step?'✓ ':'')+s.name,x+8,y+18);if(i<2){ctx.fillStyle='#4a475a';ctx.font='14px sans-serif';ctx.fillText('→',x+237,y+16)}});
+let s=steps[step],cy2=50;
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(15,cy2,720,155,10);ctx.fill();
+ctx.fillStyle=s.color;ctx.font='700 13px Fira Code';ctx.fillText(s.name,25,cy2+22);
+ctx.fillStyle='#e4e2df';ctx.font='400 10px Fira Code';ctx.fillText(s.desc,25,cy2+44);
+let dx=30,dy=cy2+62;
+s.boxes.forEach((b,i)=>{let x=dx+i*165;
+ctx.fillStyle=b.c+'22';ctx.beginPath();ctx.roundRect(x,dy,130,60,8);ctx.fill();
+ctx.strokeStyle=b.c;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x,dy,130,60,8);ctx.stroke();
+ctx.fillStyle=b.c;ctx.font='600 10px Fira Code';ctx.textAlign='center';
+b.l.split('\n').forEach((l,li)=>ctx.fillText(l,x+65,dy+26+li*14));ctx.textAlign='left';
+if(i<3){ctx.fillStyle='#4a475a';ctx.font='14px sans-serif';ctx.fillText('→',x+135,dy+32)}});
+if(step===2){ctx.strokeStyle='#a78bfa';ctx.lineWidth=1.5;ctx.setLineDash([5,4]);ctx.beginPath();
+ctx.moveTo(dx+560,dy+60);ctx.quadraticCurveTo(dx+300,dy+90,dx+40,dy+60);ctx.stroke();ctx.setLineDash([]);
+ctx.fillStyle='#a78bfa';ctx.font='400 8px Fira Code';ctx.fillText('↻ repeat',dx+270,dy+85)}
+let by=215;ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,by,720,95,10);ctx.fill();
+s.detail.forEach((d,i)=>{ctx.fillStyle=s.color;ctx.font='400 9px Fira Code';ctx.fillText((i+1)+'. '+d,25+Math.floor(i/2)*360,by+18+(i%2)*16)});
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('RLHF = Reinforcement Learning from Human Feedback → helpful, harmless, honest.',25,by+60);
+ctx.fillText('ChatGPT: fastest-growing app ever (100M users in 2 months). This 3-step recipe is now the industry standard.',25,by+78)}
+const ctrl=addControls(el);
+const nb=document.createElement('button');nb.className='btn';nb.textContent='▶ Next';nb.onclick=()=>{step=Math.min(step+1,2);draw()};
+const pb=document.createElement('button');pb.className='btn';pb.textContent='◀ Prev';pb.onclick=()=>{step=Math.max(step-1,0);draw()};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';rst.onclick=()=>{step=0;draw()};
+ctrl.appendChild(pb);ctrl.appendChild(nb);ctrl.appendChild(rst);draw()})();
+
+// ===== LLAMA =====
+(function(){const el=$('demo-llama'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Compare model sizes vs training data. LLaMA proves MORE DATA on SMALLER models beats brute-force scaling!');
+const models=[
+{name:'GPT-3',org:'OpenAI',params:175,tokens:300,perf:68,c:'#fb923c',open:false},
+{name:'Chinchilla',org:'DeepMind',params:70,tokens:1400,perf:71,c:'#a78bfa',open:false},
+{name:'LLaMA-7B',org:'Meta',params:7,tokens:1000,perf:63,c:'#34d399',open:true},
+{name:'LLaMA-13B',org:'Meta',params:13,tokens:1000,perf:68,c:'#34d399',open:true},
+{name:'LLaMA-65B',org:'Meta',params:65,tokens:1400,perf:74,c:'#34d399',open:true}];
+let hov=-1;
+function draw(){ctx.clearRect(0,0,750,300);
+let px=60,py=25,pw=350,ph=180;
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(px-20,py-5,pw+30,ph+40,10);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.fillText('Parameters vs Performance',px+80,py+10);
+ctx.strokeStyle='#333';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(px,py+ph);ctx.lineTo(px+pw,py+ph);ctx.stroke();
+ctx.beginPath();ctx.moveTo(px,py+20);ctx.lineTo(px,py+ph);ctx.stroke();
+ctx.fillStyle='#4a475a';ctx.font='400 7px Fira Code';ctx.fillText('Params (B)',px+pw/2,py+ph+18);
+ctx.save();ctx.translate(px-12,py+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('Performance',0,0);ctx.restore();
+models.forEach((m,i)=>{let x=px+Math.log(m.params+1)/Math.log(200)*pw,y=py+ph-(m.perf-55)/25*ph;let isH=i===hov;
+ctx.save();if(isH){ctx.shadowColor=m.c;ctx.shadowBlur=14}
+ctx.beginPath();ctx.arc(x,y,isH?10:7,0,TAU);ctx.fillStyle=m.c;ctx.fill();
+if(m.open){ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke()}ctx.restore();
+ctx.fillStyle=m.c;ctx.font=(isH?'600':'400')+' 8px Fira Code';ctx.textAlign='center';ctx.fillText(m.name,x,y-14);ctx.textAlign='left'});
+let rx=440,ry=20;ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(rx,ry,300,210,10);ctx.fill();
+ctx.fillStyle='#34d399';ctx.font='700 12px Fira Code';ctx.fillText('LLaMA: Open-Source Revolution',rx+10,ry+22);
+models.forEach((m,i)=>{let y=ry+35+i*34;let isH=i===hov;
+ctx.fillStyle=isH?m.c+'22':'transparent';ctx.beginPath();ctx.roundRect(rx+5,y-8,285,30,4);ctx.fill();
+ctx.fillStyle=m.c;ctx.font='600 9px Fira Code';ctx.fillText(m.name,rx+10,y+4);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText(m.params+'B | '+m.tokens+'B tok | score: '+m.perf,rx+95,y+4);
+ctx.fillStyle=m.open?'#34d399':'#ff6b6b';ctx.font='400 7px Fira Code';ctx.fillText(m.open?'🔓 Open':'🔒 Closed',rx+10,y+16)});
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,240,720,52,10);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='700 11px Fira Code';ctx.fillText('Chinchilla Law: optimal = smaller model + MORE data',25,258);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('LLaMA-13B (13B, 1T tokens) ≈ GPT-3 (175B, 300B tokens). 13× smaller, 3× more data!',25,278);
+ctx.fillText('Spawned Alpaca, Vicuna, Mistral — the entire open-source LLM ecosystem. AI for everyone.',25,290)}
+c.onmousemove=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*300/r.height;
+hov=-1;models.forEach((m,i)=>{let y=55+i*34;if(mx>=445&&mx<=740&&my>=y&&my<=y+30)hov=i});draw()};
+const ctrl=addControls(el);draw()})();
+
+// ===== GPT-4 =====
+(function(){const el=$('demo-gpt4'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Toggle text-only vs multimodal. GPT-4 understands BOTH text and images!');
+let mode='multi';
+const exs=[{mode:'text',prompt:'Explain quantum entanglement\nsimply.',output:'Imagine two coins always\nlanding opposite...',score:92},
+{mode:'multi',prompt:'[Image: chart showing\nQ3 revenue growth]\nWhat trend do you see?',output:'Revenue grew 23% YoY,\naccelerating from 15%\nin Q2...',score:96}];
+function draw(){ctx.clearRect(0,0,750,300);let ex=mode==='multi'?exs[1]:exs[0];
+['text','multi'].forEach((m,i)=>{let x=15+i*200,y=8;
+ctx.fillStyle=mode===m?'rgba(52,211,153,.12)':'#0c0c16';ctx.beginPath();ctx.roundRect(x,y,190,28,5);ctx.fill();
+ctx.strokeStyle=mode===m?'#34d399':'#1e1e32';ctx.lineWidth=mode===m?2:1;ctx.beginPath();ctx.roundRect(x,y,190,28,5);ctx.stroke();
+ctx.fillStyle=mode===m?'#e4e2df':'#4a475a';ctx.font='600 10px Fira Code';ctx.fillText(m==='text'?'📝 Text Only':'🖼️ Multimodal',x+8,y+18)});
+let iy=48;ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(15,iy,350,100,10);ctx.fill();
+ctx.fillStyle=mode==='multi'?'#a78bfa':'#38bdf8';ctx.font='600 10px Fira Code';ctx.fillText('Input:',25,iy+18);
+ctx.fillStyle='#e4e2df';ctx.font='400 10px Fira Code';ex.prompt.split('\n').forEach((l,i)=>ctx.fillText(l,25,iy+38+i*16));
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(385,iy,355,100,10);ctx.fill();
+ctx.fillStyle='#34d399';ctx.font='600 10px Fira Code';ctx.fillText('GPT-4 Output:',395,iy+18);
+ctx.fillStyle='#ffd166';ctx.font='500 10px Fira Code';ex.output.split('\n').forEach((l,i)=>ctx.fillText(l,395,iy+38+i*16));
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('Score: '+ex.score+'%',395,iy+90);
+ctx.fillStyle='#111120';ctx.fillRect(455,iy+82,180,8);ctx.fillStyle='#34d399';ctx.fillRect(455,iy+82,180*ex.score/100,8);
+let sy=162;ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(15,sy,720,55,10);ctx.fill();
+ctx.fillStyle='#34d399';ctx.font='700 11px Fira Code';ctx.fillText('GPT-4: Multimodal + Mixture of Experts',25,sy+18);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('Accepts text AND images. Passes bar exam (90th %), SAT (93rd %), writes complex code.',25,sy+38);
+ctx.fillText('MoE: ~1.8T params but only activates relevant "experts" per token → efficient at massive scale.',25,sy+52);
+let by=228;ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,by,720,64,10);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.fillText('Benchmark Performance:',25,by+18);
+[{n:'Bar Exam',s:90},{n:'SAT Math',s:93},{n:'GRE Writing',s:80},{n:'Coding (HumanEval)',s:67}].forEach((b,i)=>{let x=25+i*175;
+ctx.fillStyle='#111120';ctx.fillRect(x,by+28,150,14);ctx.fillStyle='#34d399';ctx.fillRect(x,by+28,150*b.s/100,14);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText(b.n+': '+b.s+'th %ile',x,by+56)})}
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*300/r.height;
+if(my>=8&&my<=36){if(mx>=15&&mx<=205)mode='text';if(mx>=215&&mx<=405)mode='multi';draw()}};
+const ctrl=addControls(el);draw()})();
+
+// ===== CLAUDE =====
+(function(){const el=$('demo-claude'),[c,ctx]=createCanvas(el,750,320);
+addHint(el,'Step through Constitutional AI: generate → critique against principles → revise. Scalable alignment!');
+let step=0;
+const pipe=[
+{name:'1. Generate',color:'#38bdf8',content:'Prompt: "How do I pick a lock?"\n\nInitial response: "Here\'s how to\npick a lock: First, get a tension\nwrench and a pick..."',
+note:'The base model generates a potentially harmful response without filtering.'},
+{name:'2. Critique',color:'#ff6b6b',content:'AI Self-Critique (against constitution):\n\n✗ Violates: "Don\'t help with illegal acts"\n✗ Violates: "Consider broader impacts"\n✓ Follows: "Be helpful"  (but wrong kind)',
+note:'AI checks its OWN response against written principles. No human rater needed!'},
+{name:'3. Revise',color:'#34d399',content:'Revised: "I can\'t help with lock\npicking for unauthorized access.\nIf locked out, I recommend calling\na locksmith. Here\'s how to find one..."',
+note:'AI generates a better response. This trains the reward model (RLAIF = RL from AI Feedback).'}];
+function draw(){ctx.clearRect(0,0,750,320);
+pipe.forEach((p,i)=>{let x=15+i*245,y=8;
+ctx.fillStyle=i===step?p.color+'22':'#0c0c16';ctx.beginPath();ctx.roundRect(x,y,235,28,5);ctx.fill();
+ctx.strokeStyle=i<=step?p.color:'#1e1e32';ctx.lineWidth=i===step?2:1;ctx.beginPath();ctx.roundRect(x,y,235,28,5);ctx.stroke();
+ctx.fillStyle=i<=step?'#e4e2df':'#4a475a';ctx.font=(i===step?'600':'400')+' 8px Fira Code';ctx.fillText((i<step?'✓ ':'')+p.name,x+8,y+18)});
+let p=pipe[step],cy2=48;
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(15,cy2,480,130,10);ctx.fill();
+ctx.fillStyle=p.color;ctx.font='700 12px Fira Code';ctx.fillText(p.name,25,cy2+22);
+ctx.fillStyle='#e4e2df';ctx.font='400 10px Fira Code';p.content.split('\n').forEach((l,i)=>{
+ctx.fillStyle=l.includes('✗')?'#ff6b6b':l.includes('✓')?'#34d399':'#e4e2df';ctx.fillText(l,25,cy2+45+i*16)});
+ctx.fillStyle='rgba(6,6,12,.8)';ctx.beginPath();ctx.roundRect(510,cy2,225,130,10);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 9px Fira Code';ctx.fillText('What\'s happening:',520,cy2+18);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+let words=p.note.split(' '),line='',ly=cy2+38;
+words.forEach(w=>{if((line+w).length>30){ctx.fillText(line,520,ly);ly+=14;line=''}line+=w+' '});if(line)ctx.fillText(line,520,ly);
+let py2=190;ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(15,py2,720,60,10);ctx.fill();
+ctx.fillStyle='#a78bfa';ctx.font='700 11px Fira Code';ctx.fillText('The "Constitution" — Core Principles:',25,py2+18);
+['Be helpful, harmless, honest','Don\'t help with illegal acts','Respect user autonomy',
+'Be transparent about limits','Avoid deception','Consider broader impacts'].forEach((pr,i)=>{
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText('• '+pr,25+(i%3)*240,py2+34+Math.floor(i/3)*14)});
+let vy=260;ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,vy,720,52,10);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='600 9px Fira Code';ctx.fillText('ChatGPT (RLHF): Human raters score → reward model → PPO',25,vy+16);
+ctx.fillStyle='#34d399';ctx.fillText('Claude (CAI): AI self-critiques against constitution → RLAIF → scalable, consistent',25,vy+34);
+ctx.fillStyle='#ffd166';ctx.font='400 8px Fira Code';ctx.fillText('Key: principles written once, AI applies them to millions of examples. Scales without proportional human labor.',25,vy+48)}
+const ctrl=addControls(el);
+const nb=document.createElement('button');nb.className='btn';nb.textContent='▶ Next';nb.onclick=()=>{step=Math.min(step+1,2);draw()};
+const pb=document.createElement('button');pb.className='btn';pb.textContent='◀ Prev';pb.onclick=()=>{step=Math.max(step-1,0);draw()};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';rst.onclick=()=>{step=0;draw()};
+ctrl.appendChild(pb);ctrl.appendChild(nb);ctrl.appendChild(rst);draw()})();
+
+// ===== SORA =====
+(function(){const el=$('demo-sora'),[c,ctx]=createCanvas(el,750,320);
+addHint(el,'Press Play to watch temporal diffusion: text prompt → spacetime patches → denoised video frames!');
+let frame=0,playing=false,totalF=12,denoise=1;
+const prompt='"A cat walking through a sunlit garden, cinematic"';
+function genFrame(f,noise){let grid=[];for(let r=0;r<6;r++)for(let c2=0;c2<8;c2++){
+let base=(Math.sin(r*.5+f*.3)*Math.cos(c2*.4+f*.2)+1)/2,motion=Math.sin(f*.5+c2*.3)*.15;
+grid.push(clamp((base+motion)*(1-noise)+rand(0,1)*noise,0,1))}return grid}
+function draw(){ctx.clearRect(0,0,750,320);
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(15,8,720,28,6);ctx.fill();
+ctx.fillStyle='#f472b6';ctx.font='600 10px Fira Code';ctx.fillText('Prompt: '+prompt,25,26);
+let fx=15,fy=48,fw=55,fh=42;
+for(let f=0;f<totalF;f++){let x=fx+f*60,y=fy,grid=genFrame(f,f>=frame?denoise:0);
+ctx.fillStyle='rgba(6,6,12,.7)';ctx.fillRect(x,y,fw,fh);
+for(let r=0;r<6;r++)for(let c2=0;c2<8;c2++){ctx.fillStyle=`rgba(52,211,153,${grid[r*8+c2]})`;ctx.fillRect(x+c2*7,y+r*7,6,6)}
+ctx.strokeStyle=f===frame?'#ffd166':'#1e1e32';ctx.lineWidth=f===frame?2:1;ctx.strokeRect(x,y,fw,fh);
+ctx.fillStyle=f<frame?'#34d399':f===frame?'#ffd166':'#4a475a';ctx.font='400 6px Fira Code';ctx.textAlign='center';ctx.fillText('f'+f,x+fw/2,y+fh+10);ctx.textAlign='left'}
+let ay=115;ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(15,ay,720,90,10);ctx.fill();
+ctx.fillStyle='#f472b6';ctx.font='700 12px Fira Code';ctx.fillText('Sora: Diffusion Transformer on Spacetime Patches',25,ay+18);
+[{n:'Text\nEncoder',c:'#38bdf8',x:15},{n:'Spacetime\nPatchify',c:'#a78bfa',x:145},{n:'DiT\n(Diffusion\nTransformer)',c:'#f472b6',x:290},
+{n:'Temporal\nAttention',c:'#fb923c',x:440},{n:'Video\nFrames',c:'#34d399',x:580}].forEach((b,i)=>{let x=b.x+10,y=ay+30;
+ctx.fillStyle=b.c+'22';ctx.beginPath();ctx.roundRect(x,y,115,48,6);ctx.fill();
+ctx.strokeStyle=b.c;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x,y,115,48,6);ctx.stroke();
+ctx.fillStyle=b.c;ctx.font='500 8px Fira Code';ctx.textAlign='center';b.n.split('\n').forEach((l,li)=>ctx.fillText(l,x+57,y+14+li*12));ctx.textAlign='left';
+if(i<4){ctx.fillStyle='#4a475a';ctx.font='12px sans-serif';ctx.fillText('→',x+118,y+27)}});
+let ky=215;ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(15,ky,720,95,10);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='700 11px Fira Code';ctx.fillText('How Sora works:',25,ky+18);
+[{t:'Spacetime Patches:',d:'Video → 3D patches (space×time), like ViT but with temporal dimension.',c:'#a78bfa'},
+{t:'Diffusion Transformer:',d:'DiT denoises from noise → video. Text guides via cross-attention.',c:'#f472b6'},
+{t:'Temporal Consistency:',d:'Attention across frames: objects persist, physics real, motion smooth.',c:'#fb923c'}].forEach((inn,i)=>{
+ctx.fillStyle=inn.c;ctx.font='600 9px Fira Code';ctx.fillText(inn.t,25,ky+38+i*22);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';ctx.fillText(inn.d,175,ky+38+i*22)})}
+const ctrl=addControls(el);let tmr=null;
+const pb=document.createElement('button');pb.className='btn';pb.textContent='▶ Play';
+pb.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;pb.classList.remove('active');pb.textContent='▶ Play'}
+else{frame=0;denoise=1;pb.classList.add('active');pb.textContent='⏸ Pause';
+tmr=setInterval(()=>{frame++;denoise=Math.max(0,1-frame/totalF);if(frame>=totalF){clearInterval(tmr);tmr=null;pb.classList.remove('active');pb.textContent='▶ Play'}draw()},250)}};
+const db=document.createElement('button');db.className='btn';db.textContent='▶ Denoise';db.onclick=()=>{denoise=Math.max(0,denoise-.15);draw()};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{frame=0;denoise=1;if(tmr){clearInterval(tmr);tmr=null;pb.classList.remove('active');pb.textContent='▶ Play'}draw()};
+ctrl.appendChild(pb);ctrl.appendChild(db);ctrl.appendChild(rst);draw()})();
+</script></body></html>
