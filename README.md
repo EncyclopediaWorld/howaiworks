@@ -4,7 +4,7 @@
 >
 > From Gauss's Least Squares to Sora's video generation — every milestone explained with hands-on visualizations.
 
-🔗 **Author:** Dr. Yushun Dong @ Florida State University
+🔗 **Author:** Encyclopedia World by Dr. Yushun Dong @ Florida State University
 🏷️ **License:** Educational / Open Source
 
 ---
@@ -196,6 +196,19 @@ site-en/
 3. **Navigate:** Click section cards on home page, or use the top nav bar (I–VIII)
 4. **Interact:** Every demo has hints, buttons, and mouse/click interactions
 5. **Deep link:** Use `sectionN.html#model-name` to link directly to any model
+
+---
+
+## License
+
+This project uses a dual-license structure:
+
+- **Code** (JavaScript, CSS, build scripts, and code embedded in HTML) is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). See `LICENSE`.
+- **Content** (explanatory text, narrative descriptions, educational materials) is licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). See `CONTENT_LICENSE.md`.
+
+The project name, logo, and associated branding are **not** covered by the open-source or content licenses. See `BRAND_GUIDELINES.md` for usage rules regarding forks and attribution.
+
+For commercial use, enterprise deployments, or partnership inquiries, see `COMMERCIAL.md`.
 
 ---
 
