@@ -5,9 +5,8 @@
 [![CSS3](https://img.shields.io/badge/CSS3-Responsive-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![License: Apache 2.0](https://img.shields.io/badge/Code-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![License: CC BY 4.0](https://img.shields.io/badge/Content-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![GitHub stars](https://img.shields.io/github/stars/yushundong/how-ai-works?style=social)](https://github.com/yushundong/how-ai-works)
-[![GitHub downloads](https://img.shields.io/github/downloads/yushundong/how-ai-works/total?color=brightgreen&label=Downloads)](https://github.com/yushundong/how-ai-works/releases)
-[![Models](https://img.shields.io/badge/Models-50-34d399)](section1.html)
+[![GitHub stars](https://img.shields.io/github/stars/EncyclopediaWorld/howaiworks?style=social)](https://github.com/EncyclopediaWorld/howaiworks)
+[![GitHub downloads](https://img.shields.io/github/downloads/EncyclopediaWorld/howaiworks/total?color=brightgreen&label=Downloads)](https://github.com/EncyclopediaWorld/howaiworks/releases)
 [![Demos](https://img.shields.io/badge/Interactive_Demos-50-fb923c)](section1.html)
 
 > **50 models · 1805–2024 · 8 sections · Interactive canvas demos**
