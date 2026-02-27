@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Section IV — The Golden Age of Statistical Learning · How AI Works</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<div class="progress-bar" style="background:linear-gradient(90deg,var(--a2),var(--a6))"></div>
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<nav class="topnav"><a href="index.html" class="logo">How AI Works</a><div class="nav-links"><a href="section1.html">I</a><a href="section2.html">II</a><a href="section3.html">III</a><a href="section4.html" class="active">IV</a><a href="section5.html">V</a><a href="section6.html">VI</a><a href="section7.html">VII</a><a href="section8.html">VIII</a></div></nav>
+<div class="section-hero"><div class="era-label" style="color:var(--a2)">Section IV · 1990s–2001</div>
+<h1>The Golden Age of Statistical Learning</h1><p>SVM, LSTM, Random Forest — the classics that powered ML before deep learning took over.</p>
+<div class="nav-arrows"><a href="section3.html">&larr; Section III</a><a href="section5.html">Section V &rarr;</a></div></div>
+<div class="models-container">
+
+<!-- ======= CNN / LeNet ======= -->
+<div class="model-card" id="model-cnn"><div class="mc-head"><span class="mc-year" style="color:var(--a2)">1998</span><div class="mc-info">
+<h3>CNN / LeNet <a href="http://yann.lecun.com/exdb/lenet/" target="_blank" class="paper-link">Paper</a></h3>
+<p>LeCun's convolutional neural network for handwritten digit recognition. Convolution filters slide over the image to extract features, then pooling shrinks them.</p>
+<div class="model-lineage">Adds <a href="section3.html#model-backprop">Backpropagation</a> training to <a href="section3.html#model-neocognitron">Neocognitron</a>'s hierarchical design; directly leads to <a href="section6.html#model-alexnet">AlexNet</a> and <a href="section6.html#model-resnet">ResNet</a>.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a2)">Input → [Conv → ReLU → Pool] × N → Flatten → Dense → Output class</div>
+<div class="mc-demo" id="demo-cnn"></div></div>
+
+<!-- ======= LSTM ======= -->
+<div class="model-card" id="model-lstm"><div class="mc-head"><span class="mc-year" style="color:var(--a2)">1997</span><div class="mc-info">
+<h3>LSTM (Long Short-Term Memory) <a href="https://doi.org/10.1162/neco.1997.9.8.1735" target="_blank" class="paper-link">Paper</a></h3>
+<p>Hochreiter & Schmidhuber's solution to vanishing gradients. Three gates (forget, input, output) control what to remember, add, and output from the cell state.</p>
+<div class="model-lineage">Solves <a href="section3.html#model-rnn">RNN</a>'s vanishing gradient problem with gated memory; enables <a href="section6.html#model-seq2seq">Seq2Seq</a> translation and <a href="section7.html#model-elmo">ELMo</a> embeddings.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a2)">fₜ = σ(forget) &nbsp; iₜ = σ(input) &nbsp; oₜ = σ(output) &nbsp; cₜ = fₜ⊙cₜ₋₁ + iₜ⊙tanh(…)</div>
+<div class="mc-demo" id="demo-lstm"></div></div>
+
+<!-- ======= SVM ======= -->
+<div class="model-card" id="model-svm"><div class="mc-head"><span class="mc-year" style="color:var(--a2)">1995</span><div class="mc-info">
+<h3>SVM (Support Vector Machine) <a href="https://doi.org/10.1007/BF00994018" target="_blank" class="paper-link">Paper</a></h3>
+<p>Vapnik's maximum-margin classifier — find the hyperplane that separates classes with the widest possible margin. Support vectors define the boundary.</p>
+<div class="model-lineage">Extends <a href="section2.html#model-knn">k-NN</a>'s distance-based idea with kernel tricks for non-linear boundaries; dominated ML before <a href="section6.html#model-alexnet">AlexNet</a> proved deep learning superior.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a2)">maximize margin = 2/||w|| &nbsp; subject to yᵢ(w·xᵢ + b) ≥ 1</div>
+<div class="mc-demo" id="demo-svm"></div></div>
+
+<!-- ======= GMM + EM ======= -->
+<div class="model-card" id="model-gmm"><div class="mc-head"><span class="mc-year" style="color:var(--a2)">1977</span><div class="mc-info">
+<h3>GMM + EM Algorithm <a href="https://doi.org/10.1111/j.2517-6161.1977.tb01600.x" target="_blank" class="paper-link">Paper</a></h3>
+<p>Fit a mixture of Gaussians to data using Expectation-Maximization. E-step: soft cluster assignment. M-step: update parameters. Iterate until convergence.</p>
+<div class="model-lineage">Applies <a href="section1.html#model-bayes">Bayes' Theorem</a> to unsupervised clustering with latent variables; EM's iterative approach later inspires <a href="section6.html#model-vae">VAE</a>'s variational inference.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a2)">E: P(k|xᵢ) = πₖN(xᵢ|μₖ,σₖ) / Σⱼ πⱼN(xᵢ|μⱼ,σⱼ) &nbsp; M: update μ,σ,π</div>
+<div class="mc-demo" id="demo-gmm"></div></div>
+
+<!-- ======= RANDOM FOREST ======= -->
+<div class="model-card" id="model-randomforest"><div class="mc-head"><span class="mc-year" style="color:var(--a2)">2001</span><div class="mc-info">
+<h3>Random Forest <a href="https://doi.org/10.1023/A:1010933404324" target="_blank" class="paper-link">Paper</a></h3>
+<p>Breiman's ensemble of decision trees — each tree trained on a random subset of data and features. Final prediction by majority vote.</p>
+<div class="model-lineage">Ensembles many <a href="section3.html#model-dtree">Decision Trees</a> via bagging to reduce overfitting; the ensemble idea is refined by <a href="section5.html#model-gbdt">GBDT</a> and <a href="section7.html#model-xgboost">XGBoost</a> using boosting instead.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a2)">prediction = mode(tree₁(x), tree₂(x), ..., treeₙ(x)) — majority vote of random trees</div>
+<div class="mc-demo" id="demo-rf"></div></div>
+
+<!-- ======= ADABOOST ======= -->
+<div class="model-card" id="model-adaboost"><div class="mc-head"><span class="mc-year" style="color:var(--a2)">1997</span><div class="mc-info">
+<h3>AdaBoost <a href="https://doi.org/10.1006/jcss.1997.1504" target="_blank" class="paper-link">Paper</a></h3>
+<p>Freund & Schapire's adaptive boosting — train weak classifiers sequentially, each focusing on mistakes of previous ones by upweighting misclassified samples.</p>
+<div class="model-lineage">Introduces sequential boosting of <a href="section3.html#model-dtree">Decision Tree</a> stumps; directly inspires <a href="section5.html#model-gbdt">GBDT</a> (gradient-based boosting) and <a href="section7.html#model-xgboost">XGBoost</a>.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a2)">H(x) = sign(Σ αₜhₜ(x)) &nbsp; where αₜ = ½ ln((1-εₜ)/εₜ) — weight by accuracy</div>
+<div class="mc-demo" id="demo-ada"></div></div>
+
+</div>
+<footer><a href="section3.html">&larr; Section III</a> &middot; <a href="section5.html">Section V: Eve of Deep Learning &rarr;</a></footer>
+<script src="shared.js"></script>
+<script>
+// ===== CNN / LeNet =====
+(function(){const el=$('demo-cnn'),[c,ctx]=createCanvas(el,750,350);
+addHint(el,'Draw a digit on the 10×10 grid. Watch convolution filters extract edges, then pooling shrinks the features.');
+let grid=Array(10).fill(0).map(()=>Array(10).fill(0)),drawing=false;
+const filters=[{n:'Edge-H',k:[[1,1,1],[-1,-1,-1]],c:'#ff6b6b'},{n:'Edge-V',k:[[1,-1],[1,-1],[1,-1]],c:'#38bdf8'},{n:'Corner',k:[[1,-1],[-1,1]],c:'#ffd166'}];
+function conv(g,k){let rr=g.length-k.length+1,cc2=g[0].length-k[0].length+1;let out=[];
+for(let r=0;r<rr;r++){out[r]=[];for(let c2=0;c2<cc2;c2++){let s=0;for(let kr=0;kr<k.length;kr++)for(let kc=0;kc<k[0].length;kc++)s+=g[r+kr][c2+kc]*k[kr][kc];out[r][c2]=Math.max(0,s)}}return out}
+function pool(g){let out=[];for(let r=0;r<g.length-1;r+=2){out[r>>1]=[];for(let c2=0;c2<(g[0]||[]).length-1;c2+=2)out[r>>1][c2>>1]=Math.max(g[r][c2]||0,g[r][c2+1]||0,g[r+1]?.[c2]||0,g[r+1]?.[c2+1]||0)}return out}
+function draw(){ctx.clearRect(0,0,750,350);
+let cs=22,ox=15,oy=35;
+ctx.fillStyle='#4ecdc4';ctx.font='600 11px Fira Code';ctx.fillText('1. Input (draw)',ox,oy-10);
+for(let r=0;r<10;r++)for(let c2=0;c2<10;c2++){ctx.fillStyle=grid[r][c2]?'#e4e2df':'#151520';ctx.fillRect(ox+c2*cs,oy+r*cs,cs-1,cs-1)}
+let stages=[{l:'2. Convolution',x:260},{l:'3. Max Pool',x:460},{l:'4. Classify',x:640}];
+stages.forEach(s=>{ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.fillText(s.l,s.x,oy-10)});
+ctx.fillStyle='#4a475a';ctx.font='18px sans-serif';ctx.fillText('→',238,oy+100);ctx.fillText('→',438,oy+100);ctx.fillText('→',618,oy+100);
+let fmaps=filters.map(f=>conv(grid,f.k));
+fmaps.forEach((fm,fi)=>{let fx=260,fy=oy+fi*78;let fcs=9;
+ctx.fillStyle=filters[fi].c;ctx.font='500 8px Fira Code';ctx.fillText(filters[fi].n,fx,fy+10);
+for(let r=0;r<fm.length;r++)for(let c2=0;c2<(fm[r]||[]).length;c2++){let v=fm[r][c2];
+let alpha=Math.min(v/3,.95);ctx.fillStyle=filters[fi].c+(Math.round(alpha*255).toString(16).padStart(2,'0'));
+ctx.fillRect(fx+55+c2*fcs,fy,fcs-1,fcs-1)}});
+let pooled=fmaps.map(fm=>pool(fm));
+pooled.forEach((pm,fi)=>{let fx=460,fy=oy+fi*78;let pcs=15;
+ctx.fillStyle=filters[fi].c;ctx.font='500 8px Fira Code';ctx.fillText(filters[fi].n,fx,fy+10);
+if(!pm.length)return;
+for(let r=0;r<pm.length;r++)for(let c2=0;c2<(pm[r]||[]).length;c2++){let v=pm[r][c2];
+let alpha=Math.min(v/2,.95);ctx.fillStyle=filters[fi].c+(Math.round(alpha*255).toString(16).padStart(2,'0'));
+ctx.fillRect(fx+55+c2*pcs,fy,pcs-1,pcs-1)}});
+let scores=fmaps.map(fm=>fm.reduce((a,row)=>a+row.reduce((b,v)=>b+v,0),0));
+let total=scores.reduce((a,b)=>a+b,0)||1;
+let cx2=640,cy2=oy+10;
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(cx2,cy2,100,170,8);ctx.fill();
+['Horiz','Vert','Corner'].forEach((l,i)=>{let pct=scores[i]/total*100;let y=cy2+15+i*48;
+ctx.fillStyle=filters[i].c;ctx.font='600 9px Fira Code';ctx.fillText(l,cx2+8,y);
+ctx.fillStyle='#111120';ctx.beginPath();ctx.roundRect(cx2+8,y+6,80,14,3);ctx.fill();
+ctx.fillStyle=filters[i].c+'88';ctx.beginPath();ctx.roundRect(cx2+8,y+6,80*pct/100,14,3);ctx.fill();
+ctx.fillStyle='#e4e2df';ctx.font='500 8px Fira Code';ctx.fillText(pct.toFixed(0)+'%',cx2+12,y+17)});
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,290,720,52,8);ctx.fill();
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('LeNet: Input(28×28) → Conv(5×5,6) → Pool(2×2) → Conv(5×5,16) → Pool → FC(120) → FC(84) → 10',25,310);
+ctx.fillText('Key: same filter slides across entire image → detects features regardless of position (translation invariance)',25,328)}
+c.onmousedown=e=>{drawing=true;paint(e)};c.onmousemove=e=>{if(drawing)paint(e)};
+c.onmouseup=()=>drawing=false;c.onmouseleave=()=>drawing=false;
+function paint(e){let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*350/r.height;
+let gx=Math.floor((mx-15)/22),gy=Math.floor((my-35)/22);if(gx>=0&&gx<10&&gy>=0&&gy<10){grid[gy][gx]=1;draw()}}
+const ctrl=addControls(el);
+[{n:'7',g:()=>{grid=Array(10).fill(0).map(()=>Array(10).fill(0));for(let c2=2;c2<8;c2++)grid[1][c2]=1;grid[2][7]=1;grid[3][6]=1;grid[4][5]=1;for(let r=5;r<9;r++)grid[r][4]=1}},
+{n:'L',g:()=>{grid=Array(10).fill(0).map(()=>Array(10).fill(0));for(let r=1;r<8;r++)grid[r][3]=1;for(let c2=3;c2<8;c2++)grid[8][c2]=1}},
+{n:'+',g:()=>{grid=Array(10).fill(0).map(()=>Array(10).fill(0));for(let i=2;i<8;i++){grid[5][i]=1;grid[i][5]=1}}}].forEach(p=>{
+let b=document.createElement('button');b.className='btn';b.textContent=p.n;b.onclick=()=>{p.g();draw()};ctrl.appendChild(b)});
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Clear';rst.onclick=()=>{grid=Array(10).fill(0).map(()=>Array(10).fill(0));draw()};
+ctrl.appendChild(rst);draw()})();
+
+// ===== LSTM — Gate visualization =====
+(function(){const el=$('demo-lstm'),[c,ctx]=createCanvas(el,750,340);
+addHint(el,'Feed words into the LSTM. Watch the 3 gates control what to forget, store, and output.');
+const words=['I','love','this','amazing','movie','!','It','was','terrible','though'];
+let pos=-1,cellState=0,hidden=0,gateHistory=[];
+function feedWord(){if(pos>=words.length-1)return;pos++;
+let w=words[pos];let sentiment=({'love':.8,'amazing':.9,'movie':.1,'terrible':-.9,'!':.3,'I':0,'this':.05,'It':0,'was':0,'though':-.2})[w]||0;
+let forgetG=sigmoid(hidden*1.5+sentiment*0.5-0.3);
+let inputG=sigmoid(sentiment*2+hidden*0.3);
+let candidate=Math.tanh(sentiment*1.5+hidden*0.2);
+let outputG=sigmoid(hidden*0.5+cellState*0.3+sentiment);
+cellState=forgetG*cellState+inputG*candidate;
+hidden=outputG*Math.tanh(cellState);
+gateHistory.push({w,f:forgetG,i:inputG,o:outputG,c:cellState,h:hidden});draw()}
+function drawGate(x,y,w2,h,value,label,color){
+ctx.fillStyle='#111120';ctx.beginPath();ctx.roundRect(x,y,w2,h,4);ctx.fill();
+ctx.fillStyle=color+'66';ctx.beginPath();ctx.roundRect(x,y+h*(1-value),w2,h*value,4);ctx.fill();
+ctx.strokeStyle=color;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x,y,w2,h,4);ctx.stroke();
+ctx.fillStyle='#e4e2df';ctx.font='600 9px Fira Code';ctx.textAlign='center';
+ctx.fillText((value*100|0)+'%',x+w2/2,y+h/2+3);
+ctx.fillStyle=color;ctx.font='600 8px Fira Code';ctx.fillText(label,x+w2/2,y-6);ctx.textAlign='left'}
+function draw(){ctx.clearRect(0,0,750,340);
+let wx=15,wy=12,ww=70;
+words.forEach((w,i)=>{let x=wx+i*ww;let fed=i<=pos;
+ctx.fillStyle=fed?(i===pos?'rgba(255,209,102,.15)':'rgba(78,205,196,.05)'):'#0c0c16';
+ctx.beginPath();ctx.roundRect(x,wy,ww-4,26,5);ctx.fill();
+ctx.strokeStyle=fed?(i===pos?'#ffd166':'#4ecdc433'):'#1e1e32';ctx.lineWidth=i===pos?2:1;
+ctx.beginPath();ctx.roundRect(x,wy,ww-4,26,5);ctx.stroke();
+ctx.fillStyle=fed?'#e4e2df':'#4a475a';ctx.font=(i===pos?'600':'400')+' 10px Fira Code';ctx.textAlign='center';
+ctx.fillText(w,x+ww/2-2,wy+17);ctx.textAlign='left'});
+// LSTM cell
+let cx2=80,cy2=55,cw=280,ch=120;
+ctx.fillStyle='rgba(78,205,196,.04)';ctx.beginPath();ctx.roundRect(cx2,cy2,cw,ch,12);ctx.fill();
+ctx.strokeStyle='#4ecdc4';ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(cx2,cy2,cw,ch,12);ctx.stroke();
+ctx.fillStyle='#4ecdc4';ctx.font='700 12px Fira Code';ctx.fillText('LSTM Cell',cx2+90,cy2+20);
+let gw=58,gh=60,gy=cy2+35;
+let fg=gateHistory.length?gateHistory[gateHistory.length-1].f:0.5;
+let ig=gateHistory.length?gateHistory[gateHistory.length-1].i:0.5;
+let og=gateHistory.length?gateHistory[gateHistory.length-1].o:0.5;
+drawGate(cx2+18,gy,gw,gh,fg,'Forget','#ff6b6b');
+drawGate(cx2+88,gy,gw,gh,ig,'Input','#38bdf8');
+drawGate(cx2+158,gy,gw,gh,og,'Output','#a78bfa');
+let csNorm=(Math.tanh(cellState)+1)/2;
+ctx.fillStyle='#111120';ctx.beginPath();ctx.roundRect(cx2+228,gy,38,gh,4);ctx.fill();
+ctx.fillStyle='#ffd16666';ctx.beginPath();ctx.roundRect(cx2+228,gy+gh*(1-csNorm),38,gh*csNorm,4);ctx.fill();
+ctx.strokeStyle='#ffd166';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(cx2+228,gy,38,gh,4);ctx.stroke();
+ctx.fillStyle='#ffd166';ctx.font='600 8px Fira Code';ctx.textAlign='center';ctx.fillText('Cell',cx2+247,gy-6);
+ctx.fillText(cellState.toFixed(2),cx2+247,gy+gh/2+3);ctx.textAlign='left';
+// Explanation panel
+let rx=385,ry=55;
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(rx,ry,355,120,10);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='600 10px Fira Code';ctx.fillText('Forget Gate: "Should I keep old memory?"',rx+10,ry+18);
+ctx.fillStyle='#38bdf8';ctx.fillText('Input Gate: "How much new info to store?"',rx+10,ry+38);
+ctx.fillStyle='#a78bfa';ctx.fillText('Output Gate: "What to reveal as output?"',rx+10,ry+58);
+ctx.fillStyle='#ffd166';ctx.fillText('Cell State: long-term memory highway',rx+10,ry+78);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('Key insight: cell state flows through with minimal change',rx+10,ry+98);
+ctx.fillText('→ gradients can flow far back in time (no vanishing!)',rx+10,ry+112);
+// Gate history
+let hy2=188;
+ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.fillText('Gate values over time:',15,hy2);
+if(gateHistory.length>0){let bw=Math.min(70,700/gateHistory.length);
+gateHistory.forEach((g,gi)=>{let x=15+gi*bw;let bh=35;
+ctx.fillStyle='#ff6b6b55';ctx.fillRect(x,hy2+8,bw/3-1,bh*g.f);
+ctx.fillStyle='#38bdf855';ctx.fillRect(x+bw/3,hy2+8,bw/3-1,bh*g.i);
+ctx.fillStyle='#a78bfa55';ctx.fillRect(x+2*bw/3,hy2+8,bw/3-1,bh*g.o);
+ctx.fillStyle=gi===pos?'#ffd166':'#7d7a8c';ctx.font='500 8px Fira Code';ctx.textAlign='center';
+ctx.fillText(g.w,x+bw/2,hy2+bh+22);ctx.textAlign='left'})}
+// Sentiment meter
+let sy=240;
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,sy,720,35,6);ctx.fill();
+ctx.fillStyle='#7d7a8c';ctx.font='500 9px Fira Code';ctx.fillText('Hidden output (sentiment): ',25,sy+14);
+let sentBar=400,sentVal=(hidden+1)/2;
+ctx.fillStyle='#111120';ctx.beginPath();ctx.roundRect(200,sy+5,sentBar,18,4);ctx.fill();
+let grd=ctx.createLinearGradient(200,0,200+sentBar,0);grd.addColorStop(0,'#ff6b6b');grd.addColorStop(.5,'#7d7a8c');grd.addColorStop(1,'#34d399');
+ctx.fillStyle=grd;ctx.beginPath();ctx.roundRect(200,sy+5,sentBar,18,4);ctx.fill();
+ctx.fillStyle='#fff';ctx.fillRect(200+sentBar*sentVal-1.5,sy+2,3,24);
+ctx.fillStyle='#e4e2df';ctx.font='600 9px Fira Code';ctx.fillText('Negative',620,sy+12);ctx.fillText('Positive',620,sy+26);
+// Bottom
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,284,720,50,8);ctx.fill();
+ctx.fillStyle='#4ecdc4';ctx.font='600 10px Fira Code';ctx.fillText('Why LSTM beats vanilla RNN:',25,302);
+ctx.fillStyle='#e4e2df';ctx.font='400 9px Fira Code';
+ctx.fillText('RNN: gradients shrink exponentially over long sequences → forgets early words',25,318);
+ctx.fillText('LSTM: cell state highway + gates → can remember "love" even after many words!',25,332)}
+const ctrl=addControls(el);
+const fb2=document.createElement('button');fb2.className='btn';fb2.textContent='▶ Feed Word';fb2.onclick=feedWord;
+let tmr=null;const ab=document.createElement('button');ab.className='btn';ab.textContent='⏩ Auto';
+ab.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}else{tmr=setInterval(()=>{feedWord();if(pos>=words.length-1){clearInterval(tmr);tmr=null;ab.classList.remove('active')}},500);ab.classList.add('active')}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{pos=-1;cellState=0;hidden=0;gateHistory=[];if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}draw()};
+ctrl.appendChild(fb2);ctrl.appendChild(ab);ctrl.appendChild(rst);draw()})();
+
+// ===== SVM — Maximum margin classifier =====
+(function(){const el=$('demo-svm'),[c,ctx]=createCanvas(el,750,320);
+addHint(el,'Left-click = Red, Right-click = Blue. Watch SVM find the maximum-margin boundary. Support vectors are circled.');
+let pts=[];function init(){pts=[];for(let i=0;i<10;i++){pts.push({x:rand(40,300),y:rand(40,280),c:0});pts.push({x:rand(450,710),y:rand(40,280),c:1})}}
+init();
+function solveSVM(){if(pts.length<4)return null;
+let bestW=null,bestB=0,bestMargin=0;
+for(let trial=0;trial<200;trial++){let i=randInt(0,pts.length),j=randInt(0,pts.length);
+if(pts[i].c===pts[j].c)continue;
+let mx=(pts[i].x+pts[j].x)/2,my=(pts[i].y+pts[j].y)/2;
+let nx=pts[j].x-pts[i].x,ny=pts[j].y-pts[i].y;
+let len=Math.hypot(nx,ny);if(len<1)continue;nx/=len;ny/=len;
+let b2=-(nx*mx+ny*my);
+let minDist=Infinity,valid=true;
+pts.forEach(p=>{let d=(nx*p.x+ny*p.y+b2)*(p.c?1:-1);if(d<0)valid=false;minDist=Math.min(minDist,Math.abs(d))});
+if(valid&&minDist>bestMargin){bestMargin=minDist;bestW={x:nx,y:ny};bestB=b2}}
+return bestW?{w:bestW,b:bestB,margin:bestMargin}:null}
+function draw(){ctx.clearRect(0,0,750,320);
+let sol=solveSVM();
+if(sol){let{w,b,margin}=sol;
+// Decision regions
+for(let py=0;py<320;py+=12)for(let px=0;px<750;px+=12){
+let d=w.x*px+w.y*py+b;
+ctx.fillStyle=d>=0?'rgba(56,189,248,0.05)':'rgba(255,107,107,0.05)';ctx.fillRect(px,py,12,12)}
+// Boundary
+ctx.save();ctx.shadowColor='#ffd166';ctx.shadowBlur=10;ctx.strokeStyle='#ffd166';ctx.lineWidth=2.5;ctx.beginPath();
+if(Math.abs(w.y)>1e-6){ctx.moveTo(0,(-b)/w.y);ctx.lineTo(750,(-b-w.x*750)/w.y)}
+else{let xv=-b/w.x;ctx.moveTo(xv,0);ctx.lineTo(xv,320)}
+ctx.stroke();ctx.restore();
+// Margin lines
+ctx.strokeStyle='rgba(255,209,102,.2)';ctx.lineWidth=1;ctx.setLineDash([5,5]);
+if(Math.abs(w.y)>1e-6){
+ctx.beginPath();ctx.moveTo(0,(-b+margin)/w.y);ctx.lineTo(750,(-b-w.x*750+margin)/w.y);ctx.stroke();
+ctx.beginPath();ctx.moveTo(0,(-b-margin)/w.y);ctx.lineTo(750,(-b-w.x*750-margin)/w.y);ctx.stroke()}
+ctx.setLineDash([]);
+// Find support vectors
+let svs=pts.filter(p=>{let d=Math.abs(w.x*p.x+w.y*p.y+b);return d<margin*1.2});
+svs.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,12,0,TAU);ctx.strokeStyle='#ffd166';ctx.lineWidth=2;ctx.stroke()});
+// Info
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(8,8,220,42,8);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 11px Fira Code';ctx.fillText('Margin: '+margin.toFixed(1)+'px',18,28);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('Support vectors: '+svs.length+' (circled)',18,44)}
+// Points
+pts.forEach(p=>{ctx.save();ctx.shadowColor=p.c?'#38bdf8':'#ff6b6b';ctx.shadowBlur=5;
+ctx.beginPath();ctx.arc(p.x,p.y,6,0,TAU);ctx.fillStyle=p.c?'#38bdf8':'#ff6b6b';ctx.fill();ctx.restore()});
+// Bottom
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,284,720,30,6);ctx.fill();
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('SVM maximizes the gap (margin) between classes. Only the closest points (support vectors) matter!',25,303)}
+c.onclick=e=>{let r=c.getBoundingClientRect();pts.push({x:(e.clientX-r.left)*750/r.width,y:(e.clientY-r.top)*320/r.height,c:0});draw()};
+c.oncontextmenu=e=>{e.preventDefault();let r=c.getBoundingClientRect();pts.push({x:(e.clientX-r.left)*750/r.width,y:(e.clientY-r.top)*320/r.height,c:1});draw()};
+const ctrl=addControls(el);
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';rst.onclick=()=>{init();draw()};
+ctrl.appendChild(rst);draw()})();
+
+// ===== GMM + EM =====
+(function(){const el=$('demo-gmm'),[c,ctx]=createCanvas(el,750,320);
+addHint(el,'Click "Step EM" to run one E+M iteration. Watch clusters converge from random initialization.');
+let pts=[],K=3,means=[],sigmas=[],pis=[];
+function init(){pts=[];
+let centers=[{x:180,y:100},{x:400,y:220},{x:600,y:100}];
+centers.forEach(c2=>{for(let i=0;i<30;i++)pts.push({x:c2.x+rand(-70,70),y:c2.y+rand(-60,60),resp:Array(K).fill(1/K)})});
+means=centers.map(()=>({x:rand(100,650),y:rand(50,270)}));sigmas=Array(K).fill(50);pis=Array(K).fill(1/K)}
+init();
+let colors=['#ff6b6b','#38bdf8','#ffd166'],emStep=0;
+function gaussian(x,y,mx,my,s){let d=((x-mx)**2+(y-my)**2)/(2*s*s);return Math.exp(-d)/(TAU*s*s)}
+function eStep(){pts.forEach(p=>{let total=0;let r=means.map((m,k)=>{let v=pis[k]*gaussian(p.x,p.y,m.x,m.y,sigmas[k]);total+=v;return v});
+p.resp=r.map(v=>v/(total||1e-10))})}
+function mStep(){for(let k=0;k<K;k++){let N2=pts.reduce((a,p)=>a+p.resp[k],0);if(N2<1e-6)continue;
+means[k].x=pts.reduce((a,p)=>a+p.resp[k]*p.x,0)/N2;
+means[k].y=pts.reduce((a,p)=>a+p.resp[k]*p.y,0)/N2;
+sigmas[k]=Math.sqrt(pts.reduce((a,p)=>a+p.resp[k]*((p.x-means[k].x)**2+(p.y-means[k].y)**2),0)/(2*N2));
+sigmas[k]=Math.max(sigmas[k],10);pis[k]=N2/pts.length}}
+function draw(){ctx.clearRect(0,0,750,320);
+// Gaussian contours
+means.forEach((m,k)=>{let s=sigmas[k];for(let r=3;r>=1;r--){
+ctx.beginPath();ctx.arc(m.x,m.y,s*r*.7,0,TAU);ctx.strokeStyle=colors[k]+'33';ctx.lineWidth=1;ctx.stroke()}});
+// Points colored by responsibility
+pts.forEach(p=>{let maxK=0,maxR=0;p.resp.forEach((r,k)=>{if(r>maxR){maxR=r;maxK=k}});
+ctx.beginPath();ctx.arc(p.x,p.y,4,0,TAU);ctx.fillStyle=colors[maxK]+(Math.round(Math.max(maxR,.3)*200).toString(16).padStart(2,'0'));ctx.fill()});
+// Means
+means.forEach((m,k)=>{ctx.save();ctx.shadowColor=colors[k];ctx.shadowBlur=12;
+ctx.beginPath();ctx.arc(m.x,m.y,8,0,TAU);ctx.fillStyle=colors[k];ctx.fill();ctx.restore();
+ctx.fillStyle='#000';ctx.font='bold 9px Fira Code';ctx.textAlign='center';ctx.fillText('μ'+(k+1),m.x,m.y+3);ctx.textAlign='left'});
+// Info
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(8,8,200,28,6);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 11px Fira Code';ctx.fillText('EM Iteration: '+emStep,18,28);
+// Bottom
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,280,720,35,8);ctx.fill();
+ctx.fillStyle='#4ecdc4';ctx.font='500 9px Fira Code';
+ctx.fillText('E-step: compute P(cluster k | point) using current means/variances',25,295);
+ctx.fillText('M-step: update means/variances using soft assignments → iterate until convergence!',25,310)}
+const ctrl=addControls(el);
+const sb=document.createElement('button');sb.className='btn';sb.textContent='▶ Step EM';sb.onclick=()=>{eStep();mStep();emStep++;draw()};
+let tmr=null;const ab=document.createElement('button');ab.className='btn';ab.textContent='⏩ Auto';
+ab.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}else{tmr=setInterval(()=>{eStep();mStep();emStep++;draw()},200);ab.classList.add('active')}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{init();emStep=0;if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}draw()};
+ctrl.appendChild(sb);ctrl.appendChild(ab);ctrl.appendChild(rst);draw()})();
+
+// ===== RANDOM FOREST =====
+(function(){const el=$('demo-rf'),[c,ctx]=createCanvas(el,750,340);
+addHint(el,'Grow individual trees, then see how the forest\'s majority vote improves accuracy over any single tree.');
+let pts=[];function seedPts(){pts=[];for(let i=0;i<30;i++){pts.push({x:rand(20,350),y:rand(20,250),c:0});pts.push({x:rand(400,730),y:rand(20,250),c:1})}
+for(let i=0;i<8;i++){pts.push({x:rand(300,450),y:rand(20,125),c:0});pts.push({x:rand(300,450),y:rand(135,250),c:1})}}
+seedPts();let trees=[];
+function makeTree(){let sub=[];let n=pts.length;for(let i=0;i<n;i++)sub.push(pts[randInt(0,n)]);
+let axis=Math.random()>.5?'x':'y';let vals=sub.map(p=>p[axis]).sort((a,b)=>a-b);
+let bestGini=1,bestV=vals[Math.floor(vals.length/2)];
+for(let i=5;i<vals.length;i+=5){let v=vals[i];let left=sub.filter(p=>p[axis]<=v),right=sub.filter(p=>p[axis]>v);
+if(left.length<2||right.length<2)continue;
+let gL=1-Math.pow(left.filter(p=>p.c===0).length/left.length,2)-Math.pow(left.filter(p=>p.c===1).length/left.length,2);
+let gR=1-Math.pow(right.filter(p=>p.c===0).length/right.length,2)-Math.pow(right.filter(p=>p.c===1).length/right.length,2);
+let g=(left.length*gL+right.length*gR)/sub.length;if(g<bestGini){bestGini=g;bestV=v}}
+let leftClass=sub.filter(p=>p[axis]<=bestV).filter(p=>p.c===0).length>sub.filter(p=>p[axis]<=bestV).filter(p=>p.c===1).length?0:1;
+return{axis,value:bestV,leftClass,rightClass:1-leftClass,gini:bestGini,predict:p=>p[axis]<=bestV?leftClass:1-leftClass}}
+function draw(){ctx.clearRect(0,0,750,340);
+pts.forEach(p=>{ctx.save();ctx.shadowColor=p.c?'#38bdf8':'#ff6b6b';ctx.shadowBlur=3;
+ctx.beginPath();ctx.arc(p.x,p.y,4,0,TAU);ctx.fillStyle=p.c?'#38bdf8':'#ff6b6b';ctx.fill();ctx.restore()});
+trees.forEach((t,i)=>{ctx.strokeStyle=`rgba(255,209,102,${.12+.08*Math.min(i,5)})`;ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();
+if(t.axis==='x'){ctx.moveTo(t.value,0);ctx.lineTo(t.value,260)}else{ctx.moveTo(0,t.value);ctx.lineTo(750,t.value)}
+ctx.stroke();ctx.setLineDash([])});
+if(trees.length>0){let forestAcc=pts.filter(p=>{let v=[0,0];trees.forEach(t=>v[t.predict(p)]++);return(v[1]>v[0]?1:0)===p.c}).length;
+let singleAcc=pts.filter(p=>trees[0].predict(p)===p.c).length;
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(8,8,240,45,8);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='500 10px Fira Code';ctx.fillText('Single tree: '+(singleAcc/pts.length*100).toFixed(0)+'%',18,26);
+ctx.fillStyle='#34d399';ctx.font='600 10px Fira Code';ctx.fillText('Forest ('+trees.length+' trees): '+(forestAcc/pts.length*100).toFixed(0)+'%',18,44)}
+// Tree panel
+let tx=490,ty=265;ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(tx,ty,250,68,8);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 9px Fira Code';ctx.fillText('Recent trees:',tx+8,ty+15);
+trees.slice(-5).forEach((t,i)=>{ctx.fillStyle='#7d7a8c';ctx.font='400 7px Fira Code';
+ctx.fillText('Tree'+(trees.length-4+i)+': '+t.axis+'<'+t.value.toFixed(0)+' → '+(t.leftClass?'B':'R')+'/'+(!t.leftClass?'B':'R'),tx+8,ty+27+i*8)});
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,265,460,68,8);ctx.fill();
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('Each tree sees random subset of data (bootstrap) + random features.',25,282);
+ctx.fillText('Alone each tree is weak, but voting together → strong! (Wisdom of crowds)',25,298);
+ctx.fillText('This is "bagging" — Bootstrap AGGregatING.',25,314)}
+const ctrl=addControls(el);
+const gb=document.createElement('button');gb.className='btn';gb.textContent='🌳 +1 Tree';gb.onclick=()=>{trees.push(makeTree());draw()};
+const g5=document.createElement('button');g5.className='btn';g5.textContent='🌲 +10 Trees';g5.onclick=()=>{for(let i=0;i<10;i++)trees.push(makeTree());draw()};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';rst.onclick=()=>{trees=[];draw()};
+ctrl.appendChild(gb);ctrl.appendChild(g5);ctrl.appendChild(rst);draw()})();
+
+// ===== AdaBoost =====
+(function(){const el=$('demo-ada'),[c,ctx]=createCanvas(el,750,320);
+addHint(el,'Add weak classifiers one at a time. Watch each focus on previous mistakes (bigger circle = more weight).');
+let pts=[];function seedPts(){pts=[];for(let i=0;i<15;i++){pts.push({x:rand(30,320),y:rand(30,240),c:0,w:1});pts.push({x:rand(430,720),y:rand(30,240),c:1,w:1})}
+for(let i=0;i<6;i++){pts.push({x:rand(300,450),y:rand(30,120),c:0,w:1});pts.push({x:rand(300,450),y:rand(130,240),c:1,w:1})}}
+seedPts();let stumps=[],round=0;
+function addStump(){round++;let totalW=pts.reduce((a,p)=>a+p.w,0);
+let bestErr=Infinity,bestStump=null;
+['x','y'].forEach(axis=>{for(let v=50;v<700;v+=20){[0,1].forEach(flip=>{
+let err=pts.reduce((a,p)=>{let pred=(p[axis]<=v?flip:1-flip);return a+(pred!==p.c?p.w:0)},0)/totalW;
+if(err<bestErr){bestErr=err;bestStump={axis,value:v,flip,err}}})}});
+if(!bestStump||bestErr>=.5)return;
+let alpha=.5*Math.log((1-bestErr)/(bestErr+1e-10));bestStump.alpha=alpha;stumps.push(bestStump);
+pts.forEach(p=>{let pred=(p[bestStump.axis]<=bestStump.value?bestStump.flip:1-bestStump.flip);
+p.w*=Math.exp(alpha*(pred!==p.c?1:-1))});
+let wSum=pts.reduce((a,p)=>a+p.w,0);pts.forEach(p=>p.w/=wSum);draw()}
+function predict(p){let score=stumps.reduce((a,s)=>{let pred=(p[s.axis]<=s.value?s.flip:1-s.flip);return a+(pred?s.alpha:-s.alpha)},0);return score>=0?1:0}
+function draw(){ctx.clearRect(0,0,750,320);
+let maxW=Math.max(...pts.map(p=>p.w),.01);
+pts.forEach(p=>{let r=3+p.w/maxW*10;let wrong=stumps.length>0&&predict(p)!==p.c;
+ctx.globalAlpha=.7;ctx.beginPath();ctx.arc(p.x,p.y,r,0,TAU);ctx.fillStyle=p.c?'#38bdf8':'#ff6b6b';ctx.fill();ctx.globalAlpha=1;
+if(wrong){ctx.strokeStyle='#ffd166';ctx.lineWidth=2;ctx.stroke()}});
+stumps.forEach((s,i)=>{let alpha=Math.min(s.alpha*.5,.4);
+ctx.strokeStyle=`rgba(255,209,102,${alpha})`;ctx.lineWidth=1.5;ctx.setLineDash([4,4]);ctx.beginPath();
+if(s.axis==='x'){ctx.moveTo(s.value,0);ctx.lineTo(s.value,260)}else{ctx.moveTo(0,s.value);ctx.lineTo(750,s.value)}
+ctx.stroke();ctx.setLineDash([])});
+let correct=stumps.length>0?pts.filter(p=>predict(p)===p.c).length:0;
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(8,8,240,48,8);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 11px Fira Code';ctx.fillText('Round '+round+' | '+stumps.length+' weak learners',18,28);
+ctx.fillStyle=correct/pts.length>.9?'#34d399':'#ff6b6b';ctx.font='600 10px Fira Code';
+ctx.fillText('Accuracy: '+(pts.length?correct/pts.length*100:0).toFixed(0)+'%',18,46);
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,265,720,48,8);ctx.fill();
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('Bigger circles = higher weight (previously misclassified). Each new stump targets the hardest examples.',25,282);
+ctx.fillText('α = ½ ln((1−err)/err) — more accurate stumps get higher voting weight in the final ensemble.',25,298);
+ctx.fillText('Boosting: focus sequentially on mistakes. Bagging (Random Forest): parallelize on random subsets.',25,310)}
+const ctrl=addControls(el);
+const ab2=document.createElement('button');ab2.className='btn';ab2.textContent='▶ +1 Stump';ab2.onclick=addStump;
+const a5=document.createElement('button');a5.className='btn';a5.textContent='⏩ +5 Stumps';a5.onclick=()=>{for(let i=0;i<5;i++)addStump()};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{stumps=[];round=0;seedPts();draw()};
+ctrl.appendChild(ab2);ctrl.appendChild(a5);ctrl.appendChild(rst);draw()})();
+</script></body></html>
