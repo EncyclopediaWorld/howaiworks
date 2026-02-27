@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>How AI Works — An Interactive History</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .hero canvas { position: absolute; inset: 0; z-index: 0; }
+  .hero .stat-row {
+    display: flex; gap: 2.5rem; justify-content: center; margin-top: 2.5rem;
+    animation: fadeUp .8s .48s var(--ease) both;
+  }
+  .hero .stat { text-align: center; }
+  .hero .stat .num {
+    font-family: var(--serif); font-size: 2rem; font-weight: 900;
+    background: linear-gradient(to right, var(--a2), var(--a3));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero .stat .lbl { font-family: var(--mono); font-size: .6rem; color: var(--text3); letter-spacing: .08em; text-transform: uppercase; }
+
+  .c1 { --card-accent: var(--a1); --card-glow: rgba(255,107,107,.05); }
+  .c1::before { background: var(--a1); } .c1 .era-num { color: var(--a1); }
+  .c2 { --card-accent: var(--a7); --card-glow: rgba(251,146,60,.05); }
+  .c2::before { background: var(--a7); } .c2 .era-num { color: var(--a7); }
+  .c3 { --card-accent: var(--a3); --card-glow: rgba(255,209,102,.05); }
+  .c3::before { background: var(--a3); } .c3 .era-num { color: var(--a3); }
+  .c4 { --card-accent: var(--a2); --card-glow: rgba(78,205,196,.05); }
+  .c4::before { background: var(--a2); } .c4 .era-num { color: var(--a2); }
+  .c5 { --card-accent: var(--a4); --card-glow: rgba(167,139,250,.05); }
+  .c5::before { background: var(--a4); } .c5 .era-num { color: var(--a4); }
+  .c6 { --card-accent: var(--a5); --card-glow: rgba(244,114,182,.05); }
+  .c6::before { background: var(--a5); } .c6 .era-num { color: var(--a5); }
+  .c7 { --card-accent: var(--a6); --card-glow: rgba(56,189,248,.05); }
+  .c7::before { background: var(--a6); } .c7 .era-num { color: var(--a6); }
+  .c8 { --card-accent: var(--a8); --card-glow: rgba(52,211,153,.05); }
+  .c8::before { background: var(--a8); } .c8 .era-num { color: var(--a8); }
+
+  .toc-card .count { font-family: var(--mono); font-size: .55rem; color: var(--text3); margin-top: .5rem; position: relative; z-index: 1; }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <canvas id="particles"></canvas>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+
+    <!-- EW Logo — fully self-contained, reusable as-is -->
+    <div class="ew-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="42" height="42" fill="none">
+        <!-- Outer ring -->
+        <circle cx="24" cy="24" r="22.5" stroke="#6b6b7a" stroke-width="1" opacity=".35"/>
+        <circle cx="24" cy="24" r="19" stroke="#8a8a9a" stroke-width=".6" opacity=".2"/>
+        <!-- E letter -->
+        <path d="M12 14 h8 M12 14 v20 M12 24 h6 M12 34 h8" stroke="#9a9aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- W letter -->
+        <path d="M25 14 l3 20 4-13 4 13 3-20" stroke="#b0b0be" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Subtle accent dot -->
+        <circle cx="24" cy="6" r="1.2" fill="#8a8a9a" opacity=".4"/>
+      </svg>
+      <span class="ew-text">Encyclopedia World</span>
+    </div>
+
+    <div class="badge"><span></span>Interactive · 1805 → 2025</div>
+    <h1>How AI Works</h1>
+    <p class="sub">A hands-on journey through 50 landmark models that shaped artificial intelligence — from Gauss to GPT. Every model has an interactive demo you can touch.</p>
+
+    <!-- Author credit -->
+    <div class="author-line">
+      <a href="https://yushundong.github.io" target="_blank" rel="noopener">Dr. Yushun Dong · Florida State University</a>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><div class="num">50</div><div class="lbl">Models</div></div>
+      <div class="stat"><div class="num">220</div><div class="lbl">Years</div></div>
+      <div class="stat"><div class="num">8</div><div class="lbl">Eras</div></div>
+    </div>
+    <div class="scroll-cue" style="margin-top:2.5rem">↓ scroll to explore</div>
+  </div>
+</section>
+
+<nav class="toc">
+  <h2>Choose an Era</h2>
+  <div class="toc-grid">
+
+    <a href="section1.html" class="toc-card c1" style="text-decoration:none;color:inherit">
+      <div class="era-num">Section I · 1800s–1960s</div>
+      <h3>The Dawn of Statistical Learning</h3>
+      <div class="era-desc">From least squares to the perceptron — mathematics lays the foundation for machine intelligence</div>
+      <div class="model-tags"><span>Linear Regression</span><span>Bayes</span><span>Markov</span><span>Perceptron</span><span>Adaline</span></div>
+      <div class="count">5 models · 5 interactive demos</div>
+      <div class="enter-arrow" style="color:var(--a1)">Enter →</div>
+    </a>
+
+    <a href="section2.html" class="toc-card c2" style="text-decoration:none;color:inherit">
+      <div class="era-num">Section II · 1960s–1970s</div>
+      <h3>Early Exploration & The First AI Winter</h3>
+      <div class="era-desc">Simple but powerful methods quietly accumulate during the AI winter</div>
+      <div class="model-tags"><span>k-NN</span><span>Naive Bayes</span><span>Chain Rule</span></div>
+      <div class="count">3 models · 3 interactive demos</div>
+      <div class="enter-arrow" style="color:var(--a7)">Enter →</div>
+    </a>
+
+    <a href="section3.html" class="toc-card c3" style="text-decoration:none;color:inherit">
+      <div class="era-num">Section III · 1980s</div>
+      <h3>The Revival & Classical ML</h3>
+      <div class="era-desc">Backpropagation spreads widely; neural nets and decision trees advance side by side</div>
+      <div class="model-tags"><span>Neocognitron</span><span>RNN</span><span>Boltzmann</span><span>Backpropagation</span><span>Decision Tree</span></div>
+      <div class="count">5 models · 5 interactive demos</div>
+      <div class="enter-arrow" style="color:var(--a3)">Enter →</div>
+    </a>
+
+    <a href="section4.html" class="toc-card c4" style="text-decoration:none;color:inherit">
+      <div class="era-num">Section IV · 1990s–2001</div>
+      <h3>The Golden Age of Statistical Learning</h3>
+      <div class="era-desc">SVM, LSTM, Random Forest — classic methods flourish</div>
+      <div class="model-tags"><span>CNN</span><span>LSTM</span><span>SVM</span><span>GMM</span><span>Random Forest</span><span>AdaBoost</span></div>
+      <div class="count">6 models · 6 interactive demos</div>
+      <div class="enter-arrow" style="color:var(--a2)">Enter →</div>
+    </a>
+
+    <a href="section5.html" class="toc-card c5" style="text-decoration:none;color:inherit">
+      <div class="era-num">Section V · 2000s</div>
+      <h3>The Eve of Deep Learning</h3>
+      <div class="era-desc">Layer-wise pretraining and word embeddings — the calm before the storm</div>
+      <div class="model-tags"><span>DBN</span><span>Sparse AE</span><span>Denoising AE</span><span>GBDT</span><span>NNLM</span></div>
+      <div class="count">5 models · 5 interactive demos</div>
+      <div class="enter-arrow" style="color:var(--a4)">Enter →</div>
+    </a>
+
+    <a href="section6.html" class="toc-card c6" style="text-decoration:none;color:inherit">
+      <div class="era-num">Section VI · 2012–2015</div>
+      <h3>The Deep Learning Explosion</h3>
+      <div class="era-desc">AlexNet ignites a revolution; GANs arrive on the scene</div>
+      <div class="model-tags"><span>AlexNet</span><span>Dropout</span><span>Word2Vec</span><span>VAE</span><span>GAN</span><span>Seq2Seq</span><span>ResNet</span><span>BatchNorm</span></div>
+      <div class="count">8 models · 8 interactive demos</div>
+      <div class="enter-arrow" style="color:var(--a5)">Enter →</div>
+    </a>
+
+    <a href="section7.html" class="toc-card c7" style="text-decoration:none;color:inherit">
+      <div class="era-num">Section VII · 2016–2019</div>
+      <h3>The Transformer Revolution</h3>
+      <div class="era-desc">"Attention Is All You Need" changes everything</div>
+      <div class="model-tags"><span>XGBoost</span><span>WaveNet</span><span>Transformer ⭐</span><span>ELMo</span><span>GPT-1</span><span>BERT</span><span>StyleGAN</span><span>GPT-2</span><span>T5</span></div>
+      <div class="count">9 models · 9 interactive demos</div>
+      <div class="enter-arrow" style="color:var(--a6)">Enter →</div>
+    </a>
+
+    <a href="section8.html" class="toc-card c8" style="text-decoration:none;color:inherit">
+      <div class="era-num">Section VIII · 2020–Now</div>
+      <h3>Foundation Models & The Multimodal Era</h3>
+      <div class="era-desc">Emergent abilities, RLHF — AI enters everyday life</div>
+      <div class="model-tags"><span>GPT-3</span><span>ViT</span><span>CLIP</span><span>Diffusion</span><span>ChatGPT</span><span>LLaMA</span><span>GPT-4</span><span>Claude</span><span>Sora</span></div>
+      <div class="count">9 models · 9 interactive demos</div>
+      <div class="enter-arrow" style="color:var(--a8)">Enter →</div>
+    </a>
+
+  </div>
+</nav>
+
+<footer>Built with care to explain AI · Every demo is interactive — click, drag, and play!</footer>
+
+<script src="shared.js"></script>
+<script>initParticles('particles');</script>
+</body>
+</html>
