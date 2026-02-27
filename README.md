@@ -14,6 +14,7 @@
 > From Gauss's Least Squares to Sora's video generation — every milestone explained with hands-on visualizations.
 
 🔗 **Author:** Dr. Yushun Dong @ Florida State University
+
 🏷️ **License:** Code under Apache 2.0 · Content under CC BY 4.0
 
 ---
