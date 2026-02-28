@@ -213,12 +213,12 @@ site-en/
 
 This project uses a dual-license structure:
 
-- **Code** (JavaScript, CSS, build scripts, and code embedded in HTML) is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). See `LICENSE`.
-- **Content** (explanatory text, narrative descriptions, educational materials) is licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). See `CONTENT_LICENSE.md`.
+- **Code** (JavaScript, CSS, and code embedded in HTML) is licensed under the **Apache License 2.0**. See `LICENSE`.
+- **Content** (explanatory text, narrative descriptions, educational materials) is licensed under **CC BY‑NC 4.0** by default. See `CONTENT_LICENSE.md`.
 
-The project name, logo, and associated branding are **not** covered by the open-source or content licenses. See `BRAND_GUIDELINES.md` for usage rules regarding forks and attribution.
+**Brand / trademark:** the project name, logo, and visual identity are **not** covered by the above licenses. Public forks must rename and add a clear “not affiliated / not endorsed” disclaimer. See `BRAND_GUIDELINES.md`.
 
-For commercial use, enterprise deployments, or partnership inquiries, see `COMMERCIAL.md`.
+**Commercial use:** if you need commercial rights for the content or want an enterprise deployment/partnership, see `COMMERCIAL.md`.
 
 ---
 
