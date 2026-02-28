@@ -8,6 +8,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/EncyclopediaWorld/howaiworks?style=social)](https://github.com/EncyclopediaWorld/howaiworks)
 [![GitHub downloads](https://img.shields.io/github/downloads/EncyclopediaWorld/howaiworks/total?color=brightgreen&label=Downloads)](https://github.com/EncyclopediaWorld/howaiworks/releases)
 [![Demos](https://img.shields.io/badge/Interactive_Demos-50-fb923c)](section1.html)
+![Visitors](https://visitor-badge.laobi.icu/badge?page_id=EncyclopediaWorld.howaiworks)
 
 > **50 models · 1805–2024 · 8 sections · Interactive canvas demos**
 >
