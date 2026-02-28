@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Section I — The Dawn of Statistical Learning · How AI Works</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<div class="progress-bar" style="background:linear-gradient(90deg,var(--a1),var(--a2))"></div>
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<nav class="topnav"><a href="index.html" class="logo">How AI Works</a><div class="nav-links"><a href="section1.html" class="active">I</a><a href="section2.html">II</a><a href="section3.html">III</a><a href="section4.html">IV</a><a href="section5.html">V</a><a href="section6.html">VI</a><a href="section7.html">VII</a><a href="section8.html">VIII</a></div></nav>
+<div class="section-hero"><div class="era-label" style="color:var(--a1)">Section I · 1800s–1960s</div>
+<h1>The Dawn of Statistical Learning</h1><p>From Gauss's least squares to Rosenblatt's perceptron — mathematics lays the foundation for machine intelligence.</p>
+<div class="nav-arrows"><a href="index.html">&larr; Home</a><a href="section2.html">Section II &rarr;</a></div></div>
+<div class="models-container">
+
+<!-- ======= LINEAR REGRESSION ======= -->
+<div class="model-card" id="model-linreg"><div class="mc-head"><span class="mc-year" style="color:var(--a1)">1805</span><div class="mc-info">
+<h3>Linear Regression <a href="https://en.wikipedia.org/wiki/Least_squares" target="_blank" class="paper-link">Paper</a></h3>
+<p>Legendre & Gauss's method of least squares — fit a straight line to scattered data by minimizing the sum of squared errors.</p>
+<div class="model-lineage">The mathematical foundation for all optimization-based learning; directly leads to <a href="section1.html#model-adaline">Adaline</a> and modern <a href="section3.html#model-backprop">Backpropagation</a>.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a1)">y = wx + b &nbsp; minimize Σ(yᵢ - (wxᵢ + b))²</div>
+<div class="mc-demo" id="demo-lr"></div></div>
+
+<!-- ======= BAYES' THEOREM ======= -->
+<div class="model-card" id="model-bayes"><div class="mc-head"><span class="mc-year" style="color:var(--a1)">1812</span><div class="mc-info">
+<h3>Bayes' Theorem <a href="https://en.wikipedia.org/wiki/Bayes%27_theorem" target="_blank" class="paper-link">Paper</a></h3>
+<p>Update your belief based on new evidence. Prior × likelihood → posterior. The core framework of probabilistic inference.</p>
+<div class="model-lineage">The foundation of probabilistic reasoning; directly enables <a href="section2.html#model-naivebayes">Naive Bayes</a> classifiers and <a href="section4.html#model-gmm">GMM+EM</a> clustering.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a1)">P(A|B) = P(B|A)·P(A) / P(B) &nbsp; posterior = likelihood × prior / evidence</div>
+<div class="mc-demo" id="demo-bayes"></div></div>
+
+<!-- ======= MARKOV CHAIN ======= -->
+<div class="model-card" id="model-markov"><div class="mc-head"><span class="mc-year" style="color:var(--a1)">1906</span><div class="mc-info">
+<h3>Markov Chain <a href="https://en.wikipedia.org/wiki/Markov_chain" target="_blank" class="paper-link">Paper</a></h3>
+<p>Memoryless state transitions — the next state depends only on the current state. Cornerstone of HMM, MCMC, and PageRank.</p>
+<div class="model-lineage">Inspires sequential modeling; its memoryless limitation motivates <a href="section3.html#model-rnn">RNN</a> (which adds memory) and <a href="section3.html#model-boltzmann">Boltzmann Machine</a> sampling.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a1)">P(Xₙ₊₁|Xₙ,Xₙ₋₁,...) = P(Xₙ₊₁|Xₙ) &nbsp; memoryless property</div>
+<div class="mc-demo" id="demo-markov"></div></div>
+
+<!-- ======= PERCEPTRON ======= -->
+<div class="model-card" id="model-perceptron"><div class="mc-head"><span class="mc-year" style="color:var(--a1)">1958</span><div class="mc-info">
+<h3>Perceptron <a href="https://doi.org/10.1037/h0042519" target="_blank" class="paper-link">Paper</a></h3>
+<p>Rosenblatt's first artificial neuron that could learn from data. Computes weighted sum of inputs; output 1 if above threshold, 0 otherwise.</p>
+<div class="model-lineage">Builds on <a href="section1.html#model-linreg">Linear Regression</a> with a step activation; its linear-only limitation is fixed by <a href="section1.html#model-adaline">Adaline</a> and later <a href="section3.html#model-backprop">Backpropagation</a>.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a1)">y = step(w·x + b) &nbsp; update: w += η(target - y)·x</div>
+<div class="mc-demo" id="demo-perceptron"></div></div>
+
+<!-- ======= ADALINE ======= -->
+<div class="model-card" id="model-adaline"><div class="mc-head"><span class="mc-year" style="color:var(--a1)">1960</span><div class="mc-info">
+<h3>Adaline <a href="https://en.wikipedia.org/wiki/ADALINE" target="_blank" class="paper-link">Paper</a></h3>
+<p>Widrow & Hoff's adaptive linear neuron — unlike the Perceptron, Adaline computes error <strong>before</strong> the activation function, enabling true gradient descent (LMS rule). The decision boundary glides smoothly into place!</p>
+<div class="model-lineage">Improves on <a href="section1.html#model-perceptron">Perceptron</a> by using continuous gradient descent instead of discrete updates; the LMS rule directly inspires <a href="section3.html#model-backprop">Backpropagation</a>.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a1)">z = w·x + b &nbsp; Δw = η(target − z)·x &nbsp; error on raw output, not after step()</div>
+<div class="mc-demo" id="demo-adaline"></div></div>
+
+</div>
+<footer><a href="index.html">&larr; Home</a> &middot; <a href="section2.html">Section II: Early Exploration &rarr;</a></footer>
+<script src="shared.js"></script>
+
+<script>
+/* ============================================================
+   Section I HiDPI Patch (Sharp + putImageData-safe)
+   Fixes Retina blur AND fixes demos that use putImageData() (e.g., Adaline heatmap),
+   since putImageData ignores transforms and would otherwise render only top-left.
+   ============================================================ */
+(function(){
+  const dpr = () => (window.devicePixelRatio || 1);
+
+  window.createCanvas = function(containerEl, w, h){
+    const canvas = document.createElement('canvas');
+    canvas.style.width  = w + 'px';
+    canvas.style.height = h + 'px';
+    canvas.style.display = 'block';
+
+    const r = dpr();
+    canvas.width  = Math.round(w * r);
+    canvas.height = Math.round(h * r);
+
+    containerEl.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d', { alpha: true });
+    ctx.setTransform(r, 0, 0, r, 0, 0);
+    ctx.imageSmoothingEnabled = true;
+    try { ctx.textRendering = 'geometricPrecision'; } catch(e) {}
+
+    // ---- Fix: putImageData ignores current transform, so on HiDPI it draws too small.
+    const origPut = ctx.putImageData.bind(ctx);
+    ctx.putImageData = function(imgData, dx, dy){
+      const r2 = dpr();
+      // Only intercept on HiDPI and when imgData looks like logical-size (not already scaled)
+      if (r2 > 1 && imgData && typeof imgData.width === 'number' && typeof imgData.height === 'number') {
+        // If the imageData is <= logical canvas size, assume it was created in CSS pixels.
+        if (imgData.width <= w && imgData.height <= h) {
+          // Render into an offscreen canvas, then drawImage (which *does* respect transforms).
+          const off = document.createElement('canvas');
+          off.width = imgData.width;
+          off.height = imgData.height;
+          const octx = off.getContext('2d');
+          octx.putImageData(imgData, 0, 0);
+          ctx.save();
+          // Keep current transform (already set to DPR) so the offscreen is scaled to device pixels.
+          ctx.drawImage(off, dx, dy);
+          ctx.restore();
+          return;
+        }
+      }
+      return origPut(imgData, dx, dy);
+    };
+
+    return [canvas, ctx];
+  };
+})();
+</script>
+
+<script>
+// ===== LINEAR REGRESSION =====
+(function(){const el=$('demo-lr'),[c,ctx]=createCanvas(el,750,300);
+addHint(el,'Click to add points, right-click to remove nearest. Best-fit line updates in real-time.');
+let pts=[{x:100,y:230},{x:180,y:195},{x:260,y:175},{x:350,y:140},{x:430,y:110},{x:550,y:80},{x:620,y:60}];
+function fit(){if(pts.length<2)return{w:0,b:150};let sx=0,sy=0,sxy=0,sxx=0,n=pts.length;
+pts.forEach(p=>{sx+=p.x;sy+=p.y;sxy+=p.x*p.y;sxx+=p.x*p.x});let w=(n*sxy-sx*sy)/(n*sxx-sx*sx||1);return{w,b:(sy-w*sx)/n}}
+function draw(){ctx.clearRect(0,0,750,300);
+// Grid
+for(let i=0;i<750;i+=75){ctx.strokeStyle='#1a1a2a';ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,300);ctx.stroke()}
+for(let i=0;i<300;i+=75){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(750,i);ctx.stroke()}
+let{w,b}=fit();
+if(pts.length>=2){
+// Best-fit line
+ctx.save();ctx.shadowColor='#ff6b6b';ctx.shadowBlur=10;ctx.strokeStyle='#ff6b6b';ctx.lineWidth=2.5;
+ctx.beginPath();ctx.moveTo(0,b);ctx.lineTo(750,w*750+b);ctx.stroke();ctx.restore();
+// Residual lines
+let mse=pts.reduce((a,p)=>a+(p.y-(w*p.x+b))**2,0)/pts.length;
+pts.forEach(p=>{ctx.strokeStyle='rgba(255,107,107,.3)';ctx.lineWidth=1;ctx.setLineDash([3,3]);
+ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x,w*p.x+b);ctx.stroke();ctx.setLineDash([])});
+// Info panel
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(8,8,220,50,8);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='600 11px Fira Code';ctx.fillText('y = '+w.toFixed(3)+'x + '+b.toFixed(1),18,28);
+ctx.fillStyle='#ffd166';ctx.font='500 10px Fira Code';ctx.fillText('MSE = '+mse.toFixed(1)+' | '+pts.length+' points',18,46)}
+// Points
+pts.forEach(p=>{ctx.save();ctx.shadowColor='#4ecdc4';ctx.shadowBlur=8;ctx.beginPath();ctx.arc(p.x,p.y,6,0,TAU);ctx.fillStyle='#4ecdc4';ctx.fill();ctx.restore()})}
+c.onclick=e=>{let r=c.getBoundingClientRect();pts.push({x:(e.clientX-r.left)*750/r.width,y:(e.clientY-r.top)*300/r.height});draw()};
+c.oncontextmenu=e=>{e.preventDefault();let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*300/r.height;
+pts=pts.filter(p=>dist(p.x,p.y,mx,my)>15);draw()};
+const ctrl=addControls(el);
+const rb=document.createElement('button');rb.className='btn';rb.textContent='🎲 Random';rb.onclick=()=>{pts=[];for(let i=0;i<10;i++)pts.push({x:rand(40,700),y:rand(20,280)});draw()};
+const clr=document.createElement('button');clr.className='btn';clr.textContent='↻ Reset';clr.onclick=()=>{pts=[{x:100,y:230},{x:180,y:195},{x:260,y:175},{x:350,y:140},{x:430,y:110},{x:550,y:80},{x:620,y:60}];draw()};
+ctrl.appendChild(rb);ctrl.appendChild(clr);draw()})();
+
+// ===== BAYES' THEOREM — Medical Diagnosis =====
+(function(){const el=$('demo-bayes'),[c,ctx]=createCanvas(el,750,400);
+addHint(el,'Drag sliders to change disease prevalence and test accuracy. Watch the funnel: most positive tests are false alarms!');
+let prev=3,sens=92,fpr=7;
+function draw(){ctx.clearRect(0,0,750,400);
+let pop=1000,sick=Math.round(pop*prev/100),healthy=pop-sick;
+let tp=Math.round(sick*sens/100),fn=sick-tp,fp=Math.round(healthy*fpr/100),tn=healthy-fp;
+let totalPos=tp+fp,post=totalPos>0?tp/totalPos*100:0;
+// ===== LEFT: Population Funnel =====
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(10,8,355,240,10);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='700 12px Fira Code';ctx.fillText('Population: '+pop+' people',22,28);
+// Top bar: sick vs healthy
+let bx=22,by=42,bw=330,bh=28;
+let sickW=bw*(sick/pop),healthW=bw-sickW;
+ctx.fillStyle='#ff6b6b';ctx.beginPath();ctx.roundRect(bx,by,sickW,bh,4);ctx.fill();
+ctx.fillStyle='#38bdf8';ctx.beginPath();ctx.roundRect(bx+sickW,by,healthW,bh,4);ctx.fill();
+ctx.fillStyle='#fff';ctx.font='600 10px Fira Code';ctx.textAlign='center';
+if(sickW>40)ctx.fillText(sick+' sick',bx+sickW/2,by+18);
+ctx.fillText(healthy+' healthy',bx+sickW+healthW/2,by+18);ctx.textAlign='left';
+// Funnel arrows
+let fy=80;ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.fillText('↓ Test them all ↓',bx+120,fy);
+// Sick branch
+let by2=95,bxL=22,brW=155;
+ctx.fillStyle='rgba(255,107,107,.12)';ctx.beginPath();ctx.roundRect(bxL,by2,brW,80,8);ctx.fill();
+ctx.strokeStyle='#ff6b6b55';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(bxL,by2,brW,80,8);ctx.stroke();
+ctx.fillStyle='#ff6b6b';ctx.font='600 10px Fira Code';ctx.fillText(sick+' Sick People',bxL+10,by2+18);
+ctx.fillStyle='#34d399';ctx.font='500 9px Fira Code';ctx.fillText('Test+ (true pos): '+tp,bxL+10,by2+38);
+ctx.fillStyle='#a78bfa';ctx.fillText('Test− (missed): '+fn,bxL+10,by2+56);
+// Sensitivity gauge
+ctx.fillStyle='#111120';ctx.fillRect(bxL+10,by2+65,brW-20,6);ctx.fillStyle='#34d399';ctx.fillRect(bxL+10,by2+65,(brW-20)*sens/100,6);
+// Healthy branch
+let bxR=197;
+ctx.fillStyle='rgba(56,189,248,.08)';ctx.beginPath();ctx.roundRect(bxR,by2,brW,80,8);ctx.fill();
+ctx.strokeStyle='#38bdf855';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(bxR,by2,brW,80,8);ctx.stroke();
+ctx.fillStyle='#38bdf8';ctx.font='600 10px Fira Code';ctx.fillText(healthy+' Healthy People',bxR+10,by2+18);
+ctx.fillStyle='#fb923c';ctx.font='500 9px Fira Code';ctx.fillText('Test+ (false alarm): '+fp,bxR+10,by2+38);
+ctx.fillStyle='#4a475a';ctx.fillText('Test− (correct): '+tn,bxR+10,by2+56);
+ctx.fillStyle='#111120';ctx.fillRect(bxR+10,by2+65,brW-20,6);ctx.fillStyle='#fb923c';ctx.fillRect(bxR+10,by2+65,(brW-20)*fpr/100,6);
+// Merge arrow
+let my=190;ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.textAlign='center';
+ctx.fillText('↓ All positive tests: '+tp+' + '+fp+' = '+totalPos+' ↓',185,my);ctx.textAlign='left';
+// Result box
+let ry=200;ctx.fillStyle='rgba(255,209,102,.08)';ctx.beginPath();ctx.roundRect(22,ry,330,42,8);ctx.fill();
+ctx.strokeStyle='#ffd16644';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(22,ry,330,42,8);ctx.stroke();
+ctx.fillStyle='#34d399';ctx.font='700 11px Fira Code';
+let tpBar=tp/totalPos*310,fpBar=fp/totalPos*310;
+ctx.fillStyle='#ff6b6b';ctx.beginPath();ctx.roundRect(32,ry+10,tpBar,22,4);ctx.fill();
+ctx.fillStyle='#fb923c';ctx.beginPath();ctx.roundRect(32+tpBar,ry+10,fpBar,22,4);ctx.fill();
+ctx.fillStyle='#fff';ctx.font='700 9px Fira Code';ctx.textAlign='center';
+if(tpBar>35)ctx.fillText(tp+' real',32+tpBar/2,ry+25);
+if(fpBar>40)ctx.fillText(fp+' false',32+tpBar+fpBar/2,ry+25);
+ctx.textAlign='left';
+// ===== RIGHT: Big Result =====
+ctx.fillStyle='rgba(6,6,12,.92)';ctx.beginPath();ctx.roundRect(380,8,360,240,12);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='700 14px Fira Code';ctx.fillText('⊕ You tested POSITIVE',395,34);
+ctx.fillStyle='#7d7a8c';ctx.font='400 10px Fira Code';ctx.fillText('What is the probability you are actually sick?',395,54);
+// Big percentage
+let pctColor=post>50?'#ff6b6b':post>20?'#ffd166':'#34d399';
+ctx.fillStyle=pctColor;ctx.font='900 64px Fraunces';ctx.fillText(post.toFixed(1)+'%',400,130);
+// Gauge
+ctx.fillStyle='#111120';ctx.beginPath();ctx.roundRect(400,148,320,20,5);ctx.fill();
+ctx.fillStyle=pctColor;ctx.beginPath();ctx.roundRect(400,148,Math.max(320*post/100,4),20,5);ctx.fill();
+// Verdict
+ctx.fillStyle='#e4e2df';ctx.font='500 11px Fira Code';
+ctx.fillText(post<15?'😌 Relax! You\'re almost certainly fine.':
+post<35?'🤔 Unlikely sick, but maybe retest.':
+post<65?'⚠️ Coin-flip. Further testing needed.':
+post<85?'😟 Likely sick. See a doctor.':
+'🚨 Very likely sick. Seek treatment.',400,188);
+// Formula
+ctx.fillStyle='#a78bfa';ctx.font='500 10px Fira Code';ctx.fillText('P(sick|+) = P(+|sick)·P(sick) / P(+)',400,215);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('= '+sens+'%×'+prev+'% / '+((tp+fp)/pop*100).toFixed(1)+'% = '+post.toFixed(1)+'%',400,235);
+// ===== BOTTOM: Insight =====
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(10,258,730,65,10);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='700 11px Fira Code';ctx.fillText('🔑 The Base Rate Fallacy',22,278);
+ctx.fillStyle='#e4e2df';ctx.font='400 10px Fira Code';
+ctx.fillText('With '+prev+'% prevalence: '+healthy+' healthy people produce '+fp+' false alarms, while only '+sick+' sick produce '+tp+' true positives.',22,298);
+ctx.fillStyle='#ffd166';ctx.font='500 10px Fira Code';
+ctx.fillText('Bayes\' insight: the prior probability (base rate) matters enormously — a rare disease means most positives are wrong!',22,316);
+// ===== BOTTOM: Icon dots =====
+let dx=12,dy=332,ds=4.5,dcols=100;
+for(let i=0;i<pop;i++){let x=dx+(i%dcols)*ds*1.55,y=dy+Math.floor(i/dcols)*ds*1.55;
+let isSick=i<sick,testPos=isSick?i<tp:i>=sick&&i<sick+fp;
+ctx.fillStyle=isSick&&testPos?'#ff6b6b':isSick?'#a78bfa':testPos?'#fb923c':'#181828';
+ctx.beginPath();ctx.arc(x+ds/2,y+ds/2,ds/2,0,TAU);ctx.fill()}
+ctx.fillStyle='#4a475a';ctx.font='400 8px Fira Code';ctx.fillText('Each dot = 1 of '+pop+' people   🔴 true+  🟠 false+  🟣 missed  ⚫ true−',12,396)}
+const ctrl=addControls(el);
+ctrl.innerHTML='<label>Prevalence</label><input type="range" min="1" max="50" value="3" id="bp"><span id="bpv" class="btn" style="min-width:36px;text-align:center">3%</span>'+
+'<label>Sensitivity</label><input type="range" min="50" max="99" value="92" id="bs"><span id="bsv" class="btn" style="min-width:36px;text-align:center">92%</span>'+
+'<label>False +</label><input type="range" min="1" max="30" value="7" id="bf"><span id="bfv" class="btn" style="min-width:36px;text-align:center">7%</span>';
+$('bp').oninput=e=>{prev=+e.target.value;$('bpv').textContent=prev+'%';draw()};
+$('bs').oninput=e=>{sens=+e.target.value;$('bsv').textContent=sens+'%';draw()};
+$('bf').oninput=e=>{fpr=+e.target.value;$('bfv').textContent=fpr+'%';draw()};
+draw()})();
+
+// ===== MARKOV CHAIN =====
+(function(){const el=$('demo-markov'),[c,ctx]=createCanvas(el,750,340);
+addHint(el,'Click states to start. Watch the particle bounce between states — frequency bars converge to the steady-state distribution!');
+const states=[{name:'Sunny',emoji:'☀️',x:160,y:90,c:'#ffd166'},{name:'Cloudy',emoji:'☁️',x:590,y:90,c:'#94a3b8'},{name:'Rainy',emoji:'🌧️',x:375,y:250,c:'#38bdf8'}];
+const trans=[[.6,.3,.1],[.2,.4,.4],[.3,.3,.4]];
+let cur=0,history=[0],visits=[1,0,0],animT=0,animFrom=-1,animTo=-1,animating=false;
+function draw(){ctx.clearRect(0,0,750,340);
+// Draw transition arrows
+trans.forEach((row,i)=>row.forEach((p,j)=>{if(p<.05)return;
+let si=states[i],sj=states[j];
+if(i===j){let ax=si.x,ay=si.y-48;
+ctx.strokeStyle=i===cur?si.c:si.c+'44';ctx.lineWidth=1+p*4;
+ctx.beginPath();ctx.arc(ax,ay,20,0.3*Math.PI,0.7*Math.PI);ctx.stroke();
+ctx.fillStyle=i===cur?si.c:'#4a475a';ctx.font='700 10px Fira Code';ctx.textAlign='center';ctx.fillText((p*100|0)+'%',ax,ay-24);ctx.textAlign='left';
+}else{let dx=sj.x-si.x,dy=sj.y-si.y,len=Math.hypot(dx,dy);
+let nx=dx/len,ny=dy/len,ox=-ny*14,oy=nx*14;
+let sx=si.x+nx*44+ox,sy=si.y+ny*44+oy,ex=sj.x-nx*44+ox,ey=sj.y-ny*44+oy;
+let isActive=i===cur||animFrom===i&&animTo===j;
+ctx.strokeStyle=isActive?si.c+'aa':si.c+'22';ctx.lineWidth=isActive?2+p*4:1+p*2;
+ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.stroke();
+let aLen=10;ctx.fillStyle=isActive?si.c+'cc':si.c+'44';ctx.beginPath();ctx.moveTo(ex,ey);
+ctx.lineTo(ex-aLen*nx+aLen*.4*ny,ey-aLen*ny-aLen*.4*nx);ctx.lineTo(ex-aLen*nx-aLen*.4*ny,ey-aLen*ny+aLen*.4*nx);ctx.fill();
+ctx.fillStyle=isActive?'#e4e2df':'#4a475a';ctx.font=(isActive?'700':'500')+' 10px Fira Code';ctx.textAlign='center';
+ctx.fillText((p*100|0)+'%',(sx+ex)/2+ox*.6,(sy+ey)/2+oy*.6);ctx.textAlign='left'}}));
+// Animated particle
+if(animating&&animFrom>=0&&animTo>=0){let si=states[animFrom],sj=states[animTo];
+let px=si.x+(sj.x-si.x)*animT,py=si.y+(sj.y-si.y)*animT;
+ctx.save();ctx.shadowColor='#ffd166';ctx.shadowBlur=20;ctx.beginPath();ctx.arc(px,py,8,0,TAU);
+ctx.fillStyle='#ffd166';ctx.fill();ctx.restore()}
+// Draw state circles
+states.forEach((s,i)=>{let isCur=i===cur&&!animating;
+ctx.save();if(isCur){ctx.shadowColor=s.c;ctx.shadowBlur=25}
+ctx.beginPath();ctx.arc(s.x,s.y,isCur?42:36,0,TAU);
+ctx.fillStyle=isCur?s.c+'22':'#0a0a14';ctx.fill();
+ctx.strokeStyle=isCur?s.c:s.c+'55';ctx.lineWidth=isCur?3:1.5;ctx.stroke();ctx.restore();
+ctx.font='22px sans-serif';ctx.textAlign='center';ctx.fillText(s.emoji,s.x,s.y-2);
+ctx.fillStyle=isCur?'#fff':s.c;ctx.font=(isCur?'700':'500')+' 11px Fira Code';
+ctx.fillText(s.name,s.x,s.y+22);ctx.textAlign='left'});
+// Visit frequency panel
+let fx=15,fy=295;ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(fx,fy-8,470,48,8);ctx.fill();
+let totalV=visits.reduce((a,b)=>a+b,0)||1;
+ctx.fillStyle='#7d7a8c';ctx.font='500 9px Fira Code';ctx.fillText('Visit frequency ('+totalV+' steps):',fx+8,fy+6);
+states.forEach((s,i)=>{let x=fx+8+i*155,y=fy+14,pct=visits[i]/totalV;
+ctx.fillStyle='#111120';ctx.beginPath();ctx.roundRect(x,y,120,16,3);ctx.fill();
+ctx.fillStyle=s.c;ctx.beginPath();ctx.roundRect(x,y,120*pct,16,3);ctx.fill();
+ctx.fillStyle='#e4e2df';ctx.font='600 8px Fira Code';ctx.fillText(s.name+' '+(pct*100).toFixed(1)+'%',x+4,y+12)});
+// History trail
+let hx=500,hy=fy-8;ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(hx,hy,240,48,8);ctx.fill();
+ctx.fillStyle='#4a475a';ctx.font='400 8px Fira Code';ctx.fillText('Recent path:',hx+8,hy+12);
+let visH=history.slice(-12);
+visH.forEach((h,i)=>{let x=hx+8+i*19,y=hy+20;
+ctx.fillStyle=states[h].c;ctx.font='12px sans-serif';ctx.fillText(states[h].emoji,x,y+10)})}
+function step(){let prev2=cur,probs=trans[cur],r=Math.random(),cum=0;
+for(let i=0;i<probs.length;i++){cum+=probs[i];if(r<=cum){cur=i;break}}
+history.push(cur);visits[cur]++;
+// Animate transition
+animFrom=prev2;animTo=cur;animating=true;animT=0;
+let anim=()=>{animT+=.08;if(animT>=1){animating=false;animFrom=-1;animTo=-1;draw();return}draw();requestAnimationFrame(anim)};anim()}
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*340/r.height;
+states.forEach((s,i)=>{if(dist(mx,my,s.x,s.y)<44){cur=i;history=[i];visits=[0,0,0];visits[i]=1;draw()}})};
+const ctrl=addControls(el);
+const sb=document.createElement('button');sb.className='btn';sb.textContent='▶ Step';sb.onclick=step;
+let tmr=null;const ab=document.createElement('button');ab.className='btn';ab.textContent='⏩ Auto';
+ab.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}else{tmr=setInterval(step,500);ab.classList.add('active')}};
+const fb=document.createElement('button');fb.className='btn';fb.textContent='⏩ ×100';fb.onclick=()=>{for(let i=0;i<100;i++){let probs=trans[cur],r=Math.random(),cum=0;for(let j=0;j<probs.length;j++){cum+=probs[j];if(r<=cum){cur=j;break}}history.push(cur);visits[cur]++}draw()};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{cur=0;history=[0];visits=[1,0,0];if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}draw()};
+ctrl.appendChild(sb);ctrl.appendChild(ab);ctrl.appendChild(fb);ctrl.appendChild(rst);draw()})();
+
+// ===== PERCEPTRON =====
+(function(){const el=$('demo-perceptron'),[c,ctx]=createCanvas(el,750,340);
+addHint(el,'Left-click = Red (class 0), Right-click = Blue (class 1). Train to learn the boundary. Yellow ring = misclassified.');
+let pts=[],w1=0,w2=0,b=0,lr=0.2,epoch=0,errs=0,errHist=[];
+// Normalize pixel coords to [0,1] for stable training
+function nx(px){return px/750} function ny(py){return py/340}
+function seed(){pts=[];for(let i=0;i<8;i++){pts.push({x:rand(60,320),y:rand(40,300),c:0});pts.push({x:rand(430,700),y:rand(40,300),c:1})}
+w1=0;w2=0;b=0;epoch=0;errs=0;errHist=[]}
+seed();
+function predict(px,py){return(w1*nx(px)+w2*ny(py)+b)>=0?1:0}
+function rawVal(px,py){return w1*nx(px)+w2*ny(py)+b}
+function trainEpoch(){errs=0;epoch++;let sh=[...pts].sort(()=>Math.random()-.5);
+sh.forEach(p=>{let pred=predict(p.x,p.y),err=p.c-pred;
+if(err!==0){errs++;w1+=lr*err*nx(p.x);w2+=lr*err*ny(p.y);b+=lr*err}});
+errHist.push(errs);if(errHist.length>100)errHist.shift()}
+function draw(){ctx.clearRect(0,0,750,340);
+// Decision regions - colored background
+for(let py=0;py<340;py+=8)for(let px=0;px<750;px+=8){
+let v=rawVal(px,py);
+ctx.fillStyle=v>=0?'rgba(56,189,248,0.06)':'rgba(255,107,107,0.06)';
+ctx.fillRect(px,py,8,8)}
+// Decision boundary line
+if(epoch>0&&(Math.abs(w1)>1e-8||Math.abs(w2)>1e-8)){
+ctx.save();ctx.shadowColor='#ffd166';ctx.shadowBlur=12;ctx.strokeStyle='#ffd166';ctx.lineWidth=2.5;ctx.beginPath();
+// line: w1*(x/750) + w2*(y/340) + b = 0  =>  y = -(w1*x/750 + b)*340/w2
+if(Math.abs(w2)>1e-8){
+let y0=-(w1*nx(0)+b)/w2*340,y1=-(w1*nx(750)+b)/w2*340;
+ctx.moveTo(0,y0);ctx.lineTo(750,y1)}else{let xv=-b/w1*750;ctx.moveTo(xv,0);ctx.lineTo(xv,340)}
+ctx.stroke();ctx.restore()}
+// Points with glow
+pts.forEach(p=>{let pred=predict(p.x,p.y),wrong=pred!==p.c;
+ctx.save();if(!wrong){ctx.shadowColor=p.c?'#38bdf8':'#ff6b6b';ctx.shadowBlur=8}
+ctx.beginPath();ctx.arc(p.x,p.y,wrong?9:7,0,TAU);ctx.fillStyle=p.c?'#38bdf8':'#ff6b6b';ctx.fill();
+if(wrong){ctx.strokeStyle='#ffd166';ctx.lineWidth=3;ctx.stroke()}
+ctx.restore()});
+// Info panel
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(8,8,240,60,8);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='700 12px Fira Code';ctx.fillText('Epoch '+epoch,18,28);
+ctx.fillStyle=errs>0?'#ff6b6b':'#34d399';ctx.font='600 12px Fira Code';
+ctx.fillText(errs>0?'Errors: '+errs+'/'+pts.length:'✅ Converged!',100,28);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('w₁='+w1.toFixed(3)+' w₂='+w2.toFixed(3)+' b='+b.toFixed(3),18,48);
+ctx.fillText('lr='+lr,18,62);
+// Error history mini-chart
+if(errHist.length>1){let cx2=560,cy2=8;
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(cx2,cy2,182,65,8);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='500 9px Fira Code';ctx.fillText('Errors over epochs:',cx2+8,cy2+16);
+let mx=Math.max(...errHist,1);ctx.strokeStyle='#ff6b6b';ctx.lineWidth=1.5;ctx.beginPath();
+errHist.forEach((e,i)=>{let x=cx2+8+i*(164/100),y=cy2+60-(e/mx)*38;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();
+if(errs===0){ctx.fillStyle='#34d399';ctx.font='700 9px Fira Code';ctx.fillText('→ 0',cx2+155,cy2+58)}}
+// Algorithm rule
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(8,300,500,34,6);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='500 9px Fira Code';
+ctx.fillText('Perceptron Rule: if ŷ ≠ y → w += lr·(y−ŷ)·x, b += lr·(y−ŷ)',18,321);
+ctx.fillStyle='#7d7a8c';ctx.fillText('Guaranteed to converge for linearly separable data!',18,335)}
+c.onclick=e=>{let r=c.getBoundingClientRect();pts.push({x:(e.clientX-r.left)*750/r.width,y:(e.clientY-r.top)*340/r.height,c:0});draw()};
+c.oncontextmenu=e=>{e.preventDefault();let r=c.getBoundingClientRect();pts.push({x:(e.clientX-r.left)*750/r.width,y:(e.clientY-r.top)*340/r.height,c:1});draw()};
+const ctrl=addControls(el);
+const tb=document.createElement('button');tb.className='btn';tb.textContent='▶ Train ×10';tb.onclick=()=>{for(let i=0;i<10;i++)trainEpoch();draw()};
+let tmr=null;const ab=document.createElement('button');ab.className='btn';ab.textContent='⏩ Auto Train';
+ab.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}else{tmr=setInterval(()=>{trainEpoch();draw();if(errs===0){clearInterval(tmr);tmr=null;ab.classList.remove('active')}},60);ab.classList.add('active')}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{seed();if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}draw()};
+ctrl.appendChild(tb);ctrl.appendChild(ab);ctrl.appendChild(rst);draw()})();
+
+// ===== ADALINE — Classification with Smooth Gradient Descent =====
+(function(){const el=$('demo-adaline'),[c,ctx]=createCanvas(el,750,520);
+addHint(el,'Left-click = Red (class −1), Right-click = Blue (class +1). Watch the smooth gradient descent — compare with Perceptron\'s discrete jumps above!');
+let pts=[],w1=0,w2=0,b=0,lr=0.15,ep=0,losses=[],wHist=[];
+// Normalize coordinates for stable training
+function nx(px){return px/750}
+function ny(py){return py/380}
+function rawZ(px,py){return w1*nx(px)+w2*ny(py)+b}
+function predict(px,py){return rawZ(px,py)>=0?1:-1}
+function seed(){pts=[];
+for(let i=0;i<10;i++){pts.push({x:rand(40,310),y:rand(30,340),c:-1});pts.push({x:rand(440,710),y:rand(30,340),c:1})}
+w1=0;w2=0;b=0;ep=0;losses=[];wHist=[{w1:0,w2:0}]}
+seed();
+function trainEpoch(){
+let dw1=0,dw2=0,db=0,n=pts.length,totalLoss=0;
+// Batch gradient (entire dataset, smoother for visualization)
+pts.forEach(p=>{let z=w1*nx(p.x)+w2*ny(p.y)+b;let err=p.c-z;
+dw1+=err*nx(p.x);dw2+=err*ny(p.y);db+=err;totalLoss+=err*err});
+w1+=lr*2*dw1/n;w2+=lr*2*dw2/n;b+=lr*2*db/n;
+ep++;let mse=totalLoss/n;losses.push(mse);
+if(losses.length>300)losses.shift();
+wHist.push({w1,w2});if(wHist.length>300)wHist.shift()}
+// Precomputed heatmap for performance
+let heatCache=null,heatW1=null,heatW2=null,heatB=null;
+function drawHeatmap(){
+// Only recompute when weights change
+if(heatW1===w1&&heatW2===w2&&heatB===b&&heatCache)return heatCache;
+let step=10,imgData=ctx.createImageData(750,380);
+for(let py=0;py<380;py+=step)for(let px=0;px<750;px+=step){
+let z=rawZ(px,py);
+// Sigmoid-like mapping for smooth color
+let sig=1/(1+Math.exp(-z*3));
+let r,g,bl,a;
+if(sig>=0.5){// Blue side (class +1)
+let t=(sig-0.5)*2;r=Math.round(20+36*t);g=Math.round(20+150*t);bl=Math.round(30+218*t);a=Math.round(8+55*t)}
+else{// Red side (class -1)
+let t=(0.5-sig)*2;r=Math.round(20+235*t);g=Math.round(20+87*t);bl=Math.round(30+77*t);a=Math.round(8+55*t)}
+for(let dy=0;dy<step&&py+dy<380;dy++)for(let dx=0;dx<step&&px+dx<750;dx++){
+let idx=((py+dy)*750+(px+dx))*4;imgData.data[idx]=r;imgData.data[idx+1]=g;imgData.data[idx+2]=bl;imgData.data[idx+3]=a}}
+heatW1=w1;heatW2=w2;heatB=b;heatCache=imgData;return imgData}
+function draw(){ctx.clearRect(0,0,750,520);
+// === MAIN PLOT (top 380px) ===
+// Grid
+for(let i=0;i<750;i+=75){ctx.strokeStyle='#1a1a2a';ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,380);ctx.stroke()}
+for(let i=0;i<380;i+=75){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(750,i);ctx.stroke()}
+// Smooth gradient heatmap (only after training starts)
+if(ep>0){let img=drawHeatmap();ctx.putImageData(img,0,0)}
+// Decision boundary
+if(ep>0&&(Math.abs(w1)>1e-8||Math.abs(w2)>1e-8)){
+// Draw confidence contours at z=-2,-1,0,+1,+2
+[-2,-1,0,1,2].forEach((zv,ci)=>{
+let isMain=zv===0;
+ctx.save();
+if(isMain){ctx.shadowColor='#ffd166';ctx.shadowBlur=18;ctx.strokeStyle='#ffd166';ctx.lineWidth=3}
+else{ctx.strokeStyle=zv>0?'rgba(56,189,248,'+(0.15+ci*0.05)+')':'rgba(255,107,107,'+(0.15+(4-ci)*0.05)+')';ctx.lineWidth=1;ctx.setLineDash([4,4])}
+ctx.beginPath();
+if(Math.abs(w2)>1e-8){let y0=-(w1*nx(0)+b-zv)/w2*380;let y1=-(w1*nx(750)+b-zv)/w2*380;ctx.moveTo(0,y0);ctx.lineTo(750,y1)}
+else{let xv=(-b+zv)/w1*750;ctx.moveTo(xv,0);ctx.lineTo(xv,380)}
+ctx.stroke();ctx.setLineDash([]);ctx.restore();
+// Labels on confidence contours
+if(!isMain&&Math.abs(w2)>1e-8){let lx=zv>0?650:80;let ly=-(w1*nx(lx)+b-zv)/w2*380;
+if(ly>15&&ly<370){ctx.fillStyle=zv>0?'rgba(56,189,248,0.5)':'rgba(255,107,107,0.5)';ctx.font='500 8px Fira Code';ctx.fillText('z='+zv,lx,ly-5)}}})}
+// Gradient arrows on each point (showing error direction)
+if(ep>0){pts.forEach(p=>{let z=rawZ(p.x,p.y);let err=p.c-z;
+if(Math.abs(err)<0.05)return;// skip if error tiny
+let arrowLen=clamp(Math.abs(err)*25,5,40);
+// Arrow direction = gradient direction (toward reducing error)
+let gx=err*nx(p.x),gy=err*ny(p.y);
+let gLen=Math.hypot(gx,gy);if(gLen<1e-6)return;
+gx=gx/gLen*arrowLen;gy=gy/gLen*arrowLen;
+// Map gradient to screen direction
+let ax=gx*300,ay=gy*300;let aLen=Math.hypot(ax,ay);
+if(aLen>40){ax=ax/aLen*40;ay=ay/aLen*40}
+if(aLen<3)return;
+ctx.save();ctx.globalAlpha=clamp(Math.abs(err)*0.6,0.15,0.7);
+ctx.strokeStyle='#ffd166';ctx.lineWidth=1.5;
+ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x+ax,p.y+ay);ctx.stroke();
+// Arrowhead
+let angle=Math.atan2(ay,ax);let hs=5;
+ctx.fillStyle='#ffd166';ctx.beginPath();
+ctx.moveTo(p.x+ax,p.y+ay);
+ctx.lineTo(p.x+ax-hs*Math.cos(angle-0.5),p.y+ay-hs*Math.sin(angle-0.5));
+ctx.lineTo(p.x+ax-hs*Math.cos(angle+0.5),p.y+ay-hs*Math.sin(angle+0.5));
+ctx.fill();ctx.restore()})}
+// Points with glow + error ring
+pts.forEach(p=>{let pred=predict(p.x,p.y);let wrong=(p.c===-1&&pred!==p.c)||(p.c===1&&pred!==p.c);
+let z=rawZ(p.x,p.y);let errMag=Math.abs(p.c-z);
+ctx.save();
+// Error aura — bigger = more error (continuous visualization!)
+if(ep>0&&errMag>0.1){
+let auraR=clamp(errMag*12,8,35);
+ctx.beginPath();ctx.arc(p.x,p.y,auraR,0,TAU);
+ctx.fillStyle=wrong?'rgba(255,209,102,'+clamp(errMag*0.12,0.03,0.2)+')':'rgba(52,211,153,0.03)';ctx.fill()}
+// Point
+if(!wrong){ctx.shadowColor=p.c===1?'#38bdf8':'#ff6b6b';ctx.shadowBlur=10}
+ctx.beginPath();ctx.arc(p.x,p.y,wrong?9:7,0,TAU);ctx.fillStyle=p.c===1?'#38bdf8':'#ff6b6b';ctx.fill();
+if(wrong){ctx.strokeStyle='#ffd166';ctx.lineWidth=2.5;ctx.stroke();
+// Pulsing ring for misclassified
+ctx.beginPath();ctx.arc(p.x,p.y,12+Math.sin(Date.now()/200)*3,0,TAU);
+ctx.strokeStyle='rgba(255,209,102,0.3)';ctx.lineWidth=1;ctx.stroke()}
+ctx.restore()});
+// === INFO PANEL (top-left) ===
+ctx.fillStyle='rgba(6,6,12,.92)';ctx.beginPath();ctx.roundRect(8,8,260,75,10);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='700 13px Fira Code';ctx.fillText('Adaline — Epoch '+ep,18,28);
+let errs=pts.filter(p=>predict(p.x,p.y)!==(p.c>=0?1:-1)).length;
+ctx.fillStyle=errs>0?'#ff6b6b':'#34d399';ctx.font='600 11px Fira Code';
+ctx.fillText(errs>0?'Errors: '+errs+'/'+pts.length:'✅ All correct!',18,48);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('w₁='+w1.toFixed(3)+' w₂='+w2.toFixed(3)+' b='+b.toFixed(3),18,64);
+ctx.fillText('lr='+lr.toFixed(2)+'  |  '+pts.length+' points',18,78);
+// === BOTTOM PANELS (380px – 520px) ===
+let panelY=388;
+// --- Loss Curve Panel (left) ---
+ctx.fillStyle='rgba(6,6,12,.92)';ctx.beginPath();ctx.roundRect(8,panelY,240,125,10);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='700 11px Fira Code';ctx.fillText('Loss (MSE) — Smooth Descent',18,panelY+18);
+if(losses.length>1){let mx=Math.max(...losses),mn=Math.min(...losses);if(mx===mn)mx=mn+1;
+let gx=18,gy=panelY+28,gw=220,gh=60;
+// Gradient fill under curve
+let grad=ctx.createLinearGradient(gx,gy,gx,gy+gh);grad.addColorStop(0,'rgba(255,107,107,0.25)');grad.addColorStop(1,'rgba(255,107,107,0)');
+ctx.beginPath();losses.forEach((l,i)=>{let x=gx+i*gw/300,y=gy+(1-(l-mn)/(mx-mn))*gh;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});
+let lastX=gx+(losses.length-1)*gw/300;ctx.lineTo(lastX,gy+gh);ctx.lineTo(gx,gy+gh);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
+// Line
+ctx.strokeStyle='#ff6b6b';ctx.lineWidth=2;ctx.beginPath();
+losses.forEach((l,i)=>{let x=gx+i*gw/300,y=gy+(1-(l-mn)/(mx-mn))*gh;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();
+// Glow dot at end
+let lastY=gy+(1-(losses[losses.length-1]-mn)/(mx-mn))*gh;
+ctx.save();ctx.shadowColor='#ff6b6b';ctx.shadowBlur=10;
+ctx.beginPath();ctx.arc(lastX,lastY,4,0,TAU);ctx.fillStyle='#ff6b6b';ctx.fill();ctx.restore()}
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+if(losses.length)ctx.fillText('Current MSE: '+losses[losses.length-1].toFixed(4),18,panelY+105);
+ctx.fillStyle='#34d399';ctx.font='400 8px Fira Code';
+ctx.fillText('↑ Smooth curve = continuous gradient!',18,panelY+118);
+// --- Weight Trajectory Panel (center) ---
+let wx=258,ww=160;
+ctx.fillStyle='rgba(6,6,12,.92)';ctx.beginPath();ctx.roundRect(wx,panelY,ww,125,10);ctx.fill();
+ctx.fillStyle='#a78bfa';ctx.font='700 10px Fira Code';ctx.fillText('Weight Space',wx+10,panelY+16);
+if(wHist.length>1){
+let allW1=wHist.map(h=>h.w1),allW2=wHist.map(h=>h.w2);
+let minW1=Math.min(...allW1)-.5,maxW1=Math.max(...allW1)+.5;
+let minW2=Math.min(...allW2)-.5,maxW2=Math.max(...allW2)+.5;
+if(maxW1-minW1<1){minW1-=0.5;maxW1+=0.5}if(maxW2-minW2<1){minW2-=0.5;maxW2+=0.5}
+let mapX=v=>wx+12+(v-minW1)/(maxW1-minW1)*(ww-24);
+let mapY=v=>panelY+25+(v-minW2)/(maxW2-minW2)*80;
+// Trail with fading
+ctx.lineWidth=1.5;ctx.beginPath();
+wHist.forEach((h,i)=>{let x=mapX(h.w1),y=mapY(h.w2);
+if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)});
+ctx.strokeStyle='rgba(167,139,250,0.5)';ctx.stroke();
+// Dots with gradient from start to end
+wHist.forEach((h,i)=>{if(i%Math.max(1,Math.floor(wHist.length/30))!==0&&i!==wHist.length-1)return;
+let x=mapX(h.w1),y=mapY(h.w2);let t=i/(wHist.length-1);
+ctx.beginPath();ctx.arc(x,y,i===wHist.length-1?4:2,0,TAU);
+ctx.fillStyle=i===wHist.length-1?'#ffd166':'rgba(167,139,250,'+(0.2+t*0.8)+')';ctx.fill()});
+// Current point glow
+let last=wHist[wHist.length-1];
+ctx.save();ctx.shadowColor='#ffd166';ctx.shadowBlur=12;ctx.beginPath();
+ctx.arc(mapX(last.w1),mapY(last.w2),5,0,TAU);ctx.fillStyle='#ffd166';ctx.fill();ctx.restore()}
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';
+ctx.fillText('w₁ →',wx+10,panelY+118);ctx.fillText('w₂ ↓',wx+ww-30,panelY+118);
+ctx.fillStyle='#a78bfa66';ctx.fillText('Trajectory = gradient path',wx+50,panelY+118);
+// --- Architecture + Key Difference Panel (right) ---
+let rx=428,rw=314;
+ctx.fillStyle='rgba(6,6,12,.92)';ctx.beginPath();ctx.roundRect(rx,panelY,rw,125,10);ctx.fill();
+// Adaline neuron diagram (compact)
+ctx.fillStyle='#a78bfa';ctx.font='700 10px Fira Code';ctx.fillText('Adaline Architecture',rx+10,panelY+16);
+// Inputs
+[{l:'x₁',y:panelY+38},{l:'x₂',y:panelY+62},{l:'1',y:panelY+86}].forEach(n=>{
+ctx.beginPath();ctx.arc(rx+28,n.y,10,0,TAU);ctx.fillStyle='#38bdf822';ctx.fill();
+ctx.strokeStyle='#38bdf8';ctx.lineWidth=1;ctx.stroke();
+ctx.fillStyle='#38bdf8';ctx.font='600 9px Fira Code';ctx.textAlign='center';ctx.fillText(n.l,rx+28,n.y+3);ctx.textAlign='left'});
+// Arrows to sum
+ctx.strokeStyle='#4a475a';ctx.lineWidth=1;
+[panelY+38,panelY+62,panelY+86].forEach(y=>{ctx.beginPath();ctx.moveTo(rx+38,y);ctx.lineTo(rx+80,panelY+58);ctx.stroke()});
+ctx.fillStyle='#ffd166';ctx.font='500 7px Fira Code';ctx.fillText('w₁',rx+48,panelY+38);ctx.fillText('w₂',rx+48,panelY+62);ctx.fillText('b',rx+48,panelY+82);
+// Sum node
+ctx.beginPath();ctx.arc(rx+92,panelY+58,14,0,TAU);ctx.fillStyle='#ffd16622';ctx.fill();
+ctx.strokeStyle='#ffd166';ctx.lineWidth=1.5;ctx.stroke();
+ctx.fillStyle='#ffd166';ctx.font='700 10px Fira Code';ctx.textAlign='center';ctx.fillText('Σ',rx+92,panelY+62);ctx.textAlign='left';
+// Raw output z
+ctx.strokeStyle='#34d399';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(rx+106,panelY+58);ctx.lineTo(rx+135,panelY+58);ctx.stroke();
+ctx.fillStyle='#34d399';ctx.font='700 9px Fira Code';ctx.fillText('z',rx+138,panelY+62);
+// Error computed HERE (before activation)
+ctx.save();ctx.strokeStyle='#ff6b6b';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);
+ctx.beginPath();ctx.moveTo(rx+145,panelY+58);ctx.lineTo(rx+145,panelY+36);ctx.lineTo(rx+190,panelY+36);ctx.stroke();ctx.setLineDash([]);ctx.restore();
+ctx.fillStyle='#ff6b6b';ctx.font='700 8px Fira Code';ctx.fillText('error = t − z',rx+150,panelY+30);
+ctx.fillStyle='#ff6b6b';ctx.font='400 7px Fira Code';ctx.fillText('← computed HERE!',rx+150,panelY+42);
+// Activation → output
+ctx.strokeStyle='#4a475a';ctx.beginPath();ctx.moveTo(rx+150,panelY+58);ctx.lineTo(rx+190,panelY+58);ctx.stroke();
+// Step function box
+ctx.fillStyle='#ffffff11';ctx.beginPath();ctx.roundRect(rx+190,panelY+48,40,20,4);ctx.fill();
+ctx.strokeStyle='#7d7a8c';ctx.beginPath();ctx.roundRect(rx+190,panelY+48,40,20,4);ctx.stroke();
+ctx.fillStyle='#7d7a8c';ctx.font='600 8px Fira Code';ctx.textAlign='center';ctx.fillText('sign()',rx+210,panelY+62);ctx.textAlign='left';
+ctx.strokeStyle='#4a475a';ctx.beginPath();ctx.moveTo(rx+230,panelY+58);ctx.lineTo(rx+260,panelY+58);ctx.stroke();
+ctx.fillStyle='#e4e2df';ctx.font='700 9px Fira Code';ctx.fillText('ŷ',rx+264,panelY+62);
+// Feedback arrow
+ctx.save();ctx.strokeStyle='#ff6b6b88';ctx.lineWidth=1;ctx.setLineDash([3,3]);
+ctx.beginPath();ctx.moveTo(rx+170,panelY+36);ctx.lineTo(rx+60,panelY+36);ctx.lineTo(rx+60,panelY+58);
+ctx.stroke();ctx.setLineDash([]);ctx.restore();
+ctx.fillStyle='#ff6b6b88';ctx.font='400 7px Fira Code';ctx.fillText('Δw = η·err·x',rx+80,panelY+30);
+// Key difference box
+ctx.fillStyle='rgba(255,209,102,.06)';ctx.beginPath();ctx.roundRect(rx+8,panelY+90,rw-16,28,6);ctx.fill();
+ctx.strokeStyle='#ffd16633';ctx.beginPath();ctx.roundRect(rx+8,panelY+90,rw-16,28,6);ctx.stroke();
+ctx.fillStyle='#ffd166';ctx.font='700 8px Fira Code';ctx.fillText('KEY:',rx+14,panelY+104);
+ctx.fillStyle='#e4e2df';ctx.font='400 8px Fira Code';ctx.fillText('Error on z (continuous) → smooth gradient → stable convergence',rx+46,panelY+104);
+ctx.fillStyle='#7d7a8c';ctx.fillText('vs Perceptron: error on ŷ (binary) → no gradient → jumpy updates',rx+46,panelY+116)}
+let animating=false;
+function drawLoop(){draw();if(animating)requestAnimationFrame(drawLoop)}
+const ctrl=addControls(el);
+// Learning rate slider
+let lrLabel=document.createElement('label');lrLabel.textContent='η';ctrl.appendChild(lrLabel);
+let lrSlider=document.createElement('input');lrSlider.type='range';lrSlider.min='1';lrSlider.max='50';lrSlider.value='15';
+lrSlider.oninput=e=>{lr=+e.target.value/100;lrVal.textContent=lr.toFixed(2)};ctrl.appendChild(lrSlider);
+let lrVal=document.createElement('span');lrVal.className='btn';lrVal.style.cssText='min-width:40px;text-align:center';lrVal.textContent='0.15';ctrl.appendChild(lrVal);
+const tb=document.createElement('button');tb.className='btn';tb.textContent='▶ Train ×10';tb.onclick=()=>{for(let i=0;i<10;i++)trainEpoch();heatCache=null;draw()};
+let tmr=null;const ab=document.createElement('button');ab.className='btn';ab.textContent='⏩ Auto Train';
+ab.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active');animating=false}else{animating=true;tmr=setInterval(()=>{for(let i=0;i<3;i++)trainEpoch();heatCache=null;draw();
+let errs2=pts.filter(p=>predict(p.x,p.y)!==(p.c>=0?1:-1)).length;
+if(errs2===0&&losses.length>20&&losses[losses.length-1]<0.05){clearInterval(tmr);tmr=null;ab.classList.remove('active');animating=false}},50);ab.classList.add('active')}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{seed();heatCache=null;if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}animating=false;draw()};
+ctrl.appendChild(tb);ctrl.appendChild(ab);ctrl.appendChild(rst);draw()})();
+</script></body></html>

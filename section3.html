@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Section III — The Revival & Classical ML · How AI Works</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<div class="progress-bar" style="background:linear-gradient(90deg,var(--a3),var(--a2))"></div>
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<nav class="topnav"><a href="index.html" class="logo">How AI Works</a><div class="nav-links"><a href="section1.html">I</a><a href="section2.html">II</a><a href="section3.html" class="active">III</a><a href="section4.html">IV</a><a href="section5.html">V</a><a href="section6.html">VI</a><a href="section7.html">VII</a><a href="section8.html">VIII</a></div></nav>
+<div class="section-hero"><div class="era-label" style="color:var(--a3)">Section III · 1980s</div>
+<h1>The Revival & Classical ML</h1><p>Backpropagation revives neural networks. Decision trees, RNNs, and Boltzmann machines emerge.</p>
+<div class="nav-arrows"><a href="section2.html">&larr; Section II</a><a href="section4.html">Section IV &rarr;</a></div></div>
+<div class="models-container">
+
+<!-- ======= NEOCOGNITRON ======= -->
+<div class="model-card" id="model-neocognitron"><div class="mc-head"><span class="mc-year" style="color:var(--a3)">1980</span><div class="mc-info">
+<h3>Neocognitron <a href="https://doi.org/10.1007/BF00344251" target="_blank" class="paper-link">Paper</a></h3>
+<p>Fukushima's hierarchical pattern recognizer — inspired by the visual cortex. Simple cells detect local features, complex cells pool them for translation invariance.</p>
+<div class="model-lineage">Extends <a href="section1.html#model-perceptron">Perceptron</a> into a hierarchical architecture; the direct ancestor of <a href="section4.html#model-cnn">CNN/LeNet</a> (adds backprop-based training).</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a3)">S-cells (feature detect) → C-cells (pool/invariance) → deeper layers → recognition</div>
+<div class="mc-demo" id="demo-neo"></div></div>
+
+<!-- ======= RNN ======= -->
+<div class="model-card" id="model-rnn"><div class="mc-head"><span class="mc-year" style="color:var(--a3)">1986</span><div class="mc-info">
+<h3>RNN (Recurrent Neural Network) <a href="https://doi.org/10.1038/323533a0" target="_blank" class="paper-link">Paper</a></h3>
+<p>Networks with loops — the hidden state acts as memory, carrying information from previous time steps. Essential for sequences like text, speech, and time series.</p>
+<div class="model-lineage">Overcomes <a href="section1.html#model-markov">Markov Chain</a>'s memoryless limitation by adding recurrence; its vanishing gradient problem is solved by <a href="section4.html#model-lstm">LSTM</a>.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a3)">hₜ = tanh(W_h · hₜ₋₁ + W_x · xₜ + b) — hidden state = f(previous state + current input)</div>
+<div class="mc-demo" id="demo-rnn"></div></div>
+
+<!-- ======= BOLTZMANN MACHINE ======= -->
+<div class="model-card" id="model-boltzmann"><div class="mc-head"><span class="mc-year" style="color:var(--a3)">1985</span><div class="mc-info">
+<h3>Boltzmann Machine <a href="https://doi.org/10.1016/S0364-0213(85)80012-4" target="_blank" class="paper-link">Paper</a></h3>
+<p>Hinton & Sejnowski's stochastic network — neurons randomly flip on/off based on their energy. Lower energy states are more likely.</p>
+<div class="model-lineage">Introduces energy-based probabilistic learning inspired by <a href="section1.html#model-markov">Markov Chain</a> sampling; its restricted variant directly leads to <a href="section5.html#model-dbn">DBN</a> pretraining.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a3)">P(state) ∝ e^(-Energy/T) — lower energy = more probable. Energy = -Σ wᵢⱼ sᵢ sⱼ</div>
+<div class="mc-demo" id="demo-boltz"></div></div>
+
+<!-- ======= BACKPROPAGATION ======= -->
+<div class="model-card" id="model-backprop"><div class="mc-head"><span class="mc-year" style="color:var(--a3)">1986</span><div class="mc-info">
+<h3>Backpropagation <a href="https://doi.org/10.1038/323533a0" target="_blank" class="paper-link">Paper</a></h3>
+<p>Rumelhart, Hinton & Williams made neural networks trainable. Compute the error at the output, then propagate gradients backward through each layer.</p>
+<div class="model-lineage">Applies the <a href="section2.html#model-chainrule">Chain Rule</a> to multi-layer networks, solving <a href="section1.html#model-perceptron">Perceptron</a>'s XOR problem; enables ALL deep learning from <a href="section4.html#model-cnn">CNN</a> to <a href="section7.html#model-transformer">Transformer</a>.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a3)">∂Loss/∂wᵢ = ∂Loss/∂output · ∂output/∂hidden · ∂hidden/∂wᵢ — chain rule through layers</div>
+<div class="mc-demo" id="demo-bp"></div></div>
+
+<!-- ======= DECISION TREE ======= -->
+<div class="model-card" id="model-dtree"><div class="mc-head"><span class="mc-year" style="color:var(--a3)">1986</span><div class="mc-info">
+<h3>Decision Tree <a href="https://link.springer.com/article/10.1007/BF00116251" target="_blank" class="paper-link">Paper</a></h3>
+<p>Quinlan's ID3 algorithm — recursively split data on the feature that gives the most information gain. Simple, fast, and explainable.</p>
+<div class="model-lineage">A non-neural alternative to <a href="section1.html#model-perceptron">Perceptron</a>; later ensembled into <a href="section4.html#model-randomforest">Random Forest</a>, <a href="section5.html#model-gbdt">GBDT</a>, and <a href="section7.html#model-xgboost">XGBoost</a>.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a3)">Split on feature with max Information Gain = H(parent) - Σ (|child|/|parent|) H(child)</div>
+<div class="mc-demo" id="demo-tree"></div></div>
+
+</div>
+<footer><a href="section2.html">&larr; Section II</a> &middot; <a href="section4.html">Section IV: Golden Age &rarr;</a></footer>
+<script src="shared.js"></script>
+
+<script>
+/* ============================================================
+   HiDPI / Retina Canvas Patch (Sharp, Layout-Preserving)
+   - Fixes blurry canvas text/lines on Retina by scaling the backing store.
+   - IMPORTANT: preserves the original demo coordinate system & CSS sizing
+     (no responsive resizing, no font scaling), preventing gradients/overlays
+     from breaking or elements from overlapping.
+   ============================================================ */
+(function(){
+  const dpr = () => (window.devicePixelRatio || 1);
+
+  window.createCanvas = function(containerEl, w, h){
+    const canvas = document.createElement('canvas');
+
+    // Keep the *same* CSS size the demos were authored for.
+    canvas.style.width  = w + 'px';
+    canvas.style.height = h + 'px';
+    canvas.style.display = 'block';
+
+    // HiDPI backing store
+    const r = dpr();
+    canvas.width  = Math.round(w * r);
+    canvas.height = Math.round(h * r);
+
+    containerEl.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d', { alpha: true });
+
+    // Map drawing coordinates to CSS pixels (so all existing coordinates stay valid)
+    ctx.setTransform(r, 0, 0, r, 0, 0);
+
+    // Rendering hints (safe no-ops if unsupported)
+    ctx.imageSmoothingEnabled = true;
+    try { ctx.textRendering = 'geometricPrecision'; } catch(e) {}
+
+    return [canvas, ctx];
+  };
+})();
+</script>
+
+<script>
+// ===== NEOCOGNITRON — Hierarchical feature extraction =====
+(function(){const el=$('demo-neo'),[c,ctx]=createCanvas(el,750,380);
+addHint(el,'Draw on the 16×16 grid (left). Watch features detected layer by layer — just like the visual cortex!');
+const G=16;let grid=Array(G).fill(0).map(()=>Array(G).fill(0)),drawing=false,erasing=false;
+const filters=[
+{name:'━ Horiz',k:[[1,1,1],[0,0,0],[-1,-1,-1]],c:'#ff6b6b'},
+{name:'┃ Vert',k:[[1,0,-1],[1,0,-1],[1,0,-1]],c:'#38bdf8'},
+{name:'╲ Diag',k:[[1,0,-1],[0,1,0],[-1,0,1]],c:'#ffd166'},
+{name:'╱ Diag',k:[[-1,0,1],[0,1,0],[1,0,-1]],c:'#a78bfa'}];
+function conv2d(g,k){let kh=k.length,kw=k[0].length,h=g.length-kh+1,w=g[0].length-kw+1,out=[];
+for(let r=0;r<h;r++){out[r]=[];for(let c2=0;c2<w;c2++){let s=0;
+for(let kr=0;kr<kh;kr++)for(let kc=0;kc<kw;kc++)s+=g[r+kr][c2+kc]*k[kr][kc];
+out[r][c2]=Math.max(0,s)}}return out}
+function pool2x2(g){let out=[];for(let r=0;r<g.length-1;r+=2){out[r>>1]=[];
+for(let c2=0;c2<g[0].length-1;c2+=2)out[r>>1][c2>>1]=Math.max(g[r][c2],g[r][c2+1],g[r+1][c2],g[r+1][c2+1])}return out}
+function draw(){ctx.clearRect(0,0,750,380);
+let cs=18,ox=12,oy=36;
+// Input label
+ctx.fillStyle='#ffd166';ctx.font='700 11px Fira Code';ctx.fillText('✏️ Draw ('+G+'×'+G+')',ox,oy-10);
+// Input grid
+for(let r=0;r<G;r++)for(let c2=0;c2<G;c2++){
+ctx.fillStyle=grid[r][c2]?'#e4e2df':'#111120';
+ctx.fillRect(ox+c2*cs,oy+r*cs,cs-1,cs-1)}
+// S-cells: conv output
+let fmaps=filters.map(f=>conv2d(grid,f.k));
+let sx=315,fmH=fmaps[0].length,fcs=Math.min(10,160/fmH);
+ctx.fillStyle='#4ecdc4';ctx.font='700 11px Fira Code';ctx.fillText('S-Cells (detect edges)',sx,oy-10);
+let cols=[[255,107,107],[56,189,248],[255,209,102],[167,139,250]];
+fmaps.forEach((fm,fi)=>{let fy=oy+fi*82;
+ctx.fillStyle=filters[fi].c;ctx.font='600 9px Fira Code';ctx.fillText(filters[fi].name,sx,fy+10);
+let mx=0;fm.forEach(row=>row.forEach(v=>{if(v>mx)mx=v}));mx=mx||1;
+for(let r=0;r<fm.length;r++)for(let c2=0;c2<fm[0].length;c2++){
+let v=fm[r][c2]/mx;
+ctx.fillStyle=`rgba(${cols[fi].join(',')},${v*.85})`;
+ctx.fillRect(sx+60+c2*fcs,fy,fcs-1,fcs-1)}
+// Show max activation
+let total=0;fm.forEach(row=>row.forEach(v=>{total+=v}));
+ctx.fillStyle=filters[fi].c+'88';ctx.font='400 8px Fira Code';
+ctx.fillText('Σ='+total.toFixed(0),sx+60+fm[0].length*fcs+4,fy+10)});
+// C-cells: pooled
+let cx2=540;
+ctx.fillStyle='#fb923c';ctx.font='700 11px Fira Code';ctx.fillText('C-Cells (pool)',cx2,oy-10);
+let pooled=fmaps.map(fm=>pool2x2(fm));
+let pcs=Math.min(18,140/(pooled[0]?pooled[0][0].length:1));
+pooled.forEach((pm,fi)=>{if(!pm.length||!pm[0].length)return;
+let fy=oy+fi*82;
+ctx.fillStyle=filters[fi].c;ctx.font='600 9px Fira Code';ctx.fillText(filters[fi].name,cx2,fy+10);
+let mx=0;pm.forEach(row=>row.forEach(v=>{if(v>mx)mx=v}));mx=mx||1;
+for(let r=0;r<pm.length;r++)for(let c2=0;c2<pm[0].length;c2++){
+let v=pm[r][c2]/mx;
+ctx.fillStyle=`rgba(${cols[fi].join(',')},${v*.9})`;
+ctx.fillRect(cx2+60+c2*pcs,fy,pcs-1,pcs-1)}});
+// Recognition bars
+let rx=540,ry=oy+335;
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(rx-2,ry-12,210,44,8);ctx.fill();
+ctx.fillStyle='#34d399';ctx.font='700 10px Fira Code';ctx.fillText('Recognition',rx+4,ry);
+let scores=pooled.map(pm=>{let s=0;pm.forEach(row=>row.forEach(v=>{s+=v}));return s});
+let total=scores.reduce((a,b)=>a+b,0)||1;
+let maxI=scores.indexOf(Math.max(...scores));
+scores.forEach((s,i)=>{let pct=s/total;
+ctx.fillStyle=i===maxI&&pct>.15?filters[i].c:'#4a475a';ctx.font='500 8px Fira Code';
+ctx.fillText(filters[i].name.slice(2)+' '+(pct*100).toFixed(0)+'%',rx+4+i*50,ry+18)});
+// Flow arrows
+ctx.fillStyle='#4a475a';ctx.font='24px sans-serif';
+ctx.fillText('→',ox+G*cs+8,oy+G*cs/2);ctx.fillText('→',sx+215,oy+G*cs/2);
+// Architecture label
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(10,oy+G*cs+8,730,30,6);ctx.fill();
+ctx.fillStyle='#a78bfa';ctx.font='500 9px Fira Code';
+ctx.fillText('Neocognitron: Input → S-cells (convolution: detect local features) → C-cells (max-pool: translation invariance) → Recognition',18,oy+G*cs+28)}
+function gridXY(e){let r=c.getBoundingClientRect();
+let mx=(e.clientX-r.left)*750/r.width-12,my=(e.clientY-r.top)*380/r.height-36;
+return[Math.floor(mx/18),Math.floor(my/18)]}
+c.onmousedown=e=>{let[gx,gy]=gridXY(e);
+if(gx>=0&&gx<G&&gy>=0&&gy<G){drawing=true;erasing=grid[gy][gx]===1;grid[gy][gx]=erasing?0:1;draw()}};
+c.onmousemove=e=>{if(!drawing)return;let[gx,gy]=gridXY(e);
+if(gx>=0&&gx<G&&gy>=0&&gy<G){grid[gy][gx]=erasing?0:1;draw()}};
+c.onmouseup=()=>drawing=false;c.onmouseleave=()=>drawing=false;
+const ctrl=addControls(el);
+[{n:'━ H-line',g:()=>{grid=Array(G).fill(0).map(()=>Array(G).fill(0));for(let c2=2;c2<14;c2++){grid[7][c2]=1;grid[8][c2]=1}}},
+{n:'┃ V-line',g:()=>{grid=Array(G).fill(0).map(()=>Array(G).fill(0));for(let r=2;r<14;r++){grid[r][7]=1;grid[r][8]=1}}},
+{n:'╲ Diag',g:()=>{grid=Array(G).fill(0).map(()=>Array(G).fill(0));for(let i=1;i<15;i++){grid[i][i]=1;if(i<15)grid[i][i-1]=1}}},
+{n:'□ Box',g:()=>{grid=Array(G).fill(0).map(()=>Array(G).fill(0));for(let i=3;i<13;i++){grid[3][i]=1;grid[12][i]=1;grid[i][3]=1;grid[i][12]=1}}},
+{n:'T Shape',g:()=>{grid=Array(G).fill(0).map(()=>Array(G).fill(0));for(let c2=3;c2<13;c2++){grid[3][c2]=1;grid[4][c2]=1}for(let r=3;r<13;r++){grid[r][7]=1;grid[r][8]=1}}}
+].forEach(p=>{let b=document.createElement('button');b.className='btn';b.textContent=p.n;b.onclick=()=>{p.g();draw()};ctrl.appendChild(b)});
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Clear';rst.onclick=()=>{grid=Array(G).fill(0).map(()=>Array(G).fill(0));draw()};
+ctrl.appendChild(rst);draw()})();
+
+// ===== RNN — Sequence memory demo =====
+(function(){const el=$('demo-rnn'),[c,ctx]=createCanvas(el,750,380);
+addHint(el,'Feed words one by one. The hidden state (green bar) accumulates meaning — watch how each word changes the sentiment!');
+const sentences=[
+{words:['The','movie','was','absolutely','terrible','and','boring'],sentiments:[0,.1,.1,.3,-.8,-.7,-.9],label:'Negative review'},
+{words:['I','love','this','amazing','wonderful','beautiful','day'],sentiments:[0,.4,.4,.7,.85,.9,.95],label:'Positive review'},
+{words:['The','food','was','okay','but','service','sucked'],sentiments:[0,.05,.05,.1,.0,-.1,-.7],label:'Mixed → Negative'}];
+let si=0,pos=-1,hVal=0,history=[];
+function cur(){return sentences[si]}
+function feedWord(){if(pos>=cur().words.length-1)return;pos++;
+hVal=hVal*.6+cur().sentiments[pos]*.4; // tanh-like blending
+history.push({word:cur().words[pos],h:hVal,s:cur().sentiments[pos]});draw()}
+function draw(){ctx.clearRect(0,0,750,380);
+let sent=cur();
+// Title
+ctx.fillStyle='#ffd166';ctx.font='700 12px Fira Code';ctx.fillText('RNN: Sentiment Analysis — "'+sent.label+'"',15,20);
+// ===== UNROLLED RNN CELLS =====
+let cellW=88,cellH=50,cellY=50,startX=20;
+sent.words.forEach((w,i)=>{let x=startX+i*cellW+i*8,fed=i<=pos,isCur=i===pos;
+// Cell box
+ctx.fillStyle=fed?(isCur?'rgba(78,205,196,.12)':'rgba(78,205,196,.04)'):'#0a0a14';
+ctx.beginPath();ctx.roundRect(x,cellY,cellW,cellH,8);ctx.fill();
+ctx.strokeStyle=fed?(isCur?'#4ecdc4':'#4ecdc444'):'#1e1e32';ctx.lineWidth=isCur?2.5:1;
+ctx.beginPath();ctx.roundRect(x,cellY,cellW,cellH,8);ctx.stroke();
+// tanh label inside
+ctx.fillStyle=fed?'#4ecdc4':'#333';ctx.font='600 9px Fira Code';ctx.textAlign='center';
+ctx.fillText('tanh',x+cellW/2,cellY+18);
+ctx.fillStyle=fed?'#e4e2df':'#333';ctx.font='400 8px Fira Code';
+ctx.fillText('h=f(h,x)',x+cellW/2,cellY+34);
+// Input word below
+ctx.fillStyle=fed?(isCur?'#38bdf8':'#38bdf888'):'#333';ctx.font=(isCur?'700':'400')+' 10px Fira Code';
+ctx.fillText(w,x+cellW/2,cellY+cellH+18);
+// Input arrow up
+if(fed){ctx.strokeStyle=isCur?'#38bdf8':'#38bdf844';ctx.lineWidth=1.5;
+ctx.beginPath();ctx.moveTo(x+cellW/2,cellY+cellH+6);ctx.lineTo(x+cellW/2,cellY+cellH);ctx.stroke();
+ctx.fillStyle=ctx.strokeStyle;ctx.beginPath();ctx.moveTo(x+cellW/2-4,cellY+cellH);ctx.lineTo(x+cellW/2+4,cellY+cellH);ctx.lineTo(x+cellW/2,cellY+cellH-5);ctx.fill()}
+// Recurrent arrow to next
+if(i<sent.words.length-1){let nx=x+cellW+8;
+ctx.strokeStyle=fed?'#ffd16688':'#1e1e32';ctx.lineWidth=fed?2:1;
+ctx.beginPath();ctx.moveTo(x+cellW,cellY+cellH/2);ctx.lineTo(nx,cellY+cellH/2);ctx.stroke();
+if(fed){ctx.fillStyle='#ffd166';ctx.font='500 7px Fira Code';ctx.fillText('hₜ',x+cellW+4,cellY+cellH/2-5)}}
+ctx.textAlign='left'});
+// ===== HIDDEN STATE VISUALIZATION =====
+let hy=140;
+ctx.fillStyle='#ffd166';ctx.font='700 11px Fira Code';ctx.fillText('Hidden State h (memory) over time:',15,hy);
+// Bar chart of hidden state after each word
+if(history.length>0){let barW=Math.min(85,660/history.length);
+history.forEach((h,i)=>{let x=20+i*(barW+6),y=hy+8;
+let barH=Math.abs(h.h)*70,isPos=h.h>=0;
+// Bar
+let barY=isPos?y+75-barH:y+75;
+ctx.fillStyle=isPos?'rgba(52,211,153,.6)':'rgba(255,107,107,.6)';
+ctx.beginPath();ctx.roundRect(x,barY,barW,barH||2,3);ctx.fill();
+// Zero line
+ctx.strokeStyle='#333';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,y+75);ctx.lineTo(x+barW,y+75);ctx.stroke();
+// Value
+ctx.fillStyle=isPos?'#34d399':'#ff6b6b';ctx.font='600 9px Fira Code';ctx.textAlign='center';
+ctx.fillText(h.h.toFixed(2),x+barW/2,isPos?barY-4:barY+barH+12);
+// Word label
+ctx.fillStyle=i===pos?'#ffd166':'#7d7a8c';ctx.font=(i===pos?'600':'400')+' 8px Fira Code';
+ctx.fillText(h.word,x+barW/2,y+100);ctx.textAlign='left'});
+// Sentiment arrow
+let lastH=history[history.length-1].h;
+let arrowX=25+history.length*(Math.min(85,660/history.length)+6);
+if(arrowX<700){
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(arrowX,hy+40,90,50,8);ctx.fill();
+ctx.fillStyle=lastH>0.2?'#34d399':lastH<-0.2?'#ff6b6b':'#ffd166';
+ctx.font='22px sans-serif';ctx.textAlign='center';
+ctx.fillText(lastH>0.2?'😊':lastH<-0.2?'😠':'😐',arrowX+45,hy+62);
+ctx.font='600 9px Fira Code';
+ctx.fillText(lastH>0.2?'Positive':lastH<-0.2?'Negative':'Neutral',arrowX+45,hy+82);
+ctx.textAlign='left'}}
+// ===== RNN ARCHITECTURE DIAGRAM =====
+let dy=hy+120;
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(12,dy,726,80,10);ctx.fill();
+ctx.fillStyle='#4ecdc4';ctx.font='700 11px Fira Code';ctx.fillText('How RNN Works:',22,dy+18);
+// Diagram
+let dx=22,dcy=dy+50;
+// Input
+ctx.beginPath();ctx.arc(dx+25,dcy,14,0,TAU);ctx.fillStyle='#38bdf822';ctx.fill();ctx.strokeStyle='#38bdf8';ctx.lineWidth=1.5;ctx.stroke();
+ctx.fillStyle='#38bdf8';ctx.font='600 9px Fira Code';ctx.textAlign='center';ctx.fillText('xₜ',dx+25,dcy+4);
+// Arrow
+ctx.strokeStyle='#4a475a';ctx.beginPath();ctx.moveTo(dx+40,dcy);ctx.lineTo(dx+70,dcy);ctx.stroke();
+// RNN cell
+ctx.beginPath();ctx.roundRect(dx+70,dcy-18,80,36,6);ctx.fillStyle='#4ecdc422';ctx.fill();ctx.strokeStyle='#4ecdc4';ctx.lineWidth=2;ctx.stroke();
+ctx.fillStyle='#4ecdc4';ctx.fillText('RNN Cell',dx+110,dcy+4);
+// Recurrent loop
+ctx.strokeStyle='#ffd166';ctx.lineWidth=1.5;
+ctx.beginPath();ctx.moveTo(dx+150,dcy-18);ctx.quadraticCurveTo(dx+170,dcy-40,dx+110,dcy-40);ctx.quadraticCurveTo(dx+50,dcy-40,dx+70,dcy-18);ctx.stroke();
+ctx.fillStyle='#ffd166';ctx.font='500 8px Fira Code';ctx.fillText('hₜ₋₁',dx+105,dcy-44);
+// Output arrow
+ctx.strokeStyle='#4a475a';ctx.beginPath();ctx.moveTo(dx+150,dcy);ctx.lineTo(dx+180,dcy);ctx.stroke();
+ctx.beginPath();ctx.arc(dx+195,dcy,14,0,TAU);ctx.fillStyle='#ff6b6b22';ctx.fill();ctx.strokeStyle='#ff6b6b';ctx.lineWidth=1.5;ctx.stroke();
+ctx.fillStyle='#ff6b6b';ctx.fillText('hₜ',dx+195,dcy+4);ctx.textAlign='left';
+// Key formula
+ctx.fillStyle='#e4e2df';ctx.font='500 10px Fira Code';ctx.fillText('hₜ = tanh( W_h · hₜ₋₁ + W_x · xₜ + b )',dx+240,dcy-4);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('Each step blends the current input with memory of ALL previous inputs',dx+240,dcy+14);
+ctx.fillStyle='#ffd166';ctx.fillText('→ This is why RNN can understand sequences! But long-range memory fades (→ LSTM fixes this)',dx+240,dcy+28)}
+const ctrl=addControls(el);
+const fb=document.createElement('button');fb.className='btn';fb.textContent='▶ Feed Next Word';fb.onclick=feedWord;
+let tmr=null;const ab=document.createElement('button');ab.className='btn';ab.textContent='⏩ Auto Feed';
+ab.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}else{tmr=setInterval(()=>{feedWord();if(pos>=cur().words.length-1){clearInterval(tmr);tmr=null;ab.classList.remove('active')}},600);ab.classList.add('active')}};
+const nb=document.createElement('button');nb.className='btn';nb.textContent='📝 Next Sentence';nb.onclick=()=>{si=(si+1)%sentences.length;pos=-1;hVal=0;history=[];if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}draw()};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{pos=-1;hVal=0;history=[];if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}draw()};
+ctrl.appendChild(fb);ctrl.appendChild(ab);ctrl.appendChild(nb);ctrl.appendChild(rst);draw()})();
+
+// ===== BOLTZMANN MACHINE — Energy-based sampling =====
+(function(){const el=$('demo-boltz'),[c,ctx]=createCanvas(el,750,320);
+addHint(el,'Click neurons to toggle on/off. Watch the energy change. Press Sample to let the network find low-energy states!');
+const N=8;let states2=Array(N).fill(0).map(()=>Math.random()>.5?1:0);
+let W=Array(N).fill(0).map(()=>Array(N).fill(0));
+for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){W[i][j]=rand(-.8,.8);W[j][i]=W[i][j]}
+let temp=2.0,energyHist=[];
+function energy(){let E=0;for(let i=0;i<N;i++)for(let j=i+1;j<N;j++)E-=W[i][j]*states2[i]*states2[j];return E}
+function gibbsStep(){let i=randInt(0,N);let dE=0;
+for(let j=0;j<N;j++)if(j!==i)dE+=W[i][j]*states2[j];
+let p=1/(1+Math.exp(-2*dE/temp));states2[i]=Math.random()<p?1:0;
+energyHist.push(energy());if(energyHist.length>100)energyHist.shift()}
+function draw(){ctx.clearRect(0,0,750,320);let E=energy();
+let cx2=180,cy2=148,rad=100;
+// Connections
+for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){let ai=i/N*TAU-Math.PI/2,aj=j/N*TAU-Math.PI/2;
+let x1=cx2+Math.cos(ai)*rad,y1=cy2+Math.sin(ai)*rad,x2=cx2+Math.cos(aj)*rad,y2=cy2+Math.sin(aj)*rad;
+let w=W[i][j],active=states2[i]&&states2[j];
+ctx.strokeStyle=active?(w>0?'rgba(78,205,196,.6)':'rgba(255,107,107,.6)'):(w>0?'rgba(78,205,196,.08)':'rgba(255,107,107,.08)');
+ctx.lineWidth=Math.abs(w)*2.5+(active?1.5:0);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}
+// Neurons
+for(let i=0;i<N;i++){let a=i/N*TAU-Math.PI/2,x=cx2+Math.cos(a)*rad,y=cy2+Math.sin(a)*rad;
+ctx.save();if(states2[i]){ctx.shadowColor='#ffd166';ctx.shadowBlur=16}
+ctx.beginPath();ctx.arc(x,y,18,0,TAU);ctx.fillStyle=states2[i]?'#ffd166':'#1e1e32';ctx.fill();
+ctx.strokeStyle=states2[i]?'#ffd166':'#4a475a';ctx.lineWidth=2;ctx.stroke();ctx.restore();
+ctx.fillStyle=states2[i]?'#000':'#7d7a8c';ctx.font='bold 10px Fira Code';ctx.textAlign='center';
+ctx.fillText(states2[i]?'ON':'off',x,y+4);ctx.textAlign='left'}
+// Energy panel
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(310,12,420,85,10);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='900 26px Fraunces';ctx.fillText('E = '+E.toFixed(2),325,48);
+ctx.fillStyle='#7d7a8c';ctx.font='500 9px Fira Code';ctx.fillText('Energy = −Σ wᵢⱼ sᵢ sⱼ',325,66);
+ctx.fillText('Lower energy = more probable state',325,82);
+ctx.fillStyle='#ffd166';ctx.font='600 9px Fira Code';ctx.fillText('T = '+temp.toFixed(1),600,48);
+ctx.fillText(temp>3?'(exploring)':temp<1?'(frozen)':'(cooling)',600,64);
+// Energy history
+let chy=110,chh=80,chw=400;
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(310,chy,chw+20,chh+35,10);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='600 9px Fira Code';ctx.fillText('Energy over time:',320,chy+14);
+if(energyHist.length>1){let mx2=Math.max(...energyHist),mn=Math.min(...energyHist);if(mx2===mn)mx2=mn+1;
+ctx.strokeStyle='#ff6b6b';ctx.lineWidth=1.5;ctx.beginPath();
+energyHist.forEach((e,i)=>{let x=325+i*(chw-10)/100,y=chy+22+(1-(e-mn)/(mx2-mn))*(chh-10);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke()}
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';
+ctx.fillText('Green = positive weight (agree)',310,chy+chh+24);ctx.fillText('Red = negative weight (disagree)',310,chy+chh+35);
+// Bottom
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,280,720,32,6);ctx.fill();
+ctx.fillStyle='#a78bfa';ctx.font='500 9px Fira Code';
+ctx.fillText('P(state) ∝ exp(−E/T). Low T = freezes into low-energy states. High T = random exploration.',25,300)}
+c.onclick=e=>{let r2=c.getBoundingClientRect(),mx2=(e.clientX-r2.left)*750/r2.width,my=(e.clientY-r2.top)*320/r2.height;
+for(let i=0;i<N;i++){let a=i/N*TAU-Math.PI/2,x=180+Math.cos(a)*100,y=148+Math.sin(a)*100;
+if(dist(mx2,my,x,y)<22){states2[i]=1-states2[i];energyHist.push(energy());draw();return}}};
+const ctrl=addControls(el);
+ctrl.innerHTML='<label>Temp</label><input type="range" min="1" max="50" value="20" id="bt"><span id="btv" class="btn" style="min-width:30px;text-align:center">2.0</span>';
+$('bt').oninput=e=>{temp=e.target.value/10;$('btv').textContent=temp.toFixed(1);draw()};
+const sb=document.createElement('button');sb.className='btn';sb.textContent='▶ Sample ×10';sb.onclick=()=>{for(let i=0;i<10;i++)gibbsStep();draw()};
+let tmr=null;const ab=document.createElement('button');ab.className='btn';ab.textContent='⏩ Auto Sample';
+ab.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}else{tmr=setInterval(()=>{gibbsStep();draw()},50);ab.classList.add('active')}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{states2=Array(N).fill(0).map(()=>Math.random()>.5?1:0);energyHist=[];temp=2;$('bt').value=20;$('btv').textContent='2.0';if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}draw()};
+ctrl.appendChild(sb);ctrl.appendChild(ab);ctrl.appendChild(rst);draw()})();
+
+// ===== BACKPROPAGATION — XOR learning =====
+(function(){const el=$('demo-bp'),[c,ctx]=createCanvas(el,750,340);
+addHint(el,'Watch a 2-layer neural net learn XOR (the problem Perceptrons can\'t solve!). See gradients flow backward.');
+const data=[{x:[0,0],y:0},{x:[0,1],y:1},{x:[1,0],y:1},{x:[1,1],y:0}];
+let w1=Array(3).fill(0).map(()=>[rand(-.5,.5),rand(-.5,.5)]);
+let b1=Array(3).fill(0).map(()=>rand(-.3,.3));
+let w2=[rand(-.5,.5),rand(-.5,.5),rand(-.5,.5)];let b2=rand(-.3,.3);
+let lr3=0.8,epoch=0,losses=[],lastGrads=[];
+function forward(x){let h=w1.map((w,i)=>Math.max(0,w[0]*x[0]+w[1]*x[1]+b1[i]));
+let o=w2[0]*h[0]+w2[1]*h[1]+w2[2]*h[2]+b2;o=1/(1+Math.exp(-o));return{h,o}}
+function trainStep(){let totalLoss=0;let grads=w2.map(()=>0);
+data.forEach(d=>{let{h,o}=forward(d.x);let err=o-d.y;totalLoss+=err*err;
+let dOut=err*o*(1-o);
+w2.forEach((w,i)=>{let dw=dOut*h[i];w2[i]-=lr3*dw;grads[i]+=Math.abs(dw)});b2-=lr3*dOut;
+w1.forEach((w,i)=>{let dh=dOut*w2[i]*(h[i]>0?1:0);w[0]-=lr3*dh*d.x[0];w[1]-=lr3*dh*d.x[1];b1[i]-=lr3*dh})});
+epoch++;losses.push(totalLoss/4);if(losses.length>300)losses.shift();lastGrads=grads}
+function draw(){ctx.clearRect(0,0,750,340);
+// Network
+let nx=[85,305,540],ny=168;
+let inY=[ny-50,ny+50];let hidY=[ny-70,ny,ny+70];
+let np=[[],[]];inY.forEach(y=>np[0].push({x:nx[0],y}));hidY.forEach(y=>np[1].push({x:nx[1],y}));
+np[2]=[{x:nx[2],y:ny}];
+// Connections
+for(let l=0;l<2;l++){let from=np[l],to=np[l+1];
+from.forEach((f,fi)=>to.forEach((t,ti)=>{
+let wv=l===0?w1[ti][fi]:w2[fi];let absW=Math.abs(wv);
+ctx.strokeStyle=wv>0?`rgba(78,205,196,${Math.min(absW*1.5,.8)})`:`rgba(255,107,107,${Math.min(absW*1.5,.8)})`;
+ctx.lineWidth=1+absW*3;ctx.beginPath();ctx.moveTo(f.x,f.y);ctx.lineTo(t.x,t.y);ctx.stroke()}))}
+// Backward gradient arrows
+if(lastGrads.length){np[1].forEach((h,i)=>{let t=np[2][0];
+let g=Math.min(lastGrads[i]*20,1);
+ctx.strokeStyle=`rgba(255,209,102,${g})`;ctx.lineWidth=2;ctx.setLineDash([4,4]);
+ctx.beginPath();ctx.moveTo(t.x-20,t.y+(i-1)*5);ctx.lineTo(h.x+20,h.y);ctx.stroke();ctx.setLineDash([])})}
+// Nodes
+let labels=[['x₁','x₂'],['h₁','h₂','h₃'],['ŷ']];
+[np[0],np[1],np[2]].forEach((layer,li)=>layer.forEach((n,ni)=>{
+ctx.save();ctx.shadowColor=li===2?'#ff6b6b':'#4ecdc4';ctx.shadowBlur=8;
+ctx.beginPath();ctx.arc(n.x,n.y,20,0,TAU);ctx.fillStyle=li===0?'#38bdf822':li===1?'#4ecdc422':'#ff6b6b22';ctx.fill();
+ctx.strokeStyle=li===0?'#38bdf8':li===1?'#4ecdc4':'#ff6b6b';ctx.lineWidth=2;ctx.stroke();ctx.restore();
+ctx.fillStyle='#e4e2df';ctx.font='600 10px Fira Code';ctx.textAlign='center';ctx.fillText(labels[li][ni],n.x,n.y+4);ctx.textAlign='left'}));
+// Layer labels
+ctx.fillStyle='#38bdf8';ctx.font='500 9px Fira Code';ctx.textAlign='center';
+ctx.fillText('Input',nx[0],ny+100);ctx.fillStyle='#4ecdc4';ctx.fillText('Hidden (ReLU)',nx[1],ny+100);
+ctx.fillStyle='#ff6b6b';ctx.fillText('Output (σ)',nx[2],ny+100);ctx.textAlign='left';
+// XOR table
+let tx=15,ty=12;ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(tx,ty,205,100,8);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 11px Fira Code';ctx.fillText('XOR Truth vs Prediction:',tx+8,ty+18);
+data.forEach((d,i)=>{let{o}=forward(d.x);let correct=Math.abs(o-d.y)<.3;
+ctx.fillStyle=correct?'#34d399':'#ff6b6b';ctx.font='500 9px Fira Code';
+ctx.fillText(d.x[0]+','+d.x[1]+' → target:'+d.y+' pred:'+o.toFixed(2)+(correct?' ✓':' ✗'),tx+8,ty+36+i*16)});
+// Loss curve
+let lx=590,lw=150,lh=80;
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(lx,ty,lw,lh+15,8);ctx.fill();
+ctx.fillStyle='#ff6b6b';ctx.font='600 10px Fira Code';ctx.fillText('Loss',lx+8,ty+16);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('Epoch '+epoch,lx+50,ty+16);
+if(losses.length>1){let mx2=Math.max(...losses),mn=Math.min(...losses);if(mx2===mn)mx2=mn+1;
+ctx.strokeStyle='#ff6b6b';ctx.lineWidth=1.5;ctx.beginPath();
+losses.forEach((l,i)=>{let x2=lx+5+i*(lw-10)/300,y=ty+25+(1-(l-mn)/(mx2-mn))*(lh-15);i?ctx.lineTo(x2,y):ctx.moveTo(x2,y)});ctx.stroke()}
+// Bottom
+ctx.fillStyle='rgba(6,6,12,.85)';ctx.beginPath();ctx.roundRect(15,288,720,45,8);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 10px Fira Code';ctx.fillText('▶ Forward: input → hidden → output → loss',25,306);
+ctx.fillStyle='#ff6b6b';ctx.fillText('◀ Backward: loss → ∂L/∂w₂ → ∂L/∂h → ∂L/∂w₁ (yellow dashes = gradient flow)',25,324)}
+const ctrl=addControls(el);
+const tb=document.createElement('button');tb.className='btn';tb.textContent='▶ Train ×10';tb.onclick=()=>{for(let i=0;i<10;i++)trainStep();draw()};
+let tmr=null;const ab=document.createElement('button');ab.className='btn';ab.textContent='⏩ Auto Train';
+ab.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}else{tmr=setInterval(()=>{trainStep();draw()},40);ab.classList.add('active')}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{w1=Array(3).fill(0).map(()=>[rand(-.5,.5),rand(-.5,.5)]);b1=Array(3).fill(0).map(()=>rand(-.3,.3));
+w2=[rand(-.5,.5),rand(-.5,.5),rand(-.5,.5)];b2=rand(-.3,.3);epoch=0;losses=[];lastGrads=[];
+if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}draw()};
+ctrl.appendChild(tb);ctrl.appendChild(ab);ctrl.appendChild(rst);draw()})();
+
+// ===== DECISION TREE — Proper recursive splitting =====
+(function(){const el=$('demo-tree'),[c,ctx]=createCanvas(el,750,380);
+addHint(el,'Click "Grow" to add one split at a time. Watch the tree recursively partition the space with optimal Gini splits!');
+let pts=[];
+function seedPts(){pts=[];
+for(let i=0;i<15;i++){pts.push({x:rand(30,320),y:rand(30,180),c:0})}
+for(let i=0;i<15;i++){pts.push({x:rand(400,720),y:rand(30,180),c:1})}
+for(let i=0;i<8;i++){pts.push({x:rand(30,320),y:rand(200,360),c:1})}
+for(let i=0;i<8;i++){pts.push({x:rand(400,720),y:rand(200,360),c:0})}}
+seedPts();
+// Tree node: {axis,value,gini,left,right,leaf,label,count0,count1,rect}
+let root=null,nodeCount=0,growQueue=[];
+function gini(points){if(!points.length)return 0;let n=points.length;
+let c0=points.filter(p=>p.c===0).length;return 1-(c0/n)**2-((n-c0)/n)**2}
+function bestSplit(points,rect){if(points.length<4)return null;
+let best=null,bestG=gini(points);
+['x','y'].forEach(axis=>{let vals=points.map(p=>p[axis]).sort((a,b)=>a-b);
+for(let i=1;i<vals.length;i++){if(vals[i]===vals[i-1])continue;
+let mid=(vals[i-1]+vals[i])/2;
+let left=points.filter(p=>p[axis]<=mid),right=points.filter(p=>p[axis]>mid);
+if(left.length<2||right.length<2)continue;
+let g=(left.length*gini(left)+right.length*gini(right))/points.length;
+if(g<bestG-0.001){bestG=g;best={axis,value:mid,gini:bestG}}}});
+return best}
+function makeLeaf(points,rect){let c0=points.filter(p=>p.c===0).length;
+return{leaf:true,label:c0>=points.length-c0?0:1,count0:c0,count1:points.length-c0,rect,points}}
+function initTree(){root=makeLeaf(pts,{x0:0,y0:0,x1:750,y1:370});
+growQueue=[root];nodeCount=0}
+initTree();
+function growOnce(){if(!growQueue.length)return;
+// Find the leaf with highest impurity
+growQueue.sort((a,b)=>gini(b.points)-gini(a.points));
+let leaf=growQueue.shift();
+let split=bestSplit(leaf.points,leaf.rect);
+if(!split)return; // can't split further
+// Convert leaf to internal node
+leaf.leaf=false;leaf.axis=split.axis;leaf.value=split.value;leaf.gini=split.gini;
+let lPts=leaf.points.filter(p=>p[leaf.axis]<=leaf.value);
+let rPts=leaf.points.filter(p=>p[leaf.axis]>leaf.value);
+let lRect,rRect;
+if(leaf.axis==='x'){lRect={...leaf.rect,x1:leaf.value};rRect={...leaf.rect,x0:leaf.value}}
+else{lRect={...leaf.rect,y1:leaf.value};rRect={...leaf.rect,y0:leaf.value}}
+leaf.left=makeLeaf(lPts,lRect);leaf.right=makeLeaf(rPts,rRect);
+nodeCount++;
+if(gini(lPts)>0.05&&lPts.length>=4)growQueue.push(leaf.left);
+if(gini(rPts)>0.05&&rPts.length>=4)growQueue.push(leaf.right);
+draw()}
+function predict(p,node){if(!node)return 0;if(node.leaf)return node.label;
+return p[node.axis]<=node.value?predict(p,node.left):predict(p,node.right)}
+function draw(){ctx.clearRect(0,0,750,380);
+// Draw leaf regions
+function drawRegions(node){if(!node)return;
+if(node.leaf){let r=node.rect;
+ctx.fillStyle=node.label===0?'rgba(255,107,107,.08)':'rgba(56,189,248,.08)';
+ctx.fillRect(r.x0,r.y0,r.x1-r.x0,r.y1-r.y0);return}
+drawRegions(node.left);drawRegions(node.right)}
+drawRegions(root);
+// Draw split lines
+function drawSplits(node,depth){if(!node||node.leaf)return;
+let r=node.rect;
+let colors=['#ffd166','#4ecdc4','#fb923c','#a78bfa','#ff6b6b','#38bdf8'];
+let col=colors[depth%colors.length];
+ctx.strokeStyle=col;ctx.lineWidth=2.5-depth*0.3;ctx.setLineDash([6,3]);ctx.beginPath();
+if(node.axis==='x'){ctx.moveTo(node.value,r.y0);ctx.lineTo(node.value,r.y1)}
+else{ctx.moveTo(r.x0,node.value);ctx.lineTo(r.x1,node.value)}
+ctx.stroke();ctx.setLineDash([]);
+// Label
+ctx.fillStyle='rgba(6,6,12,.8)';let lx=node.axis==='x'?node.value+3:r.x0+3;
+let ly=node.axis==='y'?node.value-4:r.y0+14;
+ctx.beginPath();ctx.roundRect(lx,ly-10,70,14,3);ctx.fill();
+ctx.fillStyle=col;ctx.font='600 8px Fira Code';
+ctx.fillText(node.axis+'≤'+node.value.toFixed(0),lx+3,ly);
+drawSplits(node.left,depth+1);drawSplits(node.right,depth+1)}
+drawSplits(root,0);
+// Points with correct/wrong markers
+pts.forEach(p=>{let pred=predict(p,root),correct=pred===p.c;
+ctx.save();if(correct){ctx.shadowColor=p.c?'#38bdf8':'#ff6b6b';ctx.shadowBlur=5}
+ctx.beginPath();ctx.arc(p.x,p.y,correct?5:7,0,TAU);ctx.fillStyle=p.c?'#38bdf8':'#ff6b6b';ctx.fill();
+if(!correct){ctx.strokeStyle='#ffd166';ctx.lineWidth=2.5;ctx.stroke()}
+ctx.restore()});
+// ===== TREE DIAGRAM (right panel) =====
+// Collect tree info for mini tree drawing
+let treeNodes=[];
+function collectTree(node,x,y,w,depth){if(!node)return;
+treeNodes.push({node,x,y,depth});
+if(!node.leaf){let childW=w/2;
+collectTree(node.left,x-childW/2,y+36,childW,depth+1);
+collectTree(node.right,x+childW/2,y+36,childW,depth+1)}}
+// Draw in info panel overlay
+let px=15,py=280;
+ctx.fillStyle='rgba(6,6,12,.92)';ctx.beginPath();ctx.roundRect(px,py,720,95,10);ctx.fill();
+// Mini tree
+treeNodes=[];collectTree(root,180,py+16,280,0);
+// Draw edges first
+treeNodes.forEach(tn=>{if(tn.node.leaf)return;
+let childW=140/Math.pow(2,tn.depth);
+ctx.strokeStyle='#4a475a';ctx.lineWidth=1;
+ctx.beginPath();ctx.moveTo(tn.x,tn.y+10);ctx.lineTo(tn.x-childW/2,tn.y+36);ctx.stroke();
+ctx.beginPath();ctx.moveTo(tn.x,tn.y+10);ctx.lineTo(tn.x+childW/2,tn.y+36);ctx.stroke()});
+// Draw nodes
+treeNodes.forEach(tn=>{let n=tn.node;
+if(n.leaf){ctx.beginPath();ctx.arc(tn.x,tn.y,8,0,TAU);
+ctx.fillStyle=n.label===0?'#ff6b6b33':'#38bdf833';ctx.fill();
+ctx.strokeStyle=n.label===0?'#ff6b6b':'#38bdf8';ctx.lineWidth=1.5;ctx.stroke();
+ctx.fillStyle=n.label===0?'#ff6b6b':'#38bdf8';ctx.font='600 7px Fira Code';ctx.textAlign='center';
+ctx.fillText(n.count0+'/'+n.count1,tn.x,tn.y+3);ctx.textAlign='left'}
+else{ctx.beginPath();ctx.roundRect(tn.x-18,tn.y-7,36,14,3);
+ctx.fillStyle='#ffd16622';ctx.fill();ctx.strokeStyle='#ffd166';ctx.lineWidth=1;ctx.stroke();
+ctx.fillStyle='#ffd166';ctx.font='500 7px Fira Code';ctx.textAlign='center';
+ctx.fillText(n.axis+'≤'+n.value.toFixed(0),tn.x,tn.y+3);ctx.textAlign='left'}});
+// Stats
+let correct=pts.filter(p=>predict(p,root)===p.c).length;
+let acc=(correct/pts.length*100).toFixed(1);
+ctx.fillStyle='#ffd166';ctx.font='700 11px Fira Code';ctx.fillText('Decision Tree',400,py+16);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('Splits: '+nodeCount,400,py+34);
+ctx.fillStyle=acc>90?'#34d399':acc>70?'#ffd166':'#ff6b6b';ctx.font='700 12px Fira Code';
+ctx.fillText('Accuracy: '+acc+'%',400,py+54);
+ctx.fillStyle='#e4e2df';ctx.font='400 9px Fira Code';
+ctx.fillText(correct+'/'+pts.length+' correct',530,py+54);
+ctx.fillStyle='#7d7a8c';
+ctx.fillText('Remaining impure leaves: '+growQueue.length,400,py+72);
+ctx.fillStyle='#a78bfa';ctx.font='500 9px Fira Code';
+ctx.fillText('Split criterion: Gini impurity = 1 − Σpᵢ²',400,py+88)}
+const ctrl=addControls(el);
+const gb=document.createElement('button');gb.className='btn';gb.textContent='🌳 Grow (+1 split)';gb.onclick=growOnce;
+const g5=document.createElement('button');g5.className='btn';g5.textContent='🌳×5';g5.onclick=()=>{for(let i=0;i<5;i++)growOnce();draw()};
+let tmr=null;const ab=document.createElement('button');ab.className='btn';ab.textContent='⏩ Auto Grow';
+ab.onclick=()=>{if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}else{tmr=setInterval(()=>{if(!growQueue.length){clearInterval(tmr);tmr=null;ab.classList.remove('active');return}growOnce()},400);ab.classList.add('active')}};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{seedPts();initTree();if(tmr){clearInterval(tmr);tmr=null;ab.classList.remove('active')}draw()};
+ctrl.appendChild(gb);ctrl.appendChild(g5);ctrl.appendChild(ab);ctrl.appendChild(rst);draw()})();
+</script></body></html>

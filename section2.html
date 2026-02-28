@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Section II — Early Exploration · How AI Works</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<div class="progress-bar" style="background:linear-gradient(90deg,var(--a7),var(--a3))"></div>
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<nav class="topnav"><a href="index.html" class="logo">How AI Works</a><div class="nav-links"><a href="section1.html">I</a><a href="section2.html" class="active">II</a><a href="section3.html">III</a><a href="section4.html">IV</a><a href="section5.html">V</a><a href="section6.html">VI</a><a href="section7.html">VII</a><a href="section8.html">VIII</a></div></nav>
+<div class="section-hero"><div class="era-label" style="color:var(--a7)">Section II · 1960s–1970s</div>
+<h1>Early Exploration & The First AI Winter</h1><p>k-NN, Naive Bayes, and the chain rule — simple but powerful ideas that still matter today.</p>
+<div class="nav-arrows"><a href="section1.html">&larr; Section I</a><a href="section3.html">Section III &rarr;</a></div></div>
+<div class="models-container">
+
+<!-- ======= k-NN ======= -->
+<div class="model-card" id="model-knn"><div class="mc-head"><span class="mc-year" style="color:var(--a7)">1967</span><div class="mc-info">
+<h3>k-Nearest Neighbors <a href="https://doi.org/10.1109/TIT.1967.1053964" target="_blank" class="paper-link">Paper</a></h3>
+<p>No training needed — classify a new point by majority vote of its k closest known samples. Simple yet surprisingly effective.</p>
+<div class="model-lineage">A non-parametric alternative to <a href="section1.html#model-perceptron">Perceptron</a>'s linear boundary; its distance-based approach later inspires kernel methods in <a href="section4.html#model-svm">SVM</a>.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a7)">prediction = mode(labels of k nearest neighbors)</div>
+<div class="mc-demo" id="demo-knn"></div></div>
+
+<!-- ======= NAIVE BAYES ======= -->
+<div class="model-card" id="model-naivebayes"><div class="mc-head"><span class="mc-year" style="color:var(--a7)">1960s</span><div class="mc-info">
+<h3>Naive Bayes Classifier <a href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier" target="_blank" class="paper-link">Paper</a></h3>
+<p>Assumes features are independent (they usually aren't!), yet amazingly effective for spam filtering and text classification.</p>
+<div class="model-lineage">Directly applies <a href="section1.html#model-bayes">Bayes' Theorem</a> to classification with the "naive" independence assumption; probabilistic thinking later extends to <a href="section4.html#model-gmm">GMM+EM</a>.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a7)">P(class|features) ∝ P(class) × ∏ P(featureᵢ | class)</div>
+<div class="mc-demo" id="demo-nb"></div></div>
+
+<!-- ======= CHAIN RULE ======= -->
+<div class="model-card" id="model-chainrule"><div class="mc-head"><span class="mc-year" style="color:var(--a7)">1970</span><div class="mc-info">
+<h3>Automatic Differentiation (Chain Rule) <a href="https://en.wikipedia.org/wiki/Automatic_differentiation" target="_blank" class="paper-link">Paper</a></h3>
+<p>Linnainmaa's chain rule in code — compute gradients backward from output to inputs. The mathematical foundation of ALL neural network training.</p>
+<div class="model-lineage">Extends <a href="section1.html#model-adaline">Adaline</a>'s gradient idea to arbitrary computation graphs; directly enables <a href="section3.html#model-backprop">Backpropagation</a> in deep networks.</div>
+</div></div>
+<div class="mc-formula" style="color:var(--a7)">∂L/∂x = (∂L/∂z) · (∂z/∂y) · (∂y/∂x) — multiply local gradients backward!</div>
+<div class="mc-demo" id="demo-chain"></div></div>
+
+</div>
+<footer><a href="section1.html">&larr; Section I</a> &middot; <a href="section3.html">Section III: The Revival &rarr;</a></footer>
+<script src="shared.js"></script>
+
+<script>
+/* ============================================================
+   HiDPI / Retina Canvas Patch (Sharp, Layout-Preserving)
+   - Fixes blurry canvas text/lines on Retina by scaling the backing store.
+   - IMPORTANT: preserves the original demo coordinate system & CSS sizing
+     (no responsive resizing, no font scaling), preventing gradients/overlays
+     from breaking or elements from overlapping.
+   ============================================================ */
+(function(){
+  const dpr = () => (window.devicePixelRatio || 1);
+
+  window.createCanvas = function(containerEl, w, h){
+    const canvas = document.createElement('canvas');
+
+    // Keep the *same* CSS size the demos were authored for.
+    canvas.style.width  = w + 'px';
+    canvas.style.height = h + 'px';
+    canvas.style.display = 'block';
+
+    // HiDPI backing store
+    const r = dpr();
+    canvas.width  = Math.round(w * r);
+    canvas.height = Math.round(h * r);
+
+    containerEl.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d', { alpha: true });
+
+    // Map drawing coordinates to CSS pixels (so all existing coordinates stay valid)
+    ctx.setTransform(r, 0, 0, r, 0, 0);
+
+    // Rendering hints (safe no-ops if unsupported)
+    ctx.imageSmoothingEnabled = true;
+    try { ctx.textRendering = 'geometricPrecision'; } catch(e) {}
+
+    return [canvas, ctx];
+  };
+})();
+</script>
+
+<script>
+// ===== k-NN =====
+(function(){const el=$('demo-knn'),[c,ctx]=createCanvas(el,750,340);
+addHint(el,'Left-click = Red class, Right-click = Blue class. Move mouse to see live k-NN prediction with neighbor lines.');
+let pts=[];for(let i=0;i<12;i++){pts.push({x:rand(40,320),y:rand(40,300),c:0});pts.push({x:rand(430,710),y:rand(40,300),c:1})}
+let k=3,mx=-1,my=-1;
+function draw(){ctx.clearRect(0,0,750,340);
+// Decision regions
+let img=ctx.createImageData(75,34);
+for(let y=0;y<34;y++)for(let x=0;x<75;x++){let rx=x*10,ry=y*10,idx=(y*75+x)*4;
+let dists=pts.map(p=>({d:Math.hypot(rx-p.x,ry-p.y),c:p.c})).sort((a,b)=>a.d-b.d);
+let votes=[0,0];for(let j=0;j<Math.min(k,dists.length);j++)votes[dists[j].c]++;
+if(votes[1]>votes[0]){img.data[idx]=56;img.data[idx+1]=189;img.data[idx+2]=248;img.data[idx+3]=20}
+else{img.data[idx]=255;img.data[idx+1]=100;img.data[idx+2]=100;img.data[idx+3]=20}}
+let tc=document.createElement('canvas');tc.width=75;tc.height=34;tc.getContext('2d').putImageData(img,0,0);ctx.drawImage(tc,0,0,750,340);
+// Points
+pts.forEach(p=>{ctx.save();ctx.shadowColor=p.c?'#38bdf8':'#ff6b6b';ctx.shadowBlur=5;
+ctx.beginPath();ctx.arc(p.x,p.y,6,0,TAU);ctx.fillStyle=p.c?'#38bdf8':'#ff6b6b';ctx.fill();ctx.restore()});
+// Mouse hover prediction
+if(mx>0&&my>0){let dists=pts.map((p,i)=>({d:Math.hypot(mx-p.x,my-p.y),c:p.c,i})).sort((a,b)=>a.d-b.d);
+let votes=[0,0];
+for(let j=0;j<Math.min(k,dists.length);j++){votes[dists[j].c]++;let p=pts[dists[j].i];
+ctx.strokeStyle=p.c?'#38bdf866':'#ff6b6b66';ctx.lineWidth=2;ctx.setLineDash([4,4]);
+ctx.beginPath();ctx.moveTo(mx,my);ctx.lineTo(p.x,p.y);ctx.stroke();ctx.setLineDash([]);
+ctx.beginPath();ctx.arc(p.x,p.y,10,0,TAU);ctx.strokeStyle='#ffd166';ctx.lineWidth=2;ctx.stroke();
+let mdx=(mx+p.x)/2,mdy=(my+p.y)/2;
+ctx.fillStyle='rgba(6,6,12,.75)';ctx.beginPath();ctx.roundRect(mdx-20,mdy-8,40,15,3);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='500 8px Fira Code';ctx.textAlign='center';ctx.fillText(dists[j].d.toFixed(0)+'px',mdx,mdy+3);ctx.textAlign='left'}
+let pred=votes[1]>votes[0]?1:0;
+ctx.save();ctx.shadowColor=pred?'#38bdf8':'#ff6b6b';ctx.shadowBlur=16;
+ctx.beginPath();ctx.arc(mx,my,10,0,TAU);ctx.fillStyle=pred?'#38bdf8':'#ff6b6b';ctx.fill();ctx.restore();
+ctx.fillStyle='#fff';ctx.font='bold 10px Fira Code';ctx.textAlign='center';ctx.fillText('?',mx,my+4);ctx.textAlign='left';
+// Panel
+ctx.fillStyle='rgba(6,6,12,.9)';ctx.beginPath();ctx.roundRect(8,8,210,55,8);ctx.fill();
+ctx.fillStyle='#ffd166';ctx.font='600 12px Fira Code';ctx.fillText('k='+k+' Nearest Neighbors',18,28);
+ctx.fillStyle=pred?'#38bdf8':'#ff6b6b';ctx.font='600 11px Fira Code';
+ctx.fillText('Predict: '+(pred?'BLUE':'RED'),18,46);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('Votes: R='+votes[0]+' B='+votes[1],140,46)}
+else{ctx.fillStyle='rgba(6,6,12,.8)';ctx.beginPath();ctx.roundRect(8,8,240,28,6);ctx.fill();
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';ctx.fillText('Move mouse over canvas to classify a point',18,27)}}
+c.onmousemove=e=>{let r=c.getBoundingClientRect();mx=(e.clientX-r.left)*750/r.width;my=(e.clientY-r.top)*340/r.height;draw()};
+c.onmouseleave=()=>{mx=-1;my=-1;draw()};
+c.onclick=e=>{let r=c.getBoundingClientRect();pts.push({x:(e.clientX-r.left)*750/r.width,y:(e.clientY-r.top)*340/r.height,c:0});draw()};
+c.oncontextmenu=e=>{e.preventDefault();let r=c.getBoundingClientRect();pts.push({x:(e.clientX-r.left)*750/r.width,y:(e.clientY-r.top)*340/r.height,c:1});draw()};
+const ctrl=addControls(el);ctrl.innerHTML='<label>k =</label><input type="range" min="1" max="15" value="3" id="kv"><span id="kvv" class="btn" style="min-width:28px;text-align:center">3</span>';
+$('kv').oninput=e=>{k=+e.target.value;$('kvv').textContent=k;draw()};
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{pts=[];for(let i=0;i<12;i++){pts.push({x:rand(40,320),y:rand(40,300),c:0});pts.push({x:rand(430,710),y:rand(40,300),c:1})}draw()};
+ctrl.appendChild(rst);draw()})();
+
+// ===== NAIVE BAYES SPAM CLASSIFIER =====
+(function(){const el=$('demo-nb'),[c,ctx]=createCanvas(el,750,320);
+addHint(el,'Click words to toggle them in the email. See how each word shifts the spam probability via Bayes\' rule.');
+const words=[{w:'free',spam:.85,ham:.05},{w:'money',spam:.7,ham:.08},{w:'hello',spam:.15,ham:.6},{w:'meeting',spam:.05,ham:.55},
+{w:'winner',spam:.8,ham:.02},{w:'project',spam:.08,ham:.5},{w:'click',spam:.75,ham:.06},{w:'dear',spam:.2,ham:.4}];
+let selected=new Set([0,4,6]);
+function calc(){let lS=Math.log(.3),lH=Math.log(.7);
+words.forEach((w,i)=>{if(selected.has(i)){lS+=Math.log(w.spam);lH+=Math.log(w.ham)}else{lS+=Math.log(1-w.spam);lH+=Math.log(1-w.ham)}});
+let mx2=Math.max(lS,lH),eS=Math.exp(lS-mx2),eH=Math.exp(lH-mx2);return eS/(eS+eH)}
+function draw(){ctx.clearRect(0,0,750,320);let prob=calc();
+// Word buttons
+ctx.fillStyle='#ffd166';ctx.font='600 11px Fira Code';ctx.fillText('Toggle words in the email:',15,18);
+words.forEach((w,i)=>{let col=i%4,row=Math.floor(i/4);let x=15+col*183,y=28+row*52;
+let on=selected.has(i);
+ctx.fillStyle=on?(w.spam>.5?'rgba(255,107,107,.1)':'rgba(78,205,196,.1)'):'rgba(20,20,35,.5)';
+ctx.beginPath();ctx.roundRect(x,y,176,44,8);ctx.fill();
+ctx.strokeStyle=on?(w.spam>.5?'#ff6b6b':'#4ecdc4'):'#1e1e32';ctx.lineWidth=on?1.5:1;
+ctx.beginPath();ctx.roundRect(x,y,176,44,8);ctx.stroke();
+ctx.fillStyle=on?'#e4e2df':'#4a475a';ctx.font='600 13px Fira Code';ctx.fillText('"'+w.w+'"',x+8,y+20);
+ctx.fillStyle='#7d7a8c';ctx.font='400 8px Fira Code';
+ctx.fillText('P(w|spam)='+(w.spam*100|0)+'%',x+8,y+36);ctx.fillText('P(w|ham)='+(w.ham*100|0)+'%',x+98,y+36);
+if(on){ctx.fillStyle=w.spam>w.ham?'#ff6b6b':'#4ecdc4';ctx.font='600 9px Fira Code';ctx.fillText(w.spam>w.ham?'↑SPAM':'↑HAM',x+140,y+20)}});
+// Result panel
+let ry=140;ctx.fillStyle='rgba(6,6,12,.92)';ctx.beginPath();ctx.roundRect(15,ry,720,80,12);ctx.fill();
+ctx.strokeStyle=prob>.5?'#ff6b6b44':'#34d39944';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(15,ry,720,80,12);ctx.stroke();
+ctx.fillStyle=prob>.5?'#ff6b6b':'#34d399';ctx.font='800 20px Fira Code';
+ctx.fillText(prob>.5?'🚫 SPAM  '+(prob*100).toFixed(1)+'%':'✅ HAM  '+((1-prob)*100).toFixed(1)+'%',30,ry+28);
+// Gauge
+ctx.fillStyle='#111120';ctx.beginPath();ctx.roundRect(30,ry+40,500,18,5);ctx.fill();
+let grd=ctx.createLinearGradient(30,0,530,0);grd.addColorStop(0,'#34d399');grd.addColorStop(.5,'#ffd166');grd.addColorStop(1,'#ff6b6b');
+ctx.fillStyle=grd;ctx.beginPath();ctx.roundRect(30,ry+40,500,18,5);ctx.fill();
+// Indicator
+let ix=30+500*prob;
+ctx.fillStyle='#fff';ctx.beginPath();ctx.moveTo(ix,ry+38);ctx.lineTo(ix-5,ry+32);ctx.lineTo(ix+5,ry+32);ctx.fill();
+ctx.fillRect(ix-1.5,ry+38,3,22);
+ctx.fillStyle='#7d7a8c';ctx.font='500 8px Fira Code';ctx.fillText('HAM',35,ry+72);ctx.fillText('SPAM',500,ry+72);
+// Explanation
+let ey=230;ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(15,ey,720,82,10);ctx.fill();
+ctx.fillStyle='#fb923c';ctx.font='600 10px Fira Code';ctx.fillText('How Naive Bayes calculates:',25,ey+18);
+ctx.fillStyle='#e4e2df';ctx.font='400 9px Fira Code';
+let sWords=[...selected].map(i=>'"'+words[i].w+'"');
+ctx.fillText('Active words: '+sWords.join(', '),25,ey+36);
+ctx.fillText('P(spam|words) ∝ P(spam) × ∏ P(wordᵢ|spam) = 0.3 × '+[...selected].map(i=>(words[i].spam).toFixed(2)).join('×'),25,ey+54);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('"Naive" = assumes word probabilities are independent. Wrong but works! Simplicity beats complexity.',25,ey+72)}
+c.onclick=e=>{let r=c.getBoundingClientRect(),mx2=(e.clientX-r.left)*750/r.width,my=(e.clientY-r.top)*320/r.height;
+words.forEach((w,i)=>{let col=i%4,row=Math.floor(i/4);let x=15+col*183,y=28+row*52;
+if(mx2>=x&&mx2<=x+176&&my>=y&&my<=y+44){if(selected.has(i))selected.delete(i);else selected.add(i);draw()}})};
+const ctrl=addControls(el);const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{selected=new Set([0,4,6]);draw()};ctrl.appendChild(rst);draw()})();
+
+// ===== CHAIN RULE — Automatic Differentiation =====
+(function(){const el=$('demo-chain'),[c,ctx]=createCanvas(el,750,400);
+addHint(el,'Adjust x with the slider, then click "Forward Pass" and "Backward Pass" to see gradients flow step by step!');
+let x=2.0,phase='idle',fwdStep=-1,bwdStep=-1;
+function compute(x){
+let v_x=x,v_sq=x*x,v_sin=Math.sin(x),v_add=v_sq+v_sin,v_L=v_add*v_add;
+let dL=1,d_add=2*v_add,d_sq=d_add,d_sin=d_add;
+let dx=d_sq*2*x+d_sin*Math.cos(x);
+return{v_x,v_sq,v_sin,v_add,v_L,dL,d_add,d_sq,d_sin,dx,local_sq:2*x,local_sin:Math.cos(x)}}
+const nodes=[
+{id:'x',label:'x',fx:80,fy:170,c:'#ffd166'},
+{id:'sq',label:'x²',fx:250,fy:90,c:'#38bdf8'},
+{id:'sin',label:'sin(x)',fx:250,fy:250,c:'#a78bfa'},
+{id:'add',label:'x²+sin(x)',fx:460,fy:170,c:'#4ecdc4'},
+{id:'L',label:'L = (...)²',fx:650,fy:170,c:'#ff6b6b'}];
+const edges=[
+{from:0,to:1,getLocal:v=>v.local_sq},{from:0,to:2,getLocal:v=>v.local_sin},
+{from:1,to:3,getLocal:()=>1},{from:2,to:3,getLocal:()=>1},
+{from:3,to:4,getLocal:v=>2*v.v_add}];
+const fwdOrder=[[0],[1,2],[3],[4]],bwdOrder=[[4],[3],[1,2],[0]];
+function doForward(){phase='fwd';fwdStep=0;bwdStep=-1;
+let iv=setInterval(()=>{fwdStep++;draw();if(fwdStep>=fwdOrder.length){clearInterval(iv);phase='fwd-done'}},500)}
+function doBackward(){if(phase!=='fwd-done')return;phase='bwd';bwdStep=0;
+let iv=setInterval(()=>{bwdStep++;draw();if(bwdStep>=bwdOrder.length){clearInterval(iv);phase='bwd-done'}},500)}
+function draw(){ctx.clearRect(0,0,750,400);let v=compute(x);
+let vals=[v.v_x,v.v_sq,v.v_sin,v.v_add,v.v_L];
+let grads=[v.dx,v.d_sq,v.d_sin,v.d_add,v.dL];
+let fwdLit=new Set(),bwdLit=new Set();
+if(phase==='fwd'||phase==='fwd-done'||phase==='bwd'||phase==='bwd-done'){
+for(let i=0;i<=Math.min(fwdStep,fwdOrder.length-1);i++)fwdOrder[i].forEach(n=>fwdLit.add(n));
+if(phase!=='fwd')fwdOrder.flat().forEach(n=>fwdLit.add(n))}
+if(phase==='bwd'||phase==='bwd-done'){
+for(let i=0;i<=Math.min(bwdStep,bwdOrder.length-1);i++)bwdOrder[i].forEach(n=>bwdLit.add(n));
+if(phase==='bwd-done')bwdOrder.flat().forEach(n=>bwdLit.add(n))}
+// Edges
+edges.forEach(e=>{let f=nodes[e.from],t=nodes[e.to];
+let dx2=t.fx-f.fx,dy=t.fy-f.fy,len=Math.hypot(dx2,dy);
+let sx=f.fx+28*dx2/len,sy=f.fy+28*dy/len,ex=t.fx-28*dx2/len,ey=t.fy-28*dy/len;
+// Forward line
+ctx.strokeStyle=fwdLit.has(e.to)?'rgba(255,255,255,.25)':'rgba(255,255,255,.06)';
+ctx.lineWidth=fwdLit.has(e.to)?2.5:1;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.stroke();
+if(fwdLit.has(e.to)){let ang=Math.atan2(dy,dx2);
+ctx.fillStyle='rgba(255,255,255,.35)';ctx.beginPath();ctx.moveTo(ex,ey);
+ctx.lineTo(ex-9*Math.cos(ang-.3),ey-9*Math.sin(ang-.3));ctx.lineTo(ex-9*Math.cos(ang+.3),ey-9*Math.sin(ang+.3));ctx.fill()}
+// Local derivative label
+let lmx=(sx+ex)/2,lmy=(sy+ey)/2-12;
+ctx.fillStyle='#555';ctx.font='400 8px Fira Code';ctx.textAlign='center';
+ctx.fillText('local: '+e.getLocal(v).toFixed(2),lmx,lmy);
+// Backward line
+if(bwdLit.has(e.from)){ctx.strokeStyle='rgba(255,107,107,.5)';ctx.lineWidth=2.5;ctx.setLineDash([5,4]);
+ctx.beginPath();ctx.moveTo(ex,ey+5);ctx.lineTo(sx,sy+5);ctx.stroke();ctx.setLineDash([]);
+ctx.fillStyle='#ff6b6b';ctx.font='500 8px Fira Code';
+ctx.fillText('← '+(grads[e.to]*e.getLocal(v)).toFixed(2),lmx,lmy+26)}
+ctx.textAlign='left'});
+// Nodes
+nodes.forEach((n,i)=>{let isFwd=fwdLit.has(i),isBwd=bwdLit.has(i);
+ctx.save();if(isBwd){ctx.shadowColor='#ff6b6b';ctx.shadowBlur=16}
+else if(isFwd){ctx.shadowColor=n.c;ctx.shadowBlur=14}
+ctx.beginPath();ctx.arc(n.fx,n.fy,28,0,TAU);
+ctx.fillStyle=isFwd?n.c+'33':'#111120';ctx.fill();
+ctx.strokeStyle=isFwd?n.c:n.c+'44';ctx.lineWidth=isFwd?2.5:1;ctx.stroke();ctx.restore();
+ctx.fillStyle=isFwd?'#e4e2df':'#4a475a';ctx.font='600 10px Fira Code';ctx.textAlign='center';
+ctx.fillText(n.label,n.fx,n.fy-3);
+if(isFwd){ctx.fillStyle=n.c;ctx.font='500 9px Fira Code';ctx.fillText(vals[i].toFixed(3),n.fx,n.fy+14)}
+if(isBwd){ctx.fillStyle='#ff6b6b';ctx.font='600 9px Fira Code';ctx.fillText('∂L/∂='+grads[i].toFixed(2),n.fx,n.fy+44)}
+ctx.textAlign='left'});
+// Bottom explanation
+ctx.fillStyle='rgba(6,6,12,.88)';ctx.beginPath();ctx.roundRect(15,340,720,52,10);ctx.fill();
+if(phase==='idle'){ctx.fillStyle='#7d7a8c';ctx.font='500 10px Fira Code';
+ctx.fillText('Press "Forward Pass" to compute values left→right, then "Backward Pass" for gradients right→left.',25,360);
+ctx.fillText('This IS how all neural networks learn! Chain rule = multiply local derivatives along each path.',25,380)}
+else if(phase==='fwd'||phase==='fwd-done'){ctx.fillStyle='#4ecdc4';ctx.font='600 11px Fira Code';
+ctx.fillText('▶ FORWARD: Computing f(x) = (x² + sin(x))² with x = '+x.toFixed(1)+' → L = '+v.v_L.toFixed(3),25,360);
+ctx.fillStyle='#7d7a8c';ctx.font='400 9px Fira Code';
+ctx.fillText('Each node computes its output from inputs, flowing left to right. Now press "Backward Pass"!',25,380)}
+else{ctx.fillStyle='#ff6b6b';ctx.font='600 11px Fira Code';
+ctx.fillText('◀ BACKWARD: ∂L/∂x via chain rule = '+v.dx.toFixed(3)+' — this is how neural nets learn!',25,360);
+ctx.fillStyle='#ffd166';ctx.font='500 10px Fira Code';
+ctx.fillText('Each node multiplies incoming gradient by its local derivative. Gradients flow backward!',25,380)}}
+const ctrl=addControls(el);
+ctrl.innerHTML='<label>x =</label><input type="range" min="-30" max="30" value="20" id="xsl"><span id="xslv" class="btn" style="min-width:36px;text-align:center">2.0</span>';
+$('xsl').oninput=e=>{x=e.target.value/10;$('xslv').textContent=x.toFixed(1);phase='idle';fwdStep=-1;bwdStep=-1;draw()};
+const fb=document.createElement('button');fb.className='btn';fb.textContent='▶ Forward Pass';fb.onclick=doForward;
+const bb=document.createElement('button');bb.className='btn';bb.textContent='◀ Backward Pass';bb.onclick=doBackward;
+const rst=document.createElement('button');rst.className='btn';rst.textContent='↻ Reset';
+rst.onclick=()=>{x=2;$('xsl').value=20;$('xslv').textContent='2.0';phase='idle';fwdStep=-1;bwdStep=-1;draw()};
+ctrl.appendChild(fb);ctrl.appendChild(bb);ctrl.appendChild(rst);draw()})();
+</script></body></html>
