@@ -50,9 +50,7 @@
   </a>
 </div>
 
----
 
-## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=EncyclopediaWorld/howaiworks&type=Date)](https://star-history.com/#EncyclopediaWorld/howaiworks&Date)
 
